@@ -6,19 +6,17 @@
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
+      <a href="" target="_blank">
         <img class="round" src="../assets/cats.jfif" alt="logo">
         <h1>Quản lý nhân sự</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard"><a routerLink="/Dashboard">Dashboard</a></li>
+      <li nz-submenu nzOpen nzTitle="Quản lý nhân sự" nzIcon="user">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Dashboard</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Nhân sự</a>
+            <a routerLink="/human-resource">Nhân sự</a>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a>Workplace</a>

@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 registerLocaleData(vi);
 
@@ -28,7 +29,8 @@ registerLocaleData(vi);
     BrowserAnimationsModule,
     IconsProviderModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzBreadCrumbModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: vi_VN }
