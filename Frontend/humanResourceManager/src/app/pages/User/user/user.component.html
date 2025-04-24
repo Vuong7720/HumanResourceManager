@@ -1,0 +1,47 @@
+<nz-card nzTitle="Quản lý Người Dùng" [nzBordered]="false">
+    <div class="mb-4 flex justify-between items-center">
+      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
+        <input type="text" nz-input placeholder="Tìm theo tên hoặc mã người dùng" [(ngModel)]="searchKeyword" />
+      </nz-input-group>
+  
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+  
+      <ng-template #addButton>
+        <button nz-button nzType="primary" (click)="onAdd()">Thêm người dùng</button>
+      </ng-template>
+    </div>
+  
+    <nz-table
+      [nzData]="users"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzPageSize]="5"
+      nzShowPagination="true">
+      <thead>
+        <tr>
+          <th>Mã người dùng</th>
+          <th>Họ tên</th>
+          <th>Email</th>
+          <th>Chức vụ</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.code }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.status }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="onEdit(user)">Sửa</button>
+            <button nz-button nzType="link" nzDanger (click)="onDelete(user)">Xoá</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  

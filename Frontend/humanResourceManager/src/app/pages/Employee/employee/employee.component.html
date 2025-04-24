@@ -1,0 +1,49 @@
+<nz-card nzTitle="Quản lý nhân viên" [nzBordered]="false">
+    <div class="mb-4 flex justify-between items-center">
+      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
+        <input type="text" nz-input placeholder="Tìm theo tên hoặc mã nhân viên" [(ngModel)]="searchKeyword" />
+      </nz-input-group>
+  
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+  
+      <ng-template #addButton>
+        <button nz-button nzType="primary" (click)="onAdd()">Thêm nhân viên</button>
+      </ng-template>
+    </div>
+  
+    <nz-table
+  [nzData]="employees"
+  [nzBordered]="true"
+  [nzSize]="'middle'"
+  nzShowPagination="true"
+  [nzPageSize]="5">
+
+      <thead>
+        <tr>
+          <th>Mã NV</th>
+          <th>Họ tên</th>
+          <th>Phòng ban</th>
+          <th>Chức vụ</th>
+          <th>Ngày vào làm</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of employees">
+          <td>{{ emp.code }}</td>
+          <td>{{ emp.name }}</td>
+          <td>{{ emp.department }}</td>
+          <td>{{ emp.position }}</td>
+          <td>{{ emp.startDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="onView(emp)">Xem</button>
+            <button nz-button nzType="link" (click)="onEdit(emp)">Sửa</button>
+            <button nz-button nzType="link" nzDanger (click)="onDelete(emp)">Xoá</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  

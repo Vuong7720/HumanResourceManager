@@ -1,0 +1,50 @@
+<nz-card nzTitle="Quản lý Lương" [nzBordered]="false">
+    <div class="mb-4 flex justify-between items-center">
+      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
+        <input type="text" nz-input placeholder="Tìm theo mã nhân viên hoặc tháng năm" [(ngModel)]="searchKeyword" />
+      </nz-input-group>
+  
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+  
+      <ng-template #addButton>
+        <button nz-button nzType="primary" (click)="onAdd()">Thêm bảng lương</button>
+      </ng-template>
+    </div>
+  
+    <nz-table
+      [nzData]="payrolls"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzPageSize]="5"
+      nzShowPagination="true">
+      <thead>
+        <tr>
+          <th>Mã nhân viên</th>
+          <th>Tên nhân viên</th>
+          <th>Tháng/Năm</th>
+          <th>Lương cơ bản</th>
+          <th>Phụ cấp</th>
+          <th>Tổng lương</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payroll of payrolls">
+          <td>{{ payroll.employeeCode }}</td>
+          <td>{{ payroll.employeeName }}</td>
+          <td>{{ payroll.monthYear | date: 'MM/yyyy' }}</td>
+          <td>{{ payroll.baseSalary | currency: 'VND' }}</td>
+          <td>{{ payroll.allowance | currency: 'VND' }}</td>
+          <td>{{ payroll.totalSalary | currency: 'VND' }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="onView(payroll)">Xem</button>
+            <button nz-button nzType="link" (click)="onEdit(payroll)">Sửa</button>
+            <button nz-button nzType="link" nzDanger (click)="onDelete(payroll)">Xoá</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  

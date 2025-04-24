@@ -1,0 +1,47 @@
+<nz-card nzTitle="Quản lý Hợp đồng" [nzBordered]="false">
+    <div class="mb-4 flex justify-between items-center">
+      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
+        <input type="text" nz-input placeholder="Tìm theo tên nhân viên hoặc mã hợp đồng" [(ngModel)]="searchKeyword" />
+      </nz-input-group>
+  
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+  
+      <ng-template #addButton>
+        <button nz-button nzType="primary" (click)="onAdd()">Thêm hợp đồng</button>
+      </ng-template>
+    </div>
+  
+    <nz-table
+      [nzData]="contracts"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzPageSize]="5"
+      nzShowPagination="true">
+      <thead>
+        <tr>
+          <th>Mã hợp đồng</th>
+          <th>Tên nhân viên</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Chức vụ</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contract of contracts">
+          <td>{{ contract.code }}</td>
+          <td>{{ contract.employeeName }}</td>
+          <td>{{ contract.startDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ contract.endDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ contract.position }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="onEdit(contract)">Sửa</button>
+            <button nz-button nzType="link" nzDanger (click)="onDelete(contract)">Xoá</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  

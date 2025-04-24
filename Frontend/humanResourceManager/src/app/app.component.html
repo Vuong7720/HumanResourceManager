@@ -1,10 +1,5 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="" target="_blank">
         <img class="round" src="../assets/cats.jfif" alt="logo">
@@ -12,34 +7,43 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard"><a routerLink="/Dashboard">Dashboard</a></li>
-      <li nz-submenu nzOpen nzTitle="Quản lý nhân sự" nzIcon="user">
+      <!-- Dashboard -->
+      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard">
+        <a routerLink="/dashboard">Dashboard</a>
+      </li>
+
+      <!-- Quản lý nhân sự -->
+      <li nz-submenu nzTitle="Quản lý nhân sự" nzIcon="user">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/human-resource">Nhân sự</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
+          <li nz-menu-item><a routerLink="/employees">Danh sách nhân viên</a></li>
+          <li nz-menu-item><a routerLink="/positions">Chức vụ</a></li>
+          <li nz-menu-item><a routerLink="/departments">Phòng ban</a></li>
+          <li nz-menu-item><a routerLink="/contracts">Hợp đồng</a></li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
+
+      <!-- Chấm công -->
+      <li nz-menu-item nzIcon="clock-circle" nzTitle="Chấm công">
+        <a routerLink="/attendance">Chấm công</a>
+      </li>
+
+      <!-- Bảng lương -->
+      <li nz-menu-item nzIcon="dollar" nzTitle="Bảng lương">
+        <a routerLink="/payroll">Lương thưởng</a>
+      </li>
+
+      <!-- Tài khoản -->
+      <li nz-menu-item nzIcon="team" nzTitle="Tài khoản người dùng">
+        <a routerLink="/users">Người dùng</a>
       </li>
     </ul>
   </nz-sider>
+
   <nz-layout>
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <span class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></span>
+          <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
         </span>
       </div>
     </nz-header>

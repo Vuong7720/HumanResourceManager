@@ -1,0 +1,41 @@
+<nz-card nzTitle="Quản lý Phòng ban" [nzBordered]="false">
+    <div class="mb-4 flex justify-between items-center">
+      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
+        <input type="text" nz-input placeholder="Tìm theo tên phòng ban" [(ngModel)]="searchKeyword" />
+      </nz-input-group>
+  
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+  
+      <ng-template #addButton>
+        <button nz-button nzType="primary" (click)="onAdd()">Thêm phòng ban</button>
+      </ng-template>
+    </div>
+  
+    <nz-table
+      [nzData]="departments"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzPageSize]="5"
+      nzShowPagination="true">
+      <thead>
+        <tr>
+          <th>Tên phòng ban</th>
+          <th>Miêu tả</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let department of departments">
+          <td>{{ department.name }}</td>
+          <td>{{ department.description }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="onEdit(department)">Sửa</button>
+            <button nz-button nzType="link" nzDanger (click)="onDelete(department)">Xoá</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  

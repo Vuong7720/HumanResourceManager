@@ -1,0 +1,38 @@
+Role:
+	- Admin (Quản trị toàn bộ hệ thống)
+	- DepartmentManager (Quản lý mức độ phòng ban)
+	- Accountant (Kế toán kiêm hr)
+	- staff (Cu li)
+
+Xác định chức năng:
+	@ 
+	- Quản lý phòng ban
+		- chi tiết các phòng ban 
+			- tên phòng ban
+			- mô tả phòng ban
+			- ngày bắt đầu hoạt động
+			- trạng thái 
+			- Danh sách nhân sự thuộc phòng ban (Map với bản nhân sự)
+	- Danh sách nhân sự
+		- STT
+		- Tên nhân viên
+		- Giới tính
+		- Tuổi
+		- Chức vụ
+		- Trạng thái
+	- Chi tiết nhân sự
+		- Tên 
+		- ngày sinh
+		- Giới tính
+		- Chức vụ
+		- Mức lương (Ẩn theo điều kiện)
+		- Hợp đông (Map bản hợp đồng)
+		- 
+	- Quản lý chấm công
+
+
+
+
+
+Dashboard:
+ - Biểu đồ chấm công < số nhân viên đi làm
