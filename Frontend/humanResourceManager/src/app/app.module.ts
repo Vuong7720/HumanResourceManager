@@ -14,6 +14,8 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconModule } from 'ng-zorro-antd/icon'; // Cần nếu dùng icon
 
 registerLocaleData(vi);
 
@@ -30,7 +32,9 @@ registerLocaleData(vi);
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
-    NzBreadCrumbModule
+    NzBreadCrumbModule,
+    NzDropDownModule,
+    NzIconModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: vi_VN }

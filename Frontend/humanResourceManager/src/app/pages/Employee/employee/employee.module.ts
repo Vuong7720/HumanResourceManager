@@ -8,6 +8,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';      // 👈 cho các nút thao tác
 
@@ -23,7 +25,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';      // 👈 cho các nú
     NzInputModule,
     FormsModule,
     NzPaginationModule,
-    NzButtonModule
+    NzButtonModule,
+    NzToolTipModule,
+    NzCheckboxModule
   ]
 })
 export class EmployeeModule { }

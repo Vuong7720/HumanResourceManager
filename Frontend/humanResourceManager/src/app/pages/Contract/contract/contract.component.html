@@ -1,32 +1,32 @@
 <nz-card nzTitle="Quản lý Hợp đồng" [nzBordered]="false">
-    <div class="mb-4 flex justify-between items-center">
-      <nz-input-group [nzSuffix]="suffixIcon" nzSearch [nzAddOnAfter]="addButton">
-        <input type="text" nz-input placeholder="Tìm theo tên nhân viên hoặc mã hợp đồng" [(ngModel)]="searchKeyword" />
-      </nz-input-group>
-  
+  <div class="row">
+    <div class="col-4">
+      <input type="text" nz-input placeholder="Tìm theo tên hoặc mã nhân viên" [(ngModel)]="searchKeyword" />
       <ng-template #suffixIcon>
         <i nz-icon nzType="search"></i>
       </ng-template>
-  
-      <ng-template #addButton>
-        <button nz-button nzType="primary" (click)="onAdd()">Thêm hợp đồng</button>
-      </ng-template>
     </div>
-  
+    <div class="col-8">
+      <button nz-button nzType="primary" (click)="onAdd()" style="float: right;"><i class="bi bi-plus-square me-2"></i>
+        Thêm mới</button>
+    </div>
+  </div>
+    <div class="mt-3">
     <nz-table
       [nzData]="contracts"
       [nzBordered]="true"
       [nzSize]="'middle'"
       [nzPageSize]="5"
-      nzShowPagination="true">
+      nzShowPagination="true"
+      [nzScroll]="{ x: '100vw', y: 'calc(64vh - 100px)' }">
       <thead>
         <tr>
-          <th>Mã hợp đồng</th>
-          <th>Tên nhân viên</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
-          <th>Chức vụ</th>
-          <th>Hành động</th>
+          <th nzWidth="100px">Mã hợp đồng</th>
+          <th nzWidth="100px">Tên nhân viên</th>
+          <th nzWidth="100px">Ngày bắt đầu</th>
+          <th nzWidth="100px">Ngày kết thúc</th>
+          <th nzWidth="100px">Chức vụ</th>
+          <th nzWidth="50px" style="text-align: center;" nzRight><i class="bi bi-sliders2 fs-5 text-dark"></i></th>
         </tr>
       </thead>
       <tbody>
@@ -36,12 +36,17 @@
           <td>{{ contract.startDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ contract.endDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ contract.position }}</td>
-          <td>
-            <button nz-button nzType="link" (click)="onEdit(contract)">Sửa</button>
-            <button nz-button nzType="link" nzDanger (click)="onDelete(contract)">Xoá</button>
+          <td style="text-align: center;" nzRight>
+            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="chi tiết" (click)="onView()"><i
+                class="bi bi-eye fs-6 text-info"></i></button>
+            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="Sửa" (click)="onEdit(null)"><i
+                class="bi bi-plus-square fs-6 text-primary"></i></button>
+            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="Xóa" nzDanger
+              (click)="onDelete(null)"><i class="bi bi-trash fs-6 text-danger"></i></button>
           </td>
         </tr>
       </tbody>
     </nz-table>
+    </div>
   </nz-card>
   
