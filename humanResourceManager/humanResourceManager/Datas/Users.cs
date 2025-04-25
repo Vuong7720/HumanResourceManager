@@ -7,13 +7,19 @@ namespace humanResourceManager.Datas
     {
         [Key]
         public int Id { get; set; }
+
+        // FK đến Employee
         public int EmployeeID { get; set; }
+        public Employees Employee { get; set; }
+
         [MaxLength(128)]
         public string Username { get; set; }
         [MaxLength(128)]
         public string Password { get; set; }
+
         public Role Role { get; set; }
         public bool IsDeleted { get; set; } = false;
+
         [MaxLength(128)]
         public string? CreationName { get; set; }
         public DateTime? CreationTime { get; set; }
@@ -21,4 +27,5 @@ namespace humanResourceManager.Datas
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
+
 }
