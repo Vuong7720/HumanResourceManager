@@ -1,0 +1,67 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="form-group">
+      <label for="fullName">Họ và tên:</label>
+      <input id="fullName" class="form-control" formControlName="fullName" type="text" />
+    </div>
+  
+    <div class="form-group">
+      <label for="birthDay">Ngày sinh:</label>
+      <input id="birthDay" class="form-control" formControlName="birthDay" type="date" />
+    </div>
+  
+    <div class="form-group">
+      <label for="gender">Giới tính:</label>
+      <select id="gender" class="form-control" formControlName="gender">
+        <option value="0">Nam</option>
+        <option value="1">Nữ</option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="phoneNumber">Số điện thoại:</label>
+      <input id="phoneNumber" class="form-control" formControlName="phoneNumber" type="text" />
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" class="form-control" formControlName="email" type="email" />
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Địa chỉ:</label>
+      <input id="address" class="form-control" formControlName="address" type="text" />
+    </div>
+  
+    <div class="form-group">
+      <label for="positionId">Chức vụ:</label>
+      <input id="positionId" class="form-control" formControlName="positionId" type="number" />
+    </div>
+  
+    <div class="form-group">
+      <label for="departmentId">Phòng ban:</label>
+      <input id="departmentId" class="form-control" formControlName="departmentId" type="number" />
+    </div>
+  
+    <div class="form-group">
+      <label for="salary">Lương:</label>
+      <input id="salary" class="form-control" formControlName="salary" type="number" />
+    </div>
+  
+    <div class="form-group">
+      <label for="hireDate">Ngày vào làm:</label>
+      <input id="hireDate" class="form-control" formControlName="hireDate" type="date" />
+    </div>
+  
+    <div class="form-group">
+      <label for="status">Trạng thái:</label>
+      <select id="status" class="form-control" formControlName="status">
+        <option value="0">Đang làm việc</option>
+        <option value="1">Đã nghỉ việc</option>
+      </select>
+    </div>
+  
+    <div class="form-group text-right">
+      <button type="submit" class="btn btn-primary">Thêm mới</button>
+    </div>
+  </form>
+  

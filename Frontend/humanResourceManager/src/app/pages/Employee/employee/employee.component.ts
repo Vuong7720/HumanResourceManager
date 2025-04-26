@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { CreateeployeeComponent } from '../create-createemployee/create-createemployee.component';
 
 @Component({
   selector: 'app-employee',
@@ -6,6 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent {
+
+  constructor(private modal: NzModalService) {}
+
   searchKeyword = '';
   selectAll = false; // Thêm biến chọn tất cả
   checked = false;
@@ -93,8 +98,14 @@ export class EmployeeComponent {
   ];
   
 
-  onAdd() {
+  onAdd(): void {
     console.log('Thêm nhân viên');
+    this.modal.create({
+      nzTitle: 'Thêm mới nhân viên',
+      nzContent: CreateeployeeComponent,
+      nzWidth: 800,
+      nzFooter: null, // để footer tự do bên trong component CreateEmployee
+    });
   }
 
   onView(emp: any) {

@@ -11,11 +11,15 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';      // 👈 cho các nút thao tác
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { CreateeployeeComponent } from '../create-createemployee/create-createemployee.component';      // 👈 cho các nút thao tác
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [
-    EmployeeComponent
+    EmployeeComponent,
+    CreateeployeeComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';      // 👈 cho các nú
     NzPaginationModule,
     NzButtonModule,
     NzToolTipModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    ReactiveFormsModule,
+    NzModalModule
   ]
 })
 export class EmployeeModule { }
