@@ -16,27 +16,29 @@ namespace humanResourceManager.Services
 			_dbContext = dbContext;
 		}
 
-		public async Task<DepartmentsDto> CreateAsync(CreateUpdateDepartmentsDto input)
+		public async Task<MessageDto> CreateAsync(CreateUpdateDepartmentsDto input)
 		{
-			Departments entity = new Departments
+			try
 			{
-				DepartmentName = input.DepartmentName,
-				CreationName = input.UserName,
-				CreationTime = DateTime.Now
-			};
+                Departments entity = new Departments
+                {
+                    DepartmentName = input.DepartmentName,
+                    CreationTime = DateTime.Now
+                };
 
-			_dbContext.Departments.Add(entity);
-			await _dbContext.SaveChangesAsync();
-			return new DepartmentsDto
-			{
-				Id = entity.Id,
-				DepartmentName = entity.DepartmentName,
-				IsDeleted = entity.IsDeleted,
-				CreationName = entity.CreationName,
-				CreationTime = entity.CreationTime,
-				UpdatedBy = entity.UpdatedBy,
-				UpdatedAt = entity.UpdatedAt,
-			};
+                _dbContext.Departments.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return new MessageDto
+                {
+                    Status = true,
+                    Message = "Thêm mới phòng ban thành công!",
+                };
+            }
+            catch(Exception ex)
+            {
+                throw new BusinessException("Lỗi không xác định");
+            }
+            
 		}
 
 		public async Task DeleteAsync(int id)
@@ -128,7 +130,6 @@ namespace humanResourceManager.Services
 			}
 
 			entity.DepartmentName = input.DepartmentName;
-			entity.UpdatedBy = input.UserName;
 			entity.UpdatedAt = DateTime.Now;
 
 			_dbContext.Departments.Update(entity);

@@ -21,7 +21,6 @@ namespace humanResourceManager.Services
 			Positions entity = new Positions
 			{
 				PositionName = input.PositionName,
-				CreationName = input.UserName,
 				CreationTime = DateTime.Now
 			};
 
@@ -128,7 +127,6 @@ namespace humanResourceManager.Services
 			}
 
 			entity.PositionName = input.PositionName;
-			entity.UpdatedBy = input.UserName;
 			entity.UpdatedAt = DateTime.Now;
 
 			_dbContext.Positions.Update(entity);

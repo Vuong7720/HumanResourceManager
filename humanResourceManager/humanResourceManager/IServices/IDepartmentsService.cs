@@ -5,7 +5,7 @@ namespace humanResourceManager.IServices
 {
 	public interface IDepartmentsService
 	{
-		Task<DepartmentsDto> CreateAsync(CreateUpdateDepartmentsDto input);
+        Task<MessageDto> CreateAsync(CreateUpdateDepartmentsDto input);
 
 		Task<DepartmentsDto> UpdateAsync(int id, CreateUpdateDepartmentsDto input);
 

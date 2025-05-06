@@ -8,11 +8,11 @@ namespace humanResourceManager.Models.UsersModel
 	{
 		public int Id { get; set; }
 
-		// FK đến Employee
-		public int EmployeeID { get; set; }
-		public Employees? Employee { get; set; }
+        // FK đến Employee
+        public int? EmployeeID { get; set; } // <-- cho phép null
+        public Employees? Employee { get; set; }
 
-		public string? Username { get; set; }
+        public string? Username { get; set; }
 		public string? Password { get; set; }
 
 		public Role Role { get; set; }

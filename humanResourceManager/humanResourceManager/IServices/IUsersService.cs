@@ -17,5 +17,11 @@ namespace humanResourceManager.IServices
 		Task DeleteMultipleAsync(IEnumerable<int> ids);
 
 		Task<UsersDto> SignIn(SignInInfo input);
-	}
+
+
+        #region login logout
+        Task<string> LoginAsync(LoginDto dto);
+		Task<MessageDto> RegisterAsync(RegisterDto dto);
+        #endregion
+    }
 }

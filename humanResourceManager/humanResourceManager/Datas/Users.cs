@@ -9,8 +9,8 @@ namespace humanResourceManager.Datas
         public int Id { get; set; }
 
         // FK đến Employee
-        public int EmployeeID { get; set; }
-        public Employees Employee { get; set; }
+        public int? EmployeeID { get; set; } // <-- cho phép null
+        public Employees? Employee { get; set; }
 
         [MaxLength(128)]
         public string Username { get; set; }

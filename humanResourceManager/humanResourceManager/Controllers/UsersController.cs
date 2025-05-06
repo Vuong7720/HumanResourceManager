@@ -84,5 +84,33 @@ namespace humanResourceManager.Controllers
 		{
 			await _usersService.DeleteMultipleAsync(ids);
 		}
-	}
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            try
+            {
+                var token = await _usersService.LoginAsync(dto);
+                return Ok(new { token });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+        {
+            try
+            {
+                await _usersService.RegisterAsync(dto);
+                return Ok("User registered successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+    }
 }

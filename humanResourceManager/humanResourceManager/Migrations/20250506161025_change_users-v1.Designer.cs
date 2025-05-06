@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using humanResourceManager.Datas;
 
@@ -11,9 +12,11 @@ using humanResourceManager.Datas;
 namespace humanResourceManager.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506161025_change_users-v1")]
+    partial class change_usersv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,7 +403,7 @@ namespace humanResourceManager.Migrations
             modelBuilder.Entity("humanResourceManager.Datas.Users", b =>
                 {
                     b.HasOne("humanResourceManager.Datas.Employees", "Employee")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("EmployeeID");
 
                     b.Navigation("Employee");
@@ -418,6 +421,8 @@ namespace humanResourceManager.Migrations
                     b.Navigation("Contracts");
 
                     b.Navigation("Payrolls");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("humanResourceManager.Datas.Positions", b =>

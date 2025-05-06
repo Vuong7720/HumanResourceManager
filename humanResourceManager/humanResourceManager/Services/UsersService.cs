@@ -1,8 +1,10 @@
 ﻿using humanResourceManager.Datas;
+using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
 using humanResourceManager.Models.UsersModel;
 using humanResourceManager.Ulity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace humanResourceManager.Services
@@ -10,11 +12,13 @@ namespace humanResourceManager.Services
 	public class UsersService : IUsersService
 	{
 		private readonly MyDbContext _dbContext;
+        private readonly JwtService _jwtService;
 
-		public UsersService(MyDbContext dbContext)
+        public UsersService(MyDbContext dbContext, JwtService jwtService)
 		{
 			_dbContext = dbContext;
-		}
+            _jwtService = jwtService;
+        }
 
 		public async Task<UsersDto> CreateAsync(CreateUpdateUsersDto input)
 		{
@@ -181,5 +185,48 @@ namespace humanResourceManager.Services
 				UpdatedAt = entity.UpdatedAt,
 			};
 		}
-	}
+
+        public async Task<string> LoginAsync(LoginDto dto)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == dto.Username);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            {
+                throw new UnauthorizedAccessException("Invalid credentials");
+            }
+
+            return _jwtService.GenerateToken(user);
+        }
+
+        public async Task<MessageDto> RegisterAsync(RegisterDto dto)
+        {
+			try
+			{
+                if (await _dbContext.Users.AnyAsync(u => u.Username == dto.Username))
+                    throw new Exception("Username already exists");
+
+                var user = new Users
+                {
+                    Username = dto.Username,
+                    Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                    EmployeeID = dto.EmployeeID,
+                    Role = Role.Employee,
+                    CreationTime = DateTime.Now
+                };
+                _dbContext.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
+                return new MessageDto
+                {
+                    Status = true,
+                    Message = "Đăng ký thành công !"
+                };
+            }
+            catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+            
+        }
+
+
+    }
 }

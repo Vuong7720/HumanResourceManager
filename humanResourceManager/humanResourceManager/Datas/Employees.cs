@@ -49,7 +49,6 @@ namespace humanResourceManager.Datas
         public ICollection<Contracts>? Contracts { get; set; }
         public ICollection<Attendance>? Attendances { get; set; }
         public ICollection<Payroll>? Payrolls { get; set; }
-        public ICollection<Users>? Users { get; set; }
 
     }
 
