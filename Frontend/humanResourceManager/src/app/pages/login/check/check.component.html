@@ -1,0 +1,31 @@
+<div class="container mt-5" style="max-width: 600px;">
+  <div class="p-4 rounded shadow-lg bg-white border position-relative" style="background: linear-gradient(to bottom right, #e0f7fa, #f1f8e9);">
+    <h3 class="text-center mb-4 text-primary">🕰️ Giả lập Chấm Công</h3>
+
+    <div class="form-group mb-3">
+      <label for="employee">👤 Chọn nhân viên:</label>
+      <select [(ngModel)]="selectedEmployee" class="form-control" id="employee">
+        <option [ngValue]="null">-- Chọn nhân viên --</option>
+        <option *ngFor="let emp of employees" [ngValue]="emp">{{ emp.name }}</option>
+      </select>
+    </div>
+
+    <div class="text-center mb-3">
+      <h5>{{ currentTime | date:'HH:mm:ss' }}</h5>
+      <p class="text-muted">Ngày: {{ currentTime | date:'dd/MM/yyyy' }}</p>
+    </div>
+
+    <div class="d-flex justify-content-around mb-4">
+      <button class="btn btn-outline-success" [disabled]="!selectedEmployee" (click)="checkIn()">✅ Chấm công vào</button>
+      <button class="btn btn-outline-danger" [disabled]="!selectedEmployee" (click)="checkOut()">⏹️ Chấm công ra</button>
+    </div>
+
+    <h6 class="text-secondary">🧾 Lịch sử chấm công:</h6>
+    <ul class="list-group small">
+      <li *ngFor="let record of records" class="list-group-item d-flex justify-content-between">
+        <span>{{ record.employee.name }}</span>
+        <span>{{ record.type }} - {{ record.time | date:'HH:mm:ss' }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

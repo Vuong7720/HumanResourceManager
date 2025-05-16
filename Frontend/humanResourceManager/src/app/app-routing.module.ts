@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'payroll', loadChildren: () => import('./pages/Payroll/payroll/payroll.module').then(m => m.PayrollModule) },
   { path: 'positions', loadChildren: () => import('./pages/Position/position/position.module').then(m => m.PositionModule) },
   { path: 'users', loadChildren: () => import('./pages/User/user/user.module').then(m => m.UserModule) },
+  { path: 'check', loadChildren: () => import('./pages/login/check/check.module').then(m => m.CheckModule) },
 
 
 ];

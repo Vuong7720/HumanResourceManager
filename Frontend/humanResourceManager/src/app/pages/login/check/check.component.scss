@@ -1,0 +1,58 @@
+/* Background toàn trang */
+body {
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Container căn giữa và giới hạn chiều rộng */
+.container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 0 15px;
+}
+
+/* Khung chính */
+.container > div {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  border: 1px solid #e0e6ed;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Nút bấm */
+.btn-outline-success {
+  border-color: #198754;
+  color: #198754;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* List group sửa nhẹ */
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Tiêu đề icon nhỏ hơn và cách text */
+label, h6 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
