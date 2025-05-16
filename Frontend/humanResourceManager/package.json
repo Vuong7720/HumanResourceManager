@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "gen:api": "nswag openapi2tsclient /input:https://localhost:7259/swagger/v1/swagger.json /output:./src/app/api/api.client.ts"
   },
   "private": true,
   "dependencies": {
