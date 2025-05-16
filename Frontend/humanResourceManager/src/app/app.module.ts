@@ -16,14 +16,16 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.component'; // Cần nếu dùng icon
+import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.component';
+import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component'; // Cần nếu dùng icon
 
 registerLocaleData(vi);
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainLayoutComponent
+    MainLayoutComponent,
+    BlankLayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/Dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: '/dashboard' }, // 👈 redirect đúng path
+  { path: 'dashboard', loadChildren: () => import('./pages/Dashboard/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'login', loadChildren: () => import('./pages/login/login/login.module').then(m => m.LoginModule) },
-  { path: 'Dashboards', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'human-resource', loadChildren: () => import('./pages/human-resource/humanResource.module').then(m => m.HumanResourceModule) },
   { path: 'dashboards', loadChildren: () => import('./pages/Dashboard/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'attendance', loadChildren: () => import('./pages/Attendance/attendance/attendance.module').then(m => m.AttendanceModule) },
