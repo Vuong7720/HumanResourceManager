@@ -18,6 +18,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.component';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component'; // Cần nếu dùng icon
+import { Client } from './api2/api.client';
+import { environment } from 'src/env/environment';
 
 registerLocaleData(vi);
 
@@ -41,8 +43,12 @@ registerLocaleData(vi);
     NzIconModule
   ],
   providers: [
-    { provide: NZ_I18N, useValue: vi_VN }
-  ],
+  { provide: NZ_I18N, useValue: vi_VN },
+  {
+    provide: Client,
+    useFactory: () => new Client(environment.apiBaseUrl)
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

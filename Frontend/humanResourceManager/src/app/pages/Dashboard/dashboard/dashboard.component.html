@@ -1,1 +1,31 @@
-<p>dashboard works!</p>
+
+<div class="dashboard p-4">
+  <h2 class="mb-4 text-center text-primary">📊 Tổng Quan</h2>
+  
+  <div class="row g-4 mb-4">
+    <div class="col-md-4" *ngFor="let item of [
+      { label: 'Nhân viên', value: totalEmployees, icon: 'bi-people-fill', color: 'info' },
+      { label: 'Phòng ban', value: totalDepartments, icon: 'bi-diagram-3-fill', color: 'success' },
+      { label: 'Hợp đồng', value: totalContracts, icon: 'bi-file-earmark-text-fill', color: 'warning' },
+      { label: 'Chức vụ', value: totalPositions, icon: 'bi-person-badge-fill', color: 'primary' },
+      { label: 'Chấm công', value: totalAttendance, icon: 'bi-calendar-check-fill', color: 'danger' },
+      { label: 'Bảng lương', value: totalPayrolls, icon: 'bi-currency-dollar', color: 'dark' },
+    ]">
+      <nz-card>
+        <h5>
+          <i class="bi {{item.icon}} text-{{item.color}} me-2"></i> {{ item.label }}
+        </h5>
+        <p class="fs-4 fw-bold">{{ item.value }}</p>
+      </nz-card>
+    </div>
+  </div>
+
+  <!-- Biểu đồ -->
+  <div class="card mt-4 p-3">
+    <canvas baseChart
+      [data]="{ labels: chartLabels, datasets: [{ data: chartData, label: 'Thống kê' }] }"
+      [options]="chartOptions"
+      [type]="chartType">
+    </canvas>
+  </div>
+</div>

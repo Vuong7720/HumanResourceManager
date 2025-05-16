@@ -4,9 +4,7 @@
 // </auto-generated>
 //----------------------
 
-/* tslint:disable */
-/* eslint-disable */
-// ReSharper disable InconsistentNaming
+import { from, Observable, switchMap } from "rxjs";
 
 export class Client {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
@@ -17,6 +15,15 @@ export class Client {
         this.http = http ? http : window as any;
         this.baseUrl = baseUrl ?? "";
     }
+
+ createAuthHeader(): HeadersInit {
+  const token = localStorage.getItem('access_token');
+  return {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+  };
+}
+
 
     /**
      * @param body (optional) 
@@ -470,6 +477,38 @@ export class Client {
     }
 
     protected processDeleteByIds2(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    overview(): Promise<void> {
+        let url_ = this.baseUrl + "/api/dashboard/overview";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: this.createAuthHeader()
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return _response.json();
+        });
+    }
+
+    protected processOverview(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1752,24 +1791,26 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    login(body: LoginDto | undefined): Promise<void> {
-        let url_ = this.baseUrl + "/api/user/login";
-        url_ = url_.replace(/[?&]$/, "");
+   login(body: LoginDto | undefined): Observable<any> {
+  const url_ = `${this.baseUrl}/api/user/login`;
 
-        const content_ = JSON.stringify(body);
+  const fetchPromise = this.http.fetch(url_, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
 
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processLogin(_response);
-        });
-    }
+  return from(fetchPromise).pipe(
+    switchMap(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+  );
+}
 
     protected processLogin(response: Response): Promise<void> {
         const status = response.status;
@@ -1822,50 +1863,6 @@ export class Client {
             });
         }
         return Promise.resolve<void>(null as any);
-    }
-
-    /**
-     * @return Success
-     */
-    getWeatherForecast(): Promise<WeatherForecast[]> {
-        let url_ = this.baseUrl + "/WeatherForecast";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "text/plain"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetWeatherForecast(_response);
-        });
-    }
-
-    protected processGetWeatherForecast(response: Response): Promise<WeatherForecast[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(WeatherForecast.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<WeatherForecast[]>(null as any);
     }
 }
 
@@ -2275,72 +2272,6 @@ export interface ICreateUpdateUsersDto {
     userId?: number;
 }
 
-export class DateOnly implements IDateOnly {
-    year?: number;
-    month?: number;
-    day?: number;
-    dayOfWeek?: DayOfWeek;
-    readonly dayOfYear?: number;
-    readonly dayNumber?: number;
-
-    constructor(data?: IDateOnly) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.year = _data["year"];
-            this.month = _data["month"];
-            this.day = _data["day"];
-            this.dayOfWeek = _data["dayOfWeek"];
-            (<any>this).dayOfYear = _data["dayOfYear"];
-            (<any>this).dayNumber = _data["dayNumber"];
-        }
-    }
-
-    static fromJS(data: any): DateOnly {
-        data = typeof data === 'object' ? data : {};
-        let result = new DateOnly();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["year"] = this.year;
-        data["month"] = this.month;
-        data["day"] = this.day;
-        data["dayOfWeek"] = this.dayOfWeek;
-        data["dayOfYear"] = this.dayOfYear;
-        data["dayNumber"] = this.dayNumber;
-        return data;
-    }
-}
-
-export interface IDateOnly {
-    year?: number;
-    month?: number;
-    day?: number;
-    dayOfWeek?: DayOfWeek;
-    dayOfYear?: number;
-    dayNumber?: number;
-}
-
-export enum DayOfWeek {
-    _0 = 0,
-    _1 = 1,
-    _2 = 2,
-    _3 = 3,
-    _4 = 4,
-    _5 = 5,
-    _6 = 6,
-}
-
 export enum EmployeeStatus {
     _1 = 1,
     _2 = 2,
@@ -2487,54 +2418,6 @@ export enum Role {
     _1 = 1,
     _2 = 2,
     _3 = 3,
-}
-
-export class WeatherForecast implements IWeatherForecast {
-    date?: DateOnly;
-    temperatureC?: number;
-    readonly temperatureF?: number;
-    summary?: string | undefined;
-
-    constructor(data?: IWeatherForecast) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.date = _data["date"] ? DateOnly.fromJS(_data["date"]) : <any>undefined;
-            this.temperatureC = _data["temperatureC"];
-            (<any>this).temperatureF = _data["temperatureF"];
-            this.summary = _data["summary"];
-        }
-    }
-
-    static fromJS(data: any): WeatherForecast {
-        data = typeof data === 'object' ? data : {};
-        let result = new WeatherForecast();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["date"] = this.date ? this.date.toJSON() : <any>undefined;
-        data["temperatureC"] = this.temperatureC;
-        data["temperatureF"] = this.temperatureF;
-        data["summary"] = this.summary;
-        return data;
-    }
-}
-
-export interface IWeatherForecast {
-    date?: DateOnly;
-    temperatureC?: number;
-    temperatureF?: number;
-    summary?: string | undefined;
 }
 
 export class ApiException extends Error {
