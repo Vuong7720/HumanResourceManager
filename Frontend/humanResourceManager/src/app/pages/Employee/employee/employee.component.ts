@@ -99,7 +99,6 @@ export class EmployeeComponent {
   
 
   onAdd(): void {
-    console.log('Thêm nhân viên');
     this.modal.create({
       nzTitle: 'Thêm mới nhân viên',
       nzContent: CreateeployeeComponent,

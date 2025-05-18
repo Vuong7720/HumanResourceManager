@@ -1,5 +1,6 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="" target="_blank">
         <img class="round" src="../assets/cats.jfif" alt="logo">
@@ -9,18 +10,14 @@
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <!-- Dashboard -->
       <li nz-menu-item nzTitle="Dashboard">
-        <a routerLink="/dashboard"><i class="bi bi-house"></i>  Dashboard</a>
+        <a routerLink="/dashboard"><i class="bi bi-house"></i> Dashboard</a>
       </li>
 
       <!-- Quản lý nhân sự -->
-      <li nz-submenu nzTitle="Quản lý nhân sự" nzIcon="user">
-        <ul>
-          <li nz-menu-item><a routerLink="/employees">Danh sách nhân viên</a></li>
-          <li nz-menu-item><a routerLink="/positions">Chức vụ</a></li>
-          <li nz-menu-item><a routerLink="/departments">Phòng ban</a></li>
-          <li nz-menu-item><a routerLink="/contracts">Hợp đồng</a></li>
-        </ul>
-      </li>
+      <li nz-menu-item><a routerLink="/employees"><i class="bi bi-person-lines-fill"></i> Danh sách nhân viên</a></li>
+      <li nz-menu-item><a routerLink="/positions"><i class="bi bi-postcard-fill"></i> Chức vụ</a></li>
+      <li nz-menu-item><a routerLink="/departments"><i class="bi bi-bookmarks"></i> Phòng ban</a></li>
+      <!-- <li nz-menu-item><a routerLink="/contracts"><i class="bi bi-person-lines-fill"></i> Hợp đồng</a></li> -->
 
       <!-- Chấm công -->
       <li nz-menu-item nzIcon="clock-circle" nzTitle="Chấm công">
@@ -42,11 +39,12 @@
   <nz-layout>
     <nz-header>
       <div class="app-header d-flex justify-content-between align-items-center" style="height: 100%;">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed" >
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
         </span>
-      
-        <a nz-dropdown [nzDropdownMenu]="userMenu" class="d-flex align-items-center text-decoration-none me-4" style="cursor: pointer;">
+
+        <a nz-dropdown [nzDropdownMenu]="userMenu" class="d-flex align-items-center text-decoration-none me-4"
+          style="cursor: pointer;">
           <img src="../assets/logo/cat2.jfif" class="rounded-circle me-2" width="32" height="32" alt="Avatar" />
           <span class="text-dark me-1">{{ userInfo?.name || 'Ẩn danh' }}</span>
           <!-- <nz-icon nzType="down"></nz-icon> -->
@@ -60,7 +58,7 @@
         </nz-dropdown-menu>
       </div>
     </nz-header>
-    
+
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>

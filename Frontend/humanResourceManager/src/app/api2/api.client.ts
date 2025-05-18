@@ -542,7 +542,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto3(_response);
+            return _response.json();
         });
     }
 
@@ -623,7 +623,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate3(_response);
+            return _response.json();
         });
     }
 
@@ -661,7 +661,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate3(_response);
+            return _response.json();
         });
     }
 

@@ -7,7 +7,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { vi_VN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
@@ -20,6 +20,9 @@ import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.com
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component'; // Cần nếu dùng icon
 import { Client } from './api2/api.client';
 import { environment } from 'src/env/environment';
+import { ToastrModule } from 'ngx-toastr';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { DeleteComfirmComponent } from './shared/delete-confirm/delete-confirm.component';
 
 registerLocaleData(vi);
 
@@ -27,7 +30,8 @@ registerLocaleData(vi);
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    BlankLayoutComponent
+    BlankLayoutComponent,
+    DeleteComfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,14 @@ registerLocaleData(vi);
     NzMenuModule,
     NzBreadCrumbModule,
     NzDropDownModule,
-    NzIconModule
+    NzIconModule,
+    NzSpinModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [
   { provide: NZ_I18N, useValue: vi_VN },

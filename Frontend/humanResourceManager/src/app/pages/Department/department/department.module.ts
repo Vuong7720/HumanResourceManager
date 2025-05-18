@@ -9,11 +9,16 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  // Để sử dụng ngModel
+import { CreateDepartmentComponent } from './create-department/create-department.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 @NgModule({
   declarations: [
-    DepartmentComponent
+    DepartmentComponent,CreateDepartmentComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +27,11 @@ import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
     NzButtonModule,
     NzTableModule,
     NzInputModule,
-    FormsModule
+    FormsModule,
+    NzModalModule,
+    NzSpinModule,
+    ReactiveFormsModule,
+    NzFormModule,
   ]
 })
 export class DepartmentModule { }

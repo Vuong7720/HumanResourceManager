@@ -1,32 +1,91 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { CreateDepartmentComponent } from './create-department/create-department.component';
+import { Client, PagingRequest } from 'src/app/api2/api.client';
+import { Message, PagedResultDto } from 'src/app/api2/dto';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.scss']
 })
-export class DepartmentComponent {
-  departments = [
-    { name: 'Phòng Kinh doanh', description: 'Chịu trách nhiệm về bán hàng' },
-    { name: 'Phòng Nhân sự', description: 'Quản lý nhân viên và các hoạt động liên quan' },
-    { name: 'Phòng Kỹ thuật', description: 'Chịu trách nhiệm về bảo trì và sửa chữa' },
-    { name: 'Phòng Tài chính', description: 'Quản lý ngân sách và báo cáo tài chính' },
-    { name: 'Phòng Marketing', description: 'Lập kế hoạch và triển khai các chiến dịch tiếp thị' },
-    { name: 'Phòng IT', description: 'Quản trị hệ thống và hạ tầng công nghệ' },
-    { name: 'Phòng Pháp chế', description: 'Đảm bảo tuân thủ pháp luật và quy định' },
-    { name: 'Phòng Nghiên cứu & Phát triển', description: 'Phát triển sản phẩm mới và công nghệ' },
-    { name: 'Phòng Chăm sóc khách hàng', description: 'Giải đáp và hỗ trợ khách hàng' },
-    { name: 'Phòng Hành chính', description: 'Quản lý cơ sở vật chất và hành chính văn phòng' }
-  ];
-  
+export class DepartmentComponent implements OnInit {
+  entityRequest = {
+    field: '',
+    fieldOption: true,
+    pageSize: 10,
+    pageNumber: 1,
+    keyword: ''
+  } as PagingRequest;
+
+  checked = false;
+  setOfCheckedId = new Set<string>();
+  indeterminate = false;
+
+  listOfData = { items: [], totalCount: 0 } as PagedResultDto<any>;
+  processedData: Array<any> = [];
+
+  loading = true;
+  sortValue: string | null = null;
+  sortKey: string | null = null;
+  isSpinning: boolean = false;
+
+
+  constructor(
+    private modal: NzModalService, 
+    private viewContainerRef: ViewContainerRef, 
+    private service: Client,
+    private toastr: ToastrService
+  ) { }
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+
+  loadData() {
+  const request = PagingRequest.fromJS({
+    field: this.sortKey ?? 'CreationTime',
+    fieldOption: this.sortValue === 'descend',
+    pageSize: this.entityRequest.pageSize,
+    pageNumber: this.entityRequest.pageNumber,
+    keyword: this.entityRequest.keyword
+  });
+
+  this.service.getListDto3(request).then((response: any) => {
+    if (response && response.data) {
+      this.listOfData.totalCount = response.data.totalCount;
+      this.listOfData.items = response.data.items;
+      this.processedData = this.listOfData.items!.map(item => ({ ...item }));
+      this.loading = false;
+      this.isSpinning = false;
+    } else {
+      this.toastr.error(response?.message || 'Lỗi khi tải dữ liệu!');
+    }
+  });
+}
+
 
   // Từ khoá tìm kiếm
   searchKeyword = '';
 
   // Thêm phòng ban
-  onAdd() {
-    console.log('Thêm phòng ban mới');
-    // Logic thêm phòng ban mới
+  onAdd(data?: any) {
+    const modalRef = this.modal.create({
+      nzTitle: '',
+      nzContent: CreateDepartmentComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzFooter: null,
+      nzCentered: true,
+      nzClosable: true,
+      nzKeyboard: false,
+      nzData: { data },
+      nzClassName: 'w-modal-dialog',
+    });
+
+    modalRef.afterClose.subscribe((result: Message) => {
+      if (result?.Success) this.loadData();
+    });
   }
 
   // Sửa phòng ban
@@ -36,8 +95,7 @@ export class DepartmentComponent {
   }
 
   // Xóa phòng ban
-  onDelete(department: any) {
-    console.log('Xoá phòng ban: ', department);
-    // Logic xoá phòng ban
+  onDelete(id: string) {
+    
   }
 }

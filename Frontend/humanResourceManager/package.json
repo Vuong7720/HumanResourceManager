@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.2.0",
+    "@angular/animations": "^16.2.12",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
@@ -23,10 +23,11 @@
     "@fortawesome/fontawesome-free": "^6.5.1",
     "bootstrap": "^5.3.5",
     "bootstrap-icons": "^1.11.3",
-    "chart.js": "^4.4.0",
+    "chart.js": "^3.9.1",
     "jwt-decode": "^4.0.0",
     "ng-zorro-antd": "^16.2.2",
     "ng2-charts": "^4.0.1",
+    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

@@ -38,7 +38,6 @@ namespace humanResourceManager.Services
             {
                 throw new BusinessException("Lỗi không xác định");
             }
-            
 		}
 
 		public async Task DeleteAsync(int id)
@@ -126,7 +125,7 @@ namespace humanResourceManager.Services
 			var entity = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
-				throw new Exception("Không tìm thấy bản ghi Attendance cần cập nhật");
+				throw new Exception("Không tìm thấy phòng ban cần cập nhật");
 			}
 
 			entity.DepartmentName = input.DepartmentName;
