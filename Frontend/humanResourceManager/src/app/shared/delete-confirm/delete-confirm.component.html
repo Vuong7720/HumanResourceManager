@@ -1,0 +1,31 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title fw-bold">{{ title }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="onBack()"
+    ></button>
+  </div>
+  <!-- <form [formGroup]="form"> -->
+  <div class="modal-body">
+    <nz-result nzStatus="warning" [nzTitle]="content" class="m-3 custom-result-title"> </nz-result>
+  </div>
+  <div class="modal-footer">
+    <button (click)="save()" class="btn btn-danger btn-sm me-1">
+      <i class="bi bi-trash fs-5"></i> Xóa
+    </button>
+    &nbsp; &nbsp;
+    <button
+      (click)="onBack()"
+      class="btn btn-light btn-sm me-1"
+      type="button"
+      id="btn-add-category"
+    >
+      <i class="bi bi-x fs-4 me-1"></i> Đóng
+    </button>
+  </div>
+  <!-- </form> -->
+</div>

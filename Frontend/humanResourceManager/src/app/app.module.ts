@@ -23,6 +23,7 @@ import { environment } from 'src/env/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { DeleteComfirmComponent } from './shared/delete-confirm/delete-confirm.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 registerLocaleData(vi);
 
@@ -47,6 +48,7 @@ registerLocaleData(vi);
     NzIconModule,
     NzSpinModule,
     ReactiveFormsModule,
+    NzResultModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',

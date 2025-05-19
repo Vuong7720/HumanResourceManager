@@ -12,10 +12,26 @@ import { Client } from 'src/app/api2/api.client';
   styleUrls: ['./delete-confirm.component.scss']
 })
 export class DeleteComfirmComponent implements OnInit {
+ onLoadData: EventEmitter<any> = new EventEmitter();
+  form!: FormGroup;
+  @Output() success = new EventEmitter();
+  getParams: CategoryParams = inject(NZ_MODAL_DATA);
+  title!: string;
+  content!: string;
+
+  constructor(private nzModalRef: NzModalRef) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.title = this.getParams.title;
+    this.content = this.getParams.content;
   }
-  
+
+  save() {
+    this.onLoadData.emit(true);
+    this.nzModalRef.destroy();
+  }
+  onBack() {
+    this.nzModalRef.destroy();
+  }
 }
 
 export interface CategoryParams {

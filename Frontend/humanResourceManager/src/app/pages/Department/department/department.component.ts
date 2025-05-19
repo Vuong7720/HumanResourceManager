@@ -4,6 +4,7 @@ import { CreateDepartmentComponent } from './create-department/create-department
 import { Client, PagingRequest } from 'src/app/api2/api.client';
 import { Message, PagedResultDto } from 'src/app/api2/dto';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-confirm.component';
 
 @Component({
   selector: 'app-department',
@@ -95,7 +96,39 @@ export class DepartmentComponent implements OnInit {
   }
 
   // Xóa phòng ban
-  onDelete(id: string) {
+  onDelete(id: number) {
+     const modalConfig = {
+      nzTitle: '',
+      nzContent: DeleteComfirmComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzBackdrop: false,
+      nzFooter: null,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzKeyboard: false,
+      nzData: {
+        title: 'Xóa phòng ban',
+        content: 'Bạn có chắc chắn muốn xóa phòng ban không?',
+      },
+      nzClassName: 'w-modal-dialog',
+    };
+    const modalRef = this.modal.create(modalConfig);
+    const instanceRef = modalRef.getContentComponent();
+    instanceRef.onLoadData.subscribe(response => {
+      this.service.delete3(id).then((res: any) => {
+        if (res) {
+          if (res.status) {
+            this.toastr.success(res.message);
+            this.loadData();
+          } else {
+            this.toastr.error(res.message);
+          }
+        } else {
+          this.toastr.error(res.message);
+        }
+      });
+    });
     
   }
 }
