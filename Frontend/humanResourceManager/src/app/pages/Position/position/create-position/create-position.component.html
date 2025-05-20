@@ -9,25 +9,25 @@
   <nz-form *ngIf="form" skipValidation [formGroup]="form">
     <nz-form-item class="d-flex flex-column mb-2 fv-row">
       <nz-form-label
-        [nzFor]="'departmentName'"
+        [nzFor]="'positionName'"
         [nzNoColon]="true"
         class="d-flex align-items-center fs-6 fw-semibold required"
       >
-        <span>Tên phòng ban</span>
+        <span>Tên chức vụ</span>
       </nz-form-label>
       <nz-form-control nzHasFeedback [nzErrorTip]="codeErrorTpl">
         <input
           nz-input
           class="form-control form-control-sm"
           placeholder=""
-          formControlName="departmentName"
+          formControlName="positionName"
         />
         <ng-template #codeErrorTpl let-control>
           <ng-container *ngIf="control.hasError('required')">
-            Tên phòng ban không được bỏ trống
+            Tên chức vụ không được bỏ trống
           </ng-container>
           <ng-container *ngIf="control.hasError('maxlength')">
-            Tên phòng ban không được vượt quá 255 ký tự
+            Tên chức vụ không được vượt quá 255 ký tự
           </ng-container>
         </ng-template>
       </nz-form-control>

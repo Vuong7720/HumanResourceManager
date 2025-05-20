@@ -1,10 +1,10 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { CreatePositionComponent } from '../create-position/create-position.component';
 import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-confirm.component';
 import { Client, PagingRequest } from 'src/app/api2/api.client';
 import { Message, PagedResultDto } from 'src/app/api2/dto';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
+import { CreatePositionComponent } from './create-position/create-position.component';
 
 @Component({
   selector: 'app-position',
@@ -45,6 +45,7 @@ export class PositionComponent {
 
 
   loadData() {
+    
   const request = PagingRequest.fromJS({
     field: this.sortKey ?? 'CreationTime',
     fieldOption: this.sortValue === 'descend',
@@ -53,7 +54,8 @@ export class PositionComponent {
     keyword: this.entityRequest.keyword
   });
 
-  this.service.getListDto3(request).then((response: any) => {
+  this.service.getListDto6(request).then((response: any) => {
+    console.log('response',response)
     if (response && response.data) {
       this.listOfData.totalCount = response.data.totalCount;
       this.listOfData.items = response.data.items;
@@ -116,7 +118,7 @@ export class PositionComponent {
     const modalRef = this.modal.create(modalConfig);
     const instanceRef = modalRef.getContentComponent();
     instanceRef.onLoadData.subscribe(response => {
-      this.service.delete3(id).then((res: any) => {
+      this.service.delete6(id).then((res: any) => {
         if (res) {
           if (res.status) {
             this.toastr.success(res.message);
