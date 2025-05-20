@@ -15,5 +15,6 @@ namespace humanResourceManager.IServices
 		Task DeleteAsync(int id);
 
 		Task DeleteMultipleAsync(IEnumerable<int> ids);
+		Task<AttendanceDto> CheckOutAsync(int employeeId);
 	}
 }

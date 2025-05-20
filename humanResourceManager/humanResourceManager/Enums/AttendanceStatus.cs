@@ -4,6 +4,8 @@
     {
         CoMat = 1,
         NghiPhep = 2,
-        DiMuon = 3
-    }
+        DiMuon = 3,
+        Vao = 4,
+		Ra = 5,
+	}
 }

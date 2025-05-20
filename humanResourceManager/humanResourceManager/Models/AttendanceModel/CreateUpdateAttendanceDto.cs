@@ -6,7 +6,7 @@ namespace humanResourceManager.Models.AttendanceModel
 	public class CreateUpdateAttendanceDto
 	{
 		public int? EmployeeID { get; set; }
-		//public Employees? Employee { get; set; }
+		public Employees? Employee { get; set; }
 
 		public DateTime? Date { get; set; }
 		public DateTime? CheckIn { get; set; }

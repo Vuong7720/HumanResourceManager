@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ToastrService } from 'ngx-toastr';
+import { Client, PagingRequest } from 'src/app/api2/api.client';
+import { Message, PagedResultDto } from 'src/app/api2/dto';
+import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-confirm.component';
+import { CreateDepartmentComponent } from '../../Department/department/create-department/create-department.component';
 
 @Component({
   selector: 'app-user',
@@ -6,39 +12,123 @@ import { Component } from '@angular/core';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
-  // Danh sách người dùng
-  users = [
-    { code: 'U001', name: 'Nguyễn Văn A', email: 'a@example.com', role: 'Admin', status: 'Active' },
-    { code: 'U002', name: 'Trần Thị B', email: 'b@example.com', role: 'Manager', status: 'Inactive' },
-    { code: 'U003', name: 'Lê Minh Cường', email: 'cuong.le@example.com', role: 'Staff', status: 'Active' },
-    { code: 'U004', name: 'Phạm Thu Hà', email: 'ha.pham@example.com', role: 'HR', status: 'Active' },
-    { code: 'U005', name: 'Đặng Hoàng Nam', email: 'nam.dang@example.com', role: 'IT', status: 'Inactive' },
-    { code: 'U006', name: 'Vũ Ngọc Lan', email: 'lan.vu@example.com', role: 'Accountant', status: 'Active' },
-    { code: 'U007', name: 'Trịnh Quốc Dũng', email: 'dung.trinh@example.com', role: 'Manager', status: 'Active' },
-    { code: 'U008', name: 'Ngô Bích Hồng', email: 'hong.ngo@example.com', role: 'Support', status: 'Active' },
-    { code: 'U009', name: 'Tạ Văn Hưng', email: 'hung.ta@example.com', role: 'Admin', status: 'Inactive' },
-    { code: 'U010', name: 'Lý Thị Mai', email: 'mai.ly@example.com', role: 'Staff', status: 'Active' }
-  ];
-  
+  entityRequest = {
+    field: '',
+    fieldOption: true,
+    pageSize: 10,
+    pageNumber: 1,
+    keyword: ''
+  } as PagingRequest;
+
+  checked = false;
+  setOfCheckedId = new Set<string>();
+  indeterminate = false;
+
+  listOfData = { items: [], totalCount: 0 } as PagedResultDto<any>;
+  processedData: Array<any> = [];
+
+  loading = true;
+  sortValue: string | null = null;
+  sortKey: string | null = null;
+  isSpinning: boolean = false;
+
+
+  constructor(
+    private modal: NzModalService, 
+    private viewContainerRef: ViewContainerRef, 
+    private service: Client,
+    private toastr: ToastrService
+  ) { }
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+
+  loadData() {
+  const request = PagingRequest.fromJS({
+    field: this.sortKey ?? 'CreationTime',
+    fieldOption: this.sortValue === 'descend',
+    pageSize: this.entityRequest.pageSize,
+    pageNumber: this.entityRequest.pageNumber,
+    keyword: this.entityRequest.keyword
+  });
+
+  this.service.getListDto7(request).then((response: any) => {
+    if (response && response.data) {
+      this.listOfData.totalCount = response.data.totalCount;
+      this.listOfData.items = response.data.items;
+      this.processedData = this.listOfData.items!.map(item => ({ ...item }));
+      this.loading = false;
+      this.isSpinning = false;
+    } else {
+      this.toastr.error(response?.message || 'Lỗi khi tải dữ liệu!');
+    }
+  });
+}
+
 
   // Từ khoá tìm kiếm
   searchKeyword = '';
 
   // Thêm người dùng
-  onAdd() {
-    console.log('Thêm người dùng mới');
-    // Logic thêm người dùng mới
+  onAdd(data?: any) {
+    const modalRef = this.modal.create({
+      nzTitle: '',
+      nzContent: CreateDepartmentComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzFooter: null,
+      nzCentered: true,
+      nzClosable: true,
+      nzKeyboard: false,
+      nzData: { data },
+      nzClassName: 'w-modal-dialog',
+    });
+
+    modalRef.afterClose.subscribe((result: Message) => {
+      if (result?.Success) this.loadData();
+    });
   }
 
   // Sửa người dùng
-  onEdit(user: any) {
-    console.log('Sửa người dùng: ', user);
+  onEdit(department: any) {
+    console.log('Sửa người dùng: ', department);
     // Logic sửa người dùng
   }
 
   // Xóa người dùng
-  onDelete(user: any) {
-    console.log('Xoá người dùng: ', user);
-    // Logic xoá người dùng
+  onDelete(id: number) {
+     const modalConfig = {
+      nzTitle: '',
+      nzContent: DeleteComfirmComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzBackdrop: false,
+      nzFooter: null,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzKeyboard: false,
+      nzData: {
+        title: 'Xóa người dùng',
+        content: 'Bạn có chắc chắn muốn xóa người dùng không?',
+      },
+      nzClassName: 'w-modal-dialog',
+    };
+    const modalRef = this.modal.create(modalConfig);
+    const instanceRef = modalRef.getContentComponent();
+    instanceRef.onLoadData.subscribe(response => {
+      this.service.delete7(id).then((res: any) => {
+        if (res) {
+          if (res.status) {
+            this.toastr.success(res.message);
+            this.loadData();
+          } else {
+            this.toastr.error(res.message);
+          }
+        } else {
+          this.toastr.error(res.message);
+        }
+      });
+    });
+    
   }
 }

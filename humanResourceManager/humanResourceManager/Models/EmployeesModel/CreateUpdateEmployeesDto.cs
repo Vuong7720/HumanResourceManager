@@ -28,5 +28,8 @@ namespace humanResourceManager.Models.EmployeesModel
 
 		public string? UserName { get; set; }
 		public int UserId { get; set; }
+		public string? ContractType { get; set; }
+		public DateTime? StartDate { get; set; }
+		public DateTime? EndDate { get; set; }
 	}
 }

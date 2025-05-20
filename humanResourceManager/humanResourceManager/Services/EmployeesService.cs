@@ -1,6 +1,7 @@
 ﻿using humanResourceManager.Datas;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
+using humanResourceManager.Models.ContractsModel;
 using humanResourceManager.Models.EmployeesModel;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
@@ -35,8 +36,18 @@ namespace humanResourceManager.Services
 				CreationTime = DateTime.Now
 			};
 
-			_dbContext.Employees.Add(entity);
+			var result = _dbContext.Employees.Add(entity);
 			await _dbContext.SaveChangesAsync();
+
+			var insertContract = new CreateUpdateContractsDto
+			{
+				EmployeeID = result.Entity.Id,
+				ContractType = input.ContractType,
+				StartDate = input.StartDate,
+				EndDate = input.EndDate,
+				Salary = input.Salary,
+			};
+
 			return new EmployeesDto
 			{
 				Id = entity.Id,

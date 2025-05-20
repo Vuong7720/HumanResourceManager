@@ -127,11 +127,7 @@ namespace humanResourceManager.Services
 				StartDate = entity.StartDate,
 				EndDate = entity.EndDate,
 				Salary = entity.Salary,
-				IsDeleted = entity.IsDeleted,
-				CreationName = entity.CreationName,
-				CreationTime = entity.CreationTime,
-				UpdatedBy = entity.UpdatedBy,
-				UpdatedAt = entity.UpdatedAt,
+				IsDeleted = entity.IsDeleted
 			};
 		}
 

@@ -7,13 +7,14 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
+import { CreateUserComponent } from '../create-user/create-user.component';
 
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  // Để sử dụng ngModel
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzFormModule } from 'ng-zorro-antd/form';
 @NgModule({
-  declarations: [
-    UserComponent
-  ],
+  declarations: [UserComponent, CreateUserComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -21,7 +22,11 @@ import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
     NzButtonModule,
     NzTableModule,
     NzInputModule,
-    FormsModule
-  ]
+    FormsModule,
+    ReactiveFormsModule,
+    NzModalModule,
+    NzSpinModule,
+    NzFormModule
+  ],
 })
-export class UserModule { }
+export class UserModule {}

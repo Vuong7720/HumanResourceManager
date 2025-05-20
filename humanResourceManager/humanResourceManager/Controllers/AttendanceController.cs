@@ -74,6 +74,20 @@ namespace humanResourceManager.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Route("check-out")]
+		public async Task<IActionResult> CheckOutAsync(int employeeId)
+		{
+			try
+			{
+				return Ok(ApiResult.Success(await _attendanceService.CheckOutAsync(employeeId), "Success!"));
+			}
+			catch (BusinessException ex)
+			{
+				return Ok(ApiResult.Error(ex.Message ?? "Lỗi không xác định"));
+			}
+		}
+
 		[HttpDelete("delete")]
 		public async Task Delete(int id)
 		{
