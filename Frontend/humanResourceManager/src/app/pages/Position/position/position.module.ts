@@ -10,10 +10,14 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
+import { CreatePositionComponent } from '../create-position/create-position.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+
 
 @NgModule({
   declarations: [
-    PositionComponent
+    PositionComponent,CreatePositionComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +26,9 @@ import { FormsModule } from '@angular/forms';  // Để sử dụng ngModel
     NzButtonModule,
     NzTableModule,
     NzInputModule,
-    FormsModule
+    FormsModule,
+    NzModalModule,
+    NzSpinModule,
   ]
 })
 export class PositionModule { }

@@ -44,7 +44,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto(_response);
+            return _response.json();
         });
     }
 
@@ -82,7 +82,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById(_response);
+            return _response.json();
         });
     }
 
@@ -125,7 +125,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate(_response);
+            return _response.json();
         });
     }
 
@@ -163,7 +163,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate(_response);
+            return _response.json();
         });
     }
 
@@ -201,7 +201,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete(_response);
+            return _response.json();
         });
     }
 
@@ -239,7 +239,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds(_response);
+            return _response.json();
         });
     }
 
@@ -277,7 +277,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto2(_response);
+            return _response.json();
         });
     }
 
@@ -315,7 +315,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById2(_response);
+            return _response.json();
         });
     }
 
@@ -358,7 +358,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate2(_response);
+            return _response.json();
         });
     }
 
@@ -396,7 +396,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate2(_response);
+            return _response.json();
         });
     }
 
@@ -434,7 +434,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete2(_response);
+            return _response.json();
         });
     }
 
@@ -472,7 +472,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds2(_response);
+            return _response.json();
         });
     }
 
@@ -580,7 +580,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById3(_response);
+            return _response.json();
         });
     }
 
@@ -699,7 +699,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete3(_response);
+            return _response.json();
         });
     }
 
@@ -737,7 +737,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds3(_response);
+            return _response.json();
         });
     }
 
@@ -770,7 +770,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListSelect(_response);
+            return _response.json();
         });
     }
 
@@ -808,7 +808,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto4(_response);
+            return _response.json();
         });
     }
 
@@ -846,7 +846,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById4(_response);
+            return _response.json();
         });
     }
 
@@ -889,7 +889,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate4(_response);
+            return _response.json();
         });
     }
 
@@ -927,7 +927,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate4(_response);
+            return _response.json();
         });
     }
 
@@ -965,7 +965,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete4(_response);
+            return _response.json();
         });
     }
 
@@ -1003,7 +1003,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds4(_response);
+            return _response.json();
         });
     }
 
@@ -1036,7 +1036,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListSelect2(_response);
+            return _response.json();
         });
     }
 
@@ -1074,7 +1074,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto5(_response);
+            return _response.json();
         });
     }
 
@@ -1112,7 +1112,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById5(_response);
+            return _response.json();
         });
     }
 
@@ -1155,7 +1155,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate5(_response);
+            return _response.json();
         });
     }
 
@@ -1193,7 +1193,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate5(_response);
+            return _response.json();
         });
     }
 
@@ -1231,7 +1231,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete5(_response);
+            return _response.json();
         });
     }
 
@@ -1269,7 +1269,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds5(_response);
+            return _response.json();
         });
     }
 
@@ -1307,7 +1307,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto6(_response);
+            return _response.json();
         });
     }
 
@@ -1345,7 +1345,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById6(_response);
+            return _response.json();
         });
     }
 
@@ -1388,7 +1388,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate6(_response);
+            return _response.json();
         });
     }
 
@@ -1426,7 +1426,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate6(_response);
+            return _response.json();
         });
     }
 
@@ -1464,7 +1464,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete6(_response);
+            return _response.json();
         });
     }
 
@@ -1502,7 +1502,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds6(_response);
+            return _response.json();
         });
     }
 
@@ -1535,7 +1535,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListSelect3(_response);
+            return _response.json();
         });
     }
 
@@ -1573,7 +1573,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetListDto7(_response);
+            return _response.json();
         });
     }
 
@@ -1611,7 +1611,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetById7(_response);
+            return _response.json();
         });
     }
 
@@ -1654,7 +1654,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate7(_response);
+            return _response.json();
         });
     }
 
@@ -1692,7 +1692,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreate7(_response);
+            return _response.json();
         });
     }
 
@@ -1730,7 +1730,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete7(_response);
+            return _response.json();
         });
     }
 
@@ -1768,7 +1768,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteByIds7(_response);
+            return _response.json();
         });
     }
 
@@ -1846,7 +1846,7 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRegister(_response);
+            return _response.json();
         });
     }
 
