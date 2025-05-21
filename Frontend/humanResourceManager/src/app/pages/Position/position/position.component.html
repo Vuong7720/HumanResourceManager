@@ -13,21 +13,24 @@
   </div>
     <div class="mt-3">
     <nz-table
+      #basicTable
       [nzData]="processedData"
       [nzBordered]="true"
       [nzSize]="'middle'"
-      [nzPageSize]="5"
+      [nzPageSize]="10"
       nzShowPagination="true"
       [nzScroll]="{ y: '63vh', x: '100%' }">
       <thead>
         <tr>
+          <th nzWidth="50px">STT</th>
           <th nzWidth="100px">Tên chức vụ</th>
           <th nzWidth="100px">Ngày tạo</th>
           <th nzWidth="50px" style="text-align: center;" nzRight><i class="bi bi-sliders2 fs-5 text-dark"></i></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of processedData">
+        <tr *ngFor="let data of basicTable.data; let i = index;">
+          <td>{{ i+1 }}</td>
           <td>{{ data.positionName }}</td>
           <td>{{ data.creationTime | date:'dd-MM-yyyy HH:mm' }}</td>
           <td style="text-align: center;" nzRight>

@@ -89,12 +89,6 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
-  // Sửa phòng ban
-  onEdit(department: any) {
-    console.log('Sửa phòng ban: ', department);
-    // Logic sửa phòng ban
-  }
-
   // Xóa phòng ban
   onDelete(id: number) {
      const modalConfig = {
@@ -116,17 +110,11 @@ export class DepartmentComponent implements OnInit {
     const modalRef = this.modal.create(modalConfig);
     const instanceRef = modalRef.getContentComponent();
     instanceRef.onLoadData.subscribe(response => {
-      this.service.delete3(id).then((res: any) => {
-        if (res) {
-          if (res.status) {
-            this.toastr.success(res.message);
-            this.loadData();
-          } else {
-            this.toastr.error(res.message);
-          }
-        } else {
-          this.toastr.error(res.message);
-        }
+      this.service.delete3(id).then(() => {
+        this.toastr.success('Xóa thành công!');
+        this.loadData();
+
+
       });
     });
     

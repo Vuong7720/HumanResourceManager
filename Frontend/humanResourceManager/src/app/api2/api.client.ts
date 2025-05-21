@@ -2321,8 +2321,8 @@ export interface ILoginDto {
 export class PagingRequest implements IPagingRequest {
     field?: string | undefined;
     fieldOption?: boolean;
-    pageSize?: number;
-    pageNumber?: number;
+    pageSize: number = 10;
+    pageNumber: number = 1;
     keyword?: string | undefined;
 
     constructor(data?: IPagingRequest) {

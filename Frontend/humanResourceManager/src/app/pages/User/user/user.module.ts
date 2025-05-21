@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';  // Để s�
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 @NgModule({
   declarations: [UserComponent, CreateUserComponent],
   imports: [
@@ -26,7 +28,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     ReactiveFormsModule,
     NzModalModule,
     NzSpinModule,
-    NzFormModule
+    NzFormModule,
+    NzAffixModule,
+    NzPaginationModule
   ],
 })
 export class UserModule {}

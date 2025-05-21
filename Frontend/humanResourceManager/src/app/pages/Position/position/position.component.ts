@@ -72,7 +72,7 @@ export class PositionComponent {
   // Từ khoá tìm kiếm
   searchKeyword = '';
 
-  // Thêm phòng ban
+  // Thêm chức vụ
   onAdd(data?: any) {
     const modalRef = this.modal.create({
       nzTitle: '',
@@ -89,12 +89,6 @@ export class PositionComponent {
     modalRef.afterClose.subscribe((result: Message) => {
       if (result?.Success) this.loadData();
     });
-  }
-
-  // Sửa phòng ban
-  onEdit(department: any) {
-    console.log('Sửa phòng ban: ', department);
-    // Logic sửa phòng ban
   }
 
   // Xóa phòng ban
@@ -118,17 +112,11 @@ export class PositionComponent {
     const modalRef = this.modal.create(modalConfig);
     const instanceRef = modalRef.getContentComponent();
     instanceRef.onLoadData.subscribe(response => {
-      this.service.delete6(id).then((res: any) => {
-        if (res) {
-          if (res.status) {
-            this.toastr.success(res.message);
-            this.loadData();
-          } else {
-            this.toastr.error(res.message);
-          }
-        } else {
-          this.toastr.error(res.message);
-        }
+      this.service.delete6(id).then(() => {
+        this.toastr.success('Xóa thành công!');
+        this.loadData();
+
+
       });
     });
     

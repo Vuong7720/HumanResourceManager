@@ -102,7 +102,10 @@ namespace humanResourceManager.Services
 		public async Task<PagedResultDto<UsersDto>> GetPagingDto(PagingRequest request)
 		{
 			var users = _dbContext.Users.AsQueryable();
-
+			if (request.Keyword != null)
+			{
+				users = users.Where(x => x.Username.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
+			}
 			var queryResult = users
 			.Select(a => new UsersDto()
 			{

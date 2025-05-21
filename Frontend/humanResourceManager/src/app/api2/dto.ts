@@ -6,20 +6,17 @@ export function checkHasProp<T>(object: T, key: string | keyof T): key is keyof 
 
 
 export class ListResultDto<T> {
-  items?: T[];
+  items: T[]; // bỏ dấu "?"
 
   constructor(initialValues: Partial<ListResultDto<T>> = {}) {
-    for (const key in initialValues) {
-      if (checkHasProp(initialValues, key)) {
-        this[key] = initialValues[key];
-      }
-    }
+    this.items = initialValues.items ?? []; // gán mặc định []
   }
 }
 
+
 type ValueOf<T> = T[keyof T];
 export class PagedResultDto<T> extends ListResultDto<T> {
-  totalCount?: number;
+  totalCount: number = 0;
 
   constructor(initialValues: Partial<PagedResultDto<T>> = {}) {
     super(initialValues);

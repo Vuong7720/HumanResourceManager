@@ -87,7 +87,10 @@ namespace humanResourceManager.Services
 		public async Task<PagedResultDto<DepartmentsDto>> GetPagingDto(PagingRequest request)
 		{
 			var departments = _dbContext.Departments.AsQueryable();
-
+			if (request.Keyword != null)
+			{
+				departments = departments.Where(x => x.DepartmentName.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
+			}
 			var queryResult = departments
 			.Select(a => new DepartmentsDto()
 			{

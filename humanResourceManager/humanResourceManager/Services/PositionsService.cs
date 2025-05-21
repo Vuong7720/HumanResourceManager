@@ -4,6 +4,7 @@ using humanResourceManager.Models;
 using humanResourceManager.Models.PositionsModel;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace humanResourceManager.Services
 {
@@ -85,7 +86,10 @@ namespace humanResourceManager.Services
 		public async Task<PagedResultDto<PositionsDto>> GetPagingDto(PagingRequest request)
 		{
 			var positions = _dbContext.Positions.AsQueryable();
-
+			if(request.Keyword != null)
+			{
+				positions = positions.Where(x => x.PositionName.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
+			}
 			var queryResult = positions
 			.Select(a => new PositionsDto()
 			{

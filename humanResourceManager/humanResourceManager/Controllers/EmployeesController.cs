@@ -74,15 +74,17 @@ namespace humanResourceManager.Controllers
 		}
 
 		[HttpDelete("delete")]
-		public async Task Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
 			await _service.DeleteAsync(id);
+			return Ok(ApiResult.Success(null, "Xóa thành công"));
 		}
 
 		[HttpDelete("delete-by-ids")]
-		public async Task DeleteByIds(List<int> ids)
+		public async Task<IActionResult> DeleteByIds(List<int> ids)
 		{
 			await _service.DeleteMultipleAsync(ids);
+			return Ok(ApiResult.Success(null, "Xóa thành công"));		
 		}
 
 		[HttpGet("get-list-select")]
