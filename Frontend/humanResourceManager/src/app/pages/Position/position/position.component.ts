@@ -5,6 +5,7 @@ import { Message, PagedResultDto } from 'src/app/api2/dto';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { CreatePositionComponent } from './create-position/create-position.component';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-position',
@@ -55,7 +56,6 @@ export class PositionComponent {
   });
 
   this.service.getListDto6(request).then((response: any) => {
-    console.log('response',response)
     if (response && response.data) {
       this.listOfData.totalCount = response.data.totalCount;
       this.listOfData.items = response.data.items;
@@ -121,4 +121,55 @@ export class PositionComponent {
     });
     
   }
+
+  
+    searchData(reset: boolean = false): void {
+      if (reset) this.entityRequest.pageNumber = 1;
+      this.loading = true;
+      this.loadData();
+    }
+  
+    onQueryParamsChange(params: NzTableQueryParams): void {
+      const { sort } = params;
+      const currentSort = sort.find(item => item.value !== null);
+      this.sortKey = currentSort?.key || null;
+      this.sortValue = currentSort?.value || null;
+      this.searchData();
+    }
+  
+    
+    onPageSizeChange(_: number): void {
+      this.loadData();
+    }
+  
+    onPageIndexChange(index: number): void {
+      this.entityRequest.pageNumber = index;
+      this.loadData();
+    }
+  
+    updateCheckedSet(id: string, checked: boolean): void {
+      if (checked) this.setOfCheckedId.add(id);
+      else this.setOfCheckedId.delete(id);
+    }
+  
+    onItemChecked(id: string, checked: boolean): void {
+      this.updateCheckedSet(id, checked);
+      this.refreshCheckedStatus();
+    }
+  
+    onAllChecked(value: boolean): void {
+      this.listOfData.items?.forEach(item => this.updateCheckedSet(item.id, value));
+      this.refreshCheckedStatus();
+    }
+  
+    refreshCheckedStatus(): void {
+      const items = this.listOfData.items;
+      this.checked = items.every(item => this.setOfCheckedId.has(item.id));
+      this.indeterminate = items.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
+    }
+  
+    resetSelected(): void {
+      this.checked = false;
+      this.setOfCheckedId.clear();
+    }
 }

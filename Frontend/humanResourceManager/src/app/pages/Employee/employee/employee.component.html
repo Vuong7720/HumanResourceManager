@@ -1,51 +1,125 @@
-<nz-card nzTitle="Quản lý nhân viên" [nzBordered]="false">
-
-  <div class="row">
-    <div class="col-4">
-      <input type="text" nz-input placeholder="Tìm theo tên hoặc mã nhân viên" [(ngModel)]="searchKeyword" />
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-    </div>
-    <div class="col-8">
-      <button nz-button nzType="primary" (click)="onAdd()" style="float: right;"><i class="bi bi-plus-square me-2"></i>
-        Thêm mới</button>
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+  <!-- Toolbar -->
+  <div class="container py-3 border-bottom">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h1 class="h4 fw-bold text-dark mb-0">Danh sách nhân viên</h1>
+        <nav aria-label="breadcrumb" class="small mt-1">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a routerLink="/" class="text-decoration-none text-muted">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Nhân viên</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0">
+        <button class="btn btn-sm btn-primary" (click)="onAdd(null)">
+          <i class="bi bi-plus-circle me-1"></i> Thêm mới
+        </button>
+        <!-- 
+        <button class="btn btn-sm btn-danger" [disabled]="setOfCheckedId.size <= 0" (click)="onDelete(null)">
+          <i class="bi bi-trash me-1"></i> Xóa ({{ setOfCheckedId.size }})
+        </button> 
+        -->
+      </div>
     </div>
   </div>
-  <div class="mt-3">
-    <nz-table [nzData]="employees" [nzBordered]="true" [nzSize]="'middle'" nzShowPagination="true" [nzPageSize]="5"
-    
-     [nzScroll]="{ x: '650px', y: 'calc(55vh - 100px)' }">
 
-      <thead>
-        <tr>
-          <th nzWidth="15px"><label nz-checkbox [(ngModel)]="checked"></label></th>
-          <th nzWidth="100px">Mã NV</th>
-          <th nzWidth="100px">Họ tên</th>
-          <th nzWidth="100px">Phòng ban</th>
-          <th nzWidth="100px">Chức vụ</th>
-          <th nzWidth="100px">Ngày vào làm</th>
-          <th nzWidth="50px" style="text-align: center;" nzRight><i class="bi bi-sliders2 fs-5 text-dark"></i></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let emp of employees">
-          <td><label nz-checkbox [(ngModel)]="checked"></label></td>
-          <td>{{ emp.code }}</td>
-          <td>{{ emp.name }}</td>
-          <td>{{ emp.department }}</td>
-          <td>{{ emp.position }}</td>
-          <td>{{ emp.startDate | date: 'dd/MM/yyyy' }}</td>
-          <td style="text-align: center;" nzRight>
-            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="chi tiết" (click)="onView(emp)"><i
-                class="bi bi-eye fs-6 text-info"></i></button>
-            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="Sửa" (click)="onEdit(emp)"><i
-                class="bi bi-plus-square fs-6 text-primary"></i></button>
-            <button nz-button nzType="link" class="p-2" nz-tooltip nzTooltipTitle="Xóa" nzDanger
-              (click)="onDelete(emp)"><i class="bi bi-trash fs-6 text-danger"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
+  <!-- Content -->
+  <div class="container my-4">
+    <!-- Search bar -->
+    <div class="card mb-3">
+      <div class="card-body p-3">
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Tìm kiếm"
+            [(ngModel)]="entityRequest.keyword"
+            (keydown.enter)="searchData()"
+          />
+          <button class="btn btn-outline-secondary" (click)="searchData()">Tìm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+      <nz-table
+        [nzData]="processedData"
+        [nzTotal]="listOfData.totalCount"
+        [(nzPageIndex)]="entityRequest.pageNumber"
+        [(nzPageSize)]="entityRequest.pageSize"
+        (nzPageSizeChange)="searchData(false)"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        [nzLoading]="loading"
+        [nzSize]="'middle'"
+        [nzScroll]="{ y: '53vh', x: '100%' }"
+        [nzFrontPagination]="false"
+        [nzPaginationType]="'default'"
+        [nzShowPagination]="true"
+      >
+        <thead>
+          <tr class="table-light">
+            <th
+                [nzWidth]="'25px'"
+                  *ngIf="listOfData.totalCount > 0"
+                  nzLeft
+                  [(nzChecked)]="checked"
+                  [nzIndeterminate]="indeterminate"
+                  (nzCheckedChange)="onAllChecked($event)"
+                  nzWidth="25px"
+                ></th>
+            <th [nzWidth]="'50px'">STT</th>
+            <th [nzWidth]="'150px'">Tên Nhân viên</th>
+            <th [nzWidth]="'150px'">Ngày sinh</th>
+            <th [nzWidth]="'150px'">Giới tính</th>
+            <th [nzWidth]="'150px'">Số điện thoại</th>
+            <th [nzWidth]="'150px'">Email</th>
+            <th [nzWidth]="'150px'">Địa chỉ</th>
+            <th [nzWidth]="'150px'">Phòng ban</th>
+            <th [nzWidth]="'150px'">Chức vụ</th>
+            <th [nzWidth]="'150px'">Mức lương</th>
+            <th [nzWidth]="'150px'">Trạng thái</th>
+            <th [nzWidth]="'150px'">Người tạo</th>
+            <th nzWidth="50px" class="text-center" nzRight>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of processedData; let i = index">
+            <td *ngIf="listOfData.totalCount > 0">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="setOfCheckedId.has(data.id)"
+                (change)="onItemChecked(data.id, data)"
+              />
+            </td>
+            <td>{{ (entityRequest.pageNumber - 1) * entityRequest.pageSize + (i + 1) }}</td>
+            <td>{{ data.fullName }}</td>
+            <td>{{ data.birthDay }}</td>
+            <td>{{ data.gender }}</td>
+            <td>{{ data.phoneNumber }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.departmentName }}</td>
+            <td>{{ data.positionName }}</td>
+            <td>{{ data.salary }}</td>
+            <td>{{ data.status }}</td>
+            <td>{{ data.nguoiTao }}: {{ data.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td class="text-center" nzRight>
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="onAdd(data)" nz-tooltip nzTooltipTitle="Sửa">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="onDelete(data.id)" nz-tooltip nzTooltipTitle="Xóa">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
   </div>
-</nz-card>
+</nz-spin>

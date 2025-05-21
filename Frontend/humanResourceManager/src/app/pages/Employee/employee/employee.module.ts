@@ -16,6 +16,11 @@ import { CreateeployeeComponent } from '../create-createemployee/create-createem
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+
+import { NzFormModule } from 'ng-zorro-antd/form';
+
+
 @NgModule({
   declarations: [
     EmployeeComponent,
@@ -33,7 +38,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzToolTipModule,
     NzCheckboxModule,
     ReactiveFormsModule,
-    NzModalModule
+    NzModalModule,
+    NzSpinModule,
+NzFormModule
   ]
 })
 export class EmployeeModule { }

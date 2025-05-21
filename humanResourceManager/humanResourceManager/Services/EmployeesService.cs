@@ -37,9 +37,9 @@ namespace humanResourceManager.Services
 			};
 
 			var result = _dbContext.Employees.Add(entity);
-			await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-			var insertContract = new CreateUpdateContractsDto
+            Contracts insertContract = new Contracts
 			{
 				EmployeeID = result.Entity.Id,
 				ContractType = input.ContractType,
@@ -48,13 +48,19 @@ namespace humanResourceManager.Services
 				Salary = input.Salary,
 			};
 
+			var resultContract = _dbContext.Contracts.Add(insertContract);
+
+
+			await _dbContext.SaveChangesAsync();
+			
+
 			return new EmployeesDto
 			{
 				Id = entity.Id,
 				FullName = entity.FullName,
 				BirthDay = entity.BirthDay,
 				Gender = entity.Gender,
-				PhoneNumber = entity.PhoneNumber,
+				PhoneNumber = entity.PhoneNumber,	
 				Email = entity.Email,
 				Address = entity.Address,
 				PositionId = entity.PositionId,

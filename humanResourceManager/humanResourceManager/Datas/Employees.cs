@@ -13,7 +13,7 @@ namespace humanResourceManager.Datas
         public string? FullName { get; set; }
         public DateTime? BirthDay { get; set; }
         public int? Gender { get; set; }
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         [MaxLength(128)]
         public string? Email { get; set; }

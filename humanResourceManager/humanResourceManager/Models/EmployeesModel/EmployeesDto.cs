@@ -12,7 +12,7 @@ namespace humanResourceManager.Models.EmployeesModel
 		public string? FullName { get; set; }
 		public DateTime? BirthDay { get; set; }
 		public int? Gender { get; set; }
-		public int? PhoneNumber { get; set; }
+		public string? PhoneNumber { get; set; }
 
 		public string? Email { get; set; }
 		public string? Address { get; set; }
@@ -24,8 +24,10 @@ namespace humanResourceManager.Models.EmployeesModel
 		public int? DepartmentId { get; set; }
 
 		public Departments? Department { get; set; }
+		public string? DepartmentName { get; set; }
+		public string? PositionName { get; set; }
 
-		public Decimal? Salary { get; set; }
+        public Decimal? Salary { get; set; }
 
 		public DateTime? HireDate { get; set; }
 		public EmployeeStatus? Status { get; set; }
