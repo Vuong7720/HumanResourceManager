@@ -66,7 +66,7 @@ namespace humanResourceManager.Controllers
 		{
 			try
 			{
-				return Ok(ApiResult.Success(await _attendanceService.CreateAsync(input), "Success!"));
+				return Ok(ApiResult.Success(await _attendanceService.CreateAsync(input), "Điểm danh thành công!"));
 			}
 			catch (BusinessException ex)
 			{
@@ -80,7 +80,7 @@ namespace humanResourceManager.Controllers
 		{
 			try
 			{
-				return Ok(ApiResult.Success(await _attendanceService.CheckOutAsync(employeeId), "Success!"));
+				return Ok(ApiResult.Success(await _attendanceService.CheckOutAsync(employeeId), "Điểm danh ra về thành công!"));
 			}
 			catch (BusinessException ex)
 			{

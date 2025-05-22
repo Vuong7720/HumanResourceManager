@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Client, CreateUpdateAttendanceDto } from 'src/app/api2/api.client';
 
 
 
@@ -22,38 +24,64 @@ interface AttendanceRecord {
 })
 export class CheckComponent implements OnInit {
   currentTime: Date = new Date();
-  employees: Employee[] = [
-    { id: 1, name: 'Nguyễn Văn A' },
-    { id: 2, name: 'Trần Thị B' },
-    { id: 3, name: 'Phạm Văn C' },
-    { id: 4, name: 'Lê Thị D' },
-  ];
-  selectedEmployee: Employee | null = null;
-  records: AttendanceRecord[] = [];
+  employees: any[] = [];
+  selectedEmployee: any | null = null;
+  records: any[] = [];
+
+  constructor(
+      private service: Client,
+      private toastr: ToastrService
+    ) {}
+
 
   ngOnInit(): void {
+  this.getEmployee();
     setInterval(() => {
       this.currentTime = new Date();
     }, 1000);
   }
 
+  getEmployee(){
+    this.service.getListSelect2().then((res: any) =>{
+      this.employees = res.data;
+    })
+  }
+
   checkIn() {
     if (this.selectedEmployee) {
-      this.records.push({
-        employee: this.selectedEmployee,
-        time: new Date(),
-        type: 'Vào',
-      });
+      const attendance = new CreateUpdateAttendanceDto({
+        employeeID:this.selectedEmployee.value,
+      })
+       this.service.create(attendance).then((res: any) =>{
+        if(res.status){
+          this.records.push({
+          employee: this.selectedEmployee,
+          time: new Date(),
+          type: 'Vào',
+        });
+        this.toastr.success(res.message);
+        }else{
+          this.toastr.error(res.message);
+        }
+       })
     }
   }
 
   checkOut() {
     if (this.selectedEmployee) {
-      this.records.push({
-        employee: this.selectedEmployee,
-        time: new Date(),
-        type: 'Ra',
-      });
+      
+      this.service.checkOut(this.selectedEmployee.value).then((res: any) =>{
+        if(res.status){
+          this.toastr.success(res.message);
+          this.records.push({
+          employee: this.selectedEmployee,
+          time: new Date(),
+          type: 'Ra',
+        });
+        }else{
+           this.toastr.error(res.message);
+        }
+      })
     }
   }
 }

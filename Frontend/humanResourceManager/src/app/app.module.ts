@@ -51,7 +51,7 @@ registerLocaleData(vi);
     NzResultModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
   ],

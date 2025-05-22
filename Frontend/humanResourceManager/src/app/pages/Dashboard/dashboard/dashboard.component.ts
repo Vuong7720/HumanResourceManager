@@ -16,7 +16,7 @@ totalEmployees = 0;
   totalPayrolls = 0;
 
   // Dữ liệu biểu đồ
-  chartLabels = ['Nhân viên', 'Phòng ban', 'Hợp đồng', 'Chức vụ', 'Chấm công', 'Bảng lương'];
+  chartLabels = ['Nhân viên', 'Phòng ban', 'Hợp đồng', 'Chức vụ'];
   chartData = [0, 0, 0, 0, 0, 0];
   chartOptions: ChartOptions = {
     responsive: true,
@@ -31,7 +31,6 @@ totalEmployees = 0;
 
   ngOnInit(): void {
   this.service.overview().then((res: any)=>{
-    console.log(res)
     if (res) {
       this.totalEmployees = res.totalEmployees;
       this.totalDepartments = res.totalDepartments;
@@ -44,9 +43,7 @@ totalEmployees = 0;
         this.totalEmployees,
         this.totalDepartments,
         this.totalContracts,
-        this.totalPositions,
-        this.totalAttendance,
-        this.totalPayrolls
+        this.totalPositions
       ];
     }
   });

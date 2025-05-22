@@ -6,7 +6,7 @@
       <label for="employee">👤 Chọn nhân viên:</label>
       <select [(ngModel)]="selectedEmployee" class="form-control" id="employee">
         <option [ngValue]="null">-- Chọn nhân viên --</option>
-        <option *ngFor="let emp of employees" [ngValue]="emp">{{ emp.name }}</option>
+        <option *ngFor="let emp of employees" [ngValue]="emp">{{ emp.label }}</option>
       </select>
     </div>
 
@@ -23,7 +23,7 @@
     <h6 class="text-secondary">🧾 Lịch sử chấm công:</h6>
     <ul class="list-group small">
       <li *ngFor="let record of records" class="list-group-item d-flex justify-content-between">
-        <span>{{ record.employee.name }}</span>
+        <span>{{ record.employee.label }}</span>
         <span>{{ record.type }} - {{ record.time | date:'HH:mm:ss' }}</span>
       </li>
     </ul>

@@ -56,3 +56,7 @@ label, h6 {
   align-items: center;
   gap: 6px;
 }
+
+.toast-container {
+  z-index: 9999 !important;
+}
