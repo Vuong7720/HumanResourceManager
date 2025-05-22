@@ -6,10 +6,22 @@
     </h3>
   </div>
 
+  
+
   <nz-form *ngIf="form" skipValidation [formGroup]="form">
+
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label [nzFor]="'employeeID'" [nzNoColon]="true" class="d-flex align-items-center fs-6 fw-semibold">
+        <span>Nhân viên</span>
+      </nz-form-label>
+      <nz-select formControlName="employeeID" nzPlaceHolder="Nhân viên">
+        <nz-option *ngFor="let item of lstEmployee" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
     <nz-form-item class="d-flex flex-column mb-2 fv-row">
       <nz-form-label
-        [nzFor]="'departmentName'"
+        [nzFor]="'username'"
         [nzNoColon]="true"
         class="d-flex align-items-center fs-6 fw-semibold required"
       >
@@ -20,17 +32,44 @@
           nz-input
           class="form-control form-control-sm"
           placeholder=""
-          formControlName="departmentName"
+          formControlName="username"
         />
         <ng-template #codeErrorTpl let-control>
           <ng-container *ngIf="control.hasError('required')">
-            Tên phòng ban không được bỏ trống
+            Tên người dùng không được bỏ trống
           </ng-container>
           <ng-container *ngIf="control.hasError('maxlength')">
-            Tên phòng ban không được vượt quá 255 ký tự
+            Tên người dùng không được vượt quá 255 ký tự
           </ng-container>
         </ng-template>
       </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label
+        [nzFor]="'password'"
+        [nzNoColon]="true"
+        class="d-flex align-items-center fs-6 fw-semibold required"
+      >
+        <span>Mật khẩu</span>
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="codeErrorTpl">
+        <input
+          nz-input
+          class="form-control form-control-sm"
+          placeholder=""
+          formControlName="password"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label [nzFor]="'role'" [nzNoColon]="true" class="d-flex align-items-center fs-6 fw-semibold">
+        <span>Quyền</span>
+      </nz-form-label>
+      <nz-select formControlName="role" nzPlaceHolder="quyền">
+        <nz-option *ngFor="let item of lstRole" [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+      </nz-select>
     </nz-form-item>
   </nz-form>
 

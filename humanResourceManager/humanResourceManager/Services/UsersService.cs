@@ -212,7 +212,7 @@ namespace humanResourceManager.Services
                     Username = dto.Username,
                     Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                     EmployeeID = dto.EmployeeID,
-                    Role = Role.Employee,
+                    Role = dto.Role,
                     CreationTime = DateTime.Now
                 };
                 _dbContext.Users.Add(user);

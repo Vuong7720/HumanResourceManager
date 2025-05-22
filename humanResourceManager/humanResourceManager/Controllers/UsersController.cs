@@ -107,11 +107,11 @@ namespace humanResourceManager.Controllers
             try
             {
                 await _usersService.RegisterAsync(dto);
-                return Ok("User registered successfully");
+                return Ok(ApiResult.Success(null,"User registered successfully"));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Ok(ApiResult.Error(ex.Message));
             }
         }
     }

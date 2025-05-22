@@ -1,67 +1,165 @@
-<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-container">
-    <div class="form-group">
-      <label for="fullName">Họ và tên:</label>
-      <input id="fullName" class="form-control" formControlName="fullName" type="text" />
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+  <div *nzModalTitle>
+    <!-- <h3 class="fw-bold">Cập nhật</h3> -->
+    <h3 class="fw-bold">
+      {{ isEditMode ? 'Cập nhật' : 'Thêm mới' }}
+    </h3>
+  </div>
+
+  <nz-form *ngIf="form" skipValidation [formGroup]="form">
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label
+        class="d-flex align-items-center fs-6 fw-semibold required">
+        <span>Họ và tên</span>
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="codeErrorTpl">
+        <input nz-input class="form-control form-control-sm" placeholder="" formControlName="fullName" />
+        <ng-template #codeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Tên chức vụ không được bỏ trống
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            Tên chức vụ không được vượt quá 255 ký tự
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="row">
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Ngày sinh</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="codeErrorTpl">
+            <nz-date-picker style="width: 100%;" formControlName="birthDay"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label class="d-flex align-items-center fs-6 fw-semibold">
+            <span>Giới tính</span>
+          </nz-form-label>
+          <nz-select formControlName="gender" nzPlaceHolder="Giới tính">
+            <nz-option *ngFor="let item of lstGender" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
     </div>
-  
-    <div class="form-group">
-      <label for="birthDay">Ngày sinh:</label>
-      <input id="birthDay" class="form-control" formControlName="birthDay" type="date" />
+
+    <div class="row">
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Số điện thoại</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback>
+            <input nz-input class="form-control form-control-sm" placeholder="" formControlName="phoneNumber" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Email</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback>
+            <input nz-input class="form-control form-control-sm" placeholder="" formControlName="email" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
     </div>
-  
-    <div class="form-group">
-      <label for="gender">Giới tính:</label>
-      <select id="gender" class="form-control" formControlName="gender">
-        <option value="0">Nam</option>
-        <option value="1">Nữ</option>
-      </select>
+
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label class="d-flex align-items-center fs-6 fw-semibold required">
+        <span>Địa chỉ</span>
+      </nz-form-label>
+      <nz-form-control nzHasFeedback>
+        <textarea nz-input class="form-control form-control-sm" placeholder="" formControlName="address"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="row">
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label class="d-flex align-items-center fs-6 fw-semibold">
+            <span>Phòng ban</span>
+          </nz-form-label>
+          <nz-select formControlName="departmentId" nzPlaceHolder="Phòng ban">
+            <nz-option *ngFor="let item of lstDepartment" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+      <div class="col-6">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label class="d-flex align-items-center fs-6 fw-semibold">
+            <span>Chức vụ</span>
+          </nz-form-label>
+          <nz-select formControlName="positionId" nzPlaceHolder="Chức vụ">
+            <nz-option *ngFor="let item of lstPosition" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
     </div>
-  
-    <div class="form-group">
-      <label for="phoneNumber">Số điện thoại:</label>
-      <input id="phoneNumber" class="form-control" formControlName="phoneNumber" type="text" />
+
+
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label class="d-flex align-items-center fs-6 fw-semibold">
+        <span>Loại hợp đồng</span>
+      </nz-form-label>
+      <nz-select formControlName="contractType" nzPlaceHolder="Loại hợp đồng">
+        <nz-option *ngFor="let item of lstcontractType" [nzValue]="item.name" [nzLabel]="item.name"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
+    <div class="row">
+      <div class="col-4">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Lương cơ bản (VND)</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback>
+            <input type="number" nz-input class="form-control" placeholder="VND" formControlName="salary" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-4">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Ngày bắt đầu vào làm</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback>
+            <nz-date-picker style="width: 100%;" formControlName="hireDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-4">
+        <nz-form-item class="d-flex flex-column mb-2 fv-row">
+          <nz-form-label
+            class="d-flex align-items-center fs-6 fw-semibold required">
+            <span>Ngày kết thúc hợp đồng</span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback>
+            <nz-date-picker style="width: 100%;" formControlName="endDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
     </div>
+
+  </nz-form>
+  <div *nzModalFooter class="d-flex justify-content-end">
+    <button (click)="onSubmit()" class="btn btn-primary btn-sm me-2">
+      <i class="fa fa-floppy-o me-1"></i> Lưu
+    </button>
+    <button (click)="onBack()" class="btn btn-secondary btn-sm">
+      <i class="fa fa-times me-1"></i> Đóng
+    </button>
+  </div>
   
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input id="email" class="form-control" formControlName="email" type="email" />
-    </div>
-  
-    <div class="form-group">
-      <label for="address">Địa chỉ:</label>
-      <input id="address" class="form-control" formControlName="address" type="text" />
-    </div>
-  
-    <div class="form-group">
-      <label for="positionId">Chức vụ:</label>
-      <input id="positionId" class="form-control" formControlName="positionId" type="number" />
-    </div>
-  
-    <div class="form-group">
-      <label for="departmentId">Phòng ban:</label>
-      <input id="departmentId" class="form-control" formControlName="departmentId" type="number" />
-    </div>
-  
-    <div class="form-group">
-      <label for="salary">Lương:</label>
-      <input id="salary" class="form-control" formControlName="salary" type="number" />
-    </div>
-  
-    <div class="form-group">
-      <label for="hireDate">Ngày vào làm:</label>
-      <input id="hireDate" class="form-control" formControlName="hireDate" type="date" />
-    </div>
-  
-    <div class="form-group">
-      <label for="status">Trạng thái:</label>
-      <select id="status" class="form-control" formControlName="status">
-        <option value="0">Đang làm việc</option>
-        <option value="1">Đã nghỉ việc</option>
-      </select>
-    </div>
-  
-    <div class="form-group text-right">
-      <button type="submit" class="btn btn-primary">Thêm mới</button>
-    </div>
-  </form>
-  
+</nz-spin>

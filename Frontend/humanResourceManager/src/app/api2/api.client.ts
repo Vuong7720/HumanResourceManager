@@ -29,7 +29,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto(body: PagingRequest | undefined): Promise<void> {
+    getListDto(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -48,7 +48,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto(response: Response): Promise<void> {
+    protected processGetListDto(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -67,7 +67,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById(id: number | undefined): Promise<void> {
+    getById(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -86,7 +86,7 @@ export class Client {
         });
     }
 
-    protected processGetById(response: Response): Promise<void> {
+    protected processGetById(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -106,7 +106,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update(id: number | undefined, body: CreateUpdateAttendanceDto | undefined): Promise<void> {
+    update(id: number | undefined, body: CreateUpdateAttendanceDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -129,7 +129,7 @@ export class Client {
         });
     }
 
-    protected processUpdate(response: Response): Promise<void> {
+    protected processUpdate(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -148,7 +148,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateUpdateAttendanceDto | undefined): Promise<void> {
+    create(body: CreateUpdateAttendanceDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -167,7 +167,7 @@ export class Client {
         });
     }
 
-    protected processCreate(response: Response): Promise<void> {
+    protected processCreate(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -186,7 +186,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete(id: number | undefined): Promise<void> {
+    delete(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -205,7 +205,7 @@ export class Client {
         });
     }
 
-    protected processDelete(response: Response): Promise<void> {
+    protected processDelete(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -224,7 +224,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds(body: number[] | undefined): Promise<void> {
+    deleteByIds(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/attendance/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -243,7 +243,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds(response: Response): Promise<void> {
+    protected processDeleteByIds(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -262,7 +262,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto2(body: PagingRequest | undefined): Promise<void> {
+    getListDto2(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -281,7 +281,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto2(response: Response): Promise<void> {
+    protected processGetListDto2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -300,7 +300,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById2(id: number | undefined): Promise<void> {
+    getById2(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -319,7 +319,7 @@ export class Client {
         });
     }
 
-    protected processGetById2(response: Response): Promise<void> {
+    protected processGetById2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -339,7 +339,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update2(id: number | undefined, body: CreateUpdateContractsDto | undefined): Promise<void> {
+    update2(id: number | undefined, body: CreateUpdateContractsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -362,7 +362,7 @@ export class Client {
         });
     }
 
-    protected processUpdate2(response: Response): Promise<void> {
+    protected processUpdate2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -381,7 +381,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create2(body: CreateUpdateContractsDto | undefined): Promise<void> {
+    create2(body: CreateUpdateContractsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -400,7 +400,7 @@ export class Client {
         });
     }
 
-    protected processCreate2(response: Response): Promise<void> {
+    protected processCreate2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -419,7 +419,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete2(id: number | undefined): Promise<void> {
+    delete2(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -438,7 +438,7 @@ export class Client {
         });
     }
 
-    protected processDelete2(response: Response): Promise<void> {
+    protected processDelete2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -457,7 +457,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds2(body: number[] | undefined): Promise<void> {
+    deleteByIds2(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/contract/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -476,7 +476,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds2(response: Response): Promise<void> {
+    protected processDeleteByIds2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -494,7 +494,7 @@ export class Client {
     /**
      * @return Success
      */
-    overview(): Promise<void> {
+    overview(): Promise<any> {
         let url_ = this.baseUrl + "/api/dashboard/overview";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -508,7 +508,7 @@ export class Client {
         });
     }
 
-    protected processOverview(response: Response): Promise<void> {
+    protected processOverview(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -527,7 +527,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto3(body: PagingRequest | undefined): Promise<void> {
+    getListDto3(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -546,7 +546,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto3(response: Response): Promise<void> {
+    protected processGetListDto3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -565,7 +565,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById3(id: number | undefined): Promise<void> {
+    getById3(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -584,7 +584,7 @@ export class Client {
         });
     }
 
-    protected processGetById3(response: Response): Promise<void> {
+    protected processGetById3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -604,7 +604,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update3(id: number | undefined, body: CreateUpdateDepartmentsDto | undefined): Promise<void> {
+    update3(id: number | undefined, body: CreateUpdateDepartmentsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -627,7 +627,7 @@ export class Client {
         });
     }
 
-    protected processUpdate3(response: Response): Promise<void> {
+    protected processUpdate3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -646,7 +646,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create3(body: CreateUpdateDepartmentsDto | undefined): Promise<void> {
+    create3(body: CreateUpdateDepartmentsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -665,7 +665,7 @@ export class Client {
         });
     }
 
-    protected processCreate3(response: Response): Promise<void> {
+    protected processCreate3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -684,7 +684,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete3(id: number | undefined): Promise<void> {
+    delete3(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -703,7 +703,7 @@ export class Client {
         });
     }
 
-    protected processDelete3(response: Response): Promise<void> {
+    protected processDelete3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -722,7 +722,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds3(body: number[] | undefined): Promise<void> {
+    deleteByIds3(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/department/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -741,7 +741,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds3(response: Response): Promise<void> {
+    protected processDeleteByIds3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -759,7 +759,7 @@ export class Client {
     /**
      * @return Success
      */
-    getListSelect(): Promise<void> {
+    getListSelect(): Promise<any> {
         let url_ = this.baseUrl + "/api/department/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -774,7 +774,7 @@ export class Client {
         });
     }
 
-    protected processGetListSelect(response: Response): Promise<void> {
+    protected processGetListSelect(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -793,7 +793,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto4(body: PagingRequest | undefined): Promise<void> {
+    getListDto4(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -812,7 +812,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto4(response: Response): Promise<void> {
+    protected processGetListDto4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -831,7 +831,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById4(id: number | undefined): Promise<void> {
+    getById4(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -850,7 +850,7 @@ export class Client {
         });
     }
 
-    protected processGetById4(response: Response): Promise<void> {
+    protected processGetById4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -870,7 +870,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update4(id: number | undefined, body: CreateUpdateEmployeesDto | undefined): Promise<void> {
+    update4(id: number | undefined, body: CreateUpdateEmployeesDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -893,7 +893,7 @@ export class Client {
         });
     }
 
-    protected processUpdate4(response: Response): Promise<void> {
+    protected processUpdate4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -912,7 +912,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create4(body: CreateUpdateEmployeesDto | undefined): Promise<void> {
+    create4(body: CreateUpdateEmployeesDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -931,7 +931,7 @@ export class Client {
         });
     }
 
-    protected processCreate4(response: Response): Promise<void> {
+    protected processCreate4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -950,7 +950,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete4(id: number | undefined): Promise<void> {
+    delete4(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -969,7 +969,7 @@ export class Client {
         });
     }
 
-    protected processDelete4(response: Response): Promise<void> {
+    protected processDelete4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -988,7 +988,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds4(body: number[] | undefined): Promise<void> {
+    deleteByIds4(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1007,7 +1007,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds4(response: Response): Promise<void> {
+    protected processDeleteByIds4(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1025,7 +1025,7 @@ export class Client {
     /**
      * @return Success
      */
-    getListSelect2(): Promise<void> {
+    getListSelect2(): Promise<any> {
         let url_ = this.baseUrl + "/api/employee/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1040,7 +1040,7 @@ export class Client {
         });
     }
 
-    protected processGetListSelect2(response: Response): Promise<void> {
+    protected processGetListSelect2(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1059,7 +1059,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto5(body: PagingRequest | undefined): Promise<void> {
+    getListDto5(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1078,7 +1078,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto5(response: Response): Promise<void> {
+    protected processGetListDto5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1097,7 +1097,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById5(id: number | undefined): Promise<void> {
+    getById5(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1116,7 +1116,7 @@ export class Client {
         });
     }
 
-    protected processGetById5(response: Response): Promise<void> {
+    protected processGetById5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1136,7 +1136,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update5(id: number | undefined, body: CreateUpdatePayrollDto | undefined): Promise<void> {
+    update5(id: number | undefined, body: CreateUpdatePayrollDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1159,7 +1159,7 @@ export class Client {
         });
     }
 
-    protected processUpdate5(response: Response): Promise<void> {
+    protected processUpdate5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1178,7 +1178,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create5(body: CreateUpdatePayrollDto | undefined): Promise<void> {
+    create5(body: CreateUpdatePayrollDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1197,7 +1197,7 @@ export class Client {
         });
     }
 
-    protected processCreate5(response: Response): Promise<void> {
+    protected processCreate5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1216,7 +1216,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete5(id: number | undefined): Promise<void> {
+    delete5(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1235,7 +1235,7 @@ export class Client {
         });
     }
 
-    protected processDelete5(response: Response): Promise<void> {
+    protected processDelete5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1254,7 +1254,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds5(body: number[] | undefined): Promise<void> {
+    deleteByIds5(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/payroll/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1273,7 +1273,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds5(response: Response): Promise<void> {
+    protected processDeleteByIds5(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1292,7 +1292,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto6(body: PagingRequest | undefined): Promise<void> {
+    getListDto6(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1311,7 +1311,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto6(response: Response): Promise<void> {
+    protected processGetListDto6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1330,7 +1330,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById6(id: number | undefined): Promise<void> {
+    getById6(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1349,7 +1349,7 @@ export class Client {
         });
     }
 
-    protected processGetById6(response: Response): Promise<void> {
+    protected processGetById6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1369,7 +1369,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update6(id: number | undefined, body: CreateUpdatePositionsDto | undefined): Promise<void> {
+    update6(id: number | undefined, body: CreateUpdatePositionsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1392,7 +1392,7 @@ export class Client {
         });
     }
 
-    protected processUpdate6(response: Response): Promise<void> {
+    protected processUpdate6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1411,7 +1411,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create6(body: CreateUpdatePositionsDto | undefined): Promise<void> {
+    create6(body: CreateUpdatePositionsDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1430,7 +1430,7 @@ export class Client {
         });
     }
 
-    protected processCreate6(response: Response): Promise<void> {
+    protected processCreate6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1449,7 +1449,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete6(id: number | undefined): Promise<void> {
+    delete6(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1468,7 +1468,7 @@ export class Client {
         });
     }
 
-    protected processDelete6(response: Response): Promise<void> {
+    protected processDelete6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1487,7 +1487,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds6(body: number[] | undefined): Promise<void> {
+    deleteByIds6(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/position/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1506,7 +1506,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds6(response: Response): Promise<void> {
+    protected processDeleteByIds6(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1524,7 +1524,7 @@ export class Client {
     /**
      * @return Success
      */
-    getListSelect3(): Promise<void> {
+    getListSelect3(): Promise<any> {
         let url_ = this.baseUrl + "/api/position/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1539,7 +1539,7 @@ export class Client {
         });
     }
 
-    protected processGetListSelect3(response: Response): Promise<void> {
+    protected processGetListSelect3(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1558,7 +1558,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    getListDto7(body: PagingRequest | undefined): Promise<void> {
+    getListDto7(body: PagingRequest | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1577,7 +1577,7 @@ export class Client {
         });
     }
 
-    protected processGetListDto7(response: Response): Promise<void> {
+    protected processGetListDto7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1596,7 +1596,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    getById7(id: number | undefined): Promise<void> {
+    getById7(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1615,7 +1615,7 @@ export class Client {
         });
     }
 
-    protected processGetById7(response: Response): Promise<void> {
+    protected processGetById7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1635,7 +1635,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    update7(id: number | undefined, body: CreateUpdateUsersDto | undefined): Promise<void> {
+    update7(id: number | undefined, body: CreateUpdateUsersDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1658,7 +1658,7 @@ export class Client {
         });
     }
 
-    protected processUpdate7(response: Response): Promise<void> {
+    protected processUpdate7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1677,7 +1677,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    create7(body: CreateUpdateUsersDto | undefined): Promise<void> {
+    create7(body: CreateUpdateUsersDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1696,7 +1696,7 @@ export class Client {
         });
     }
 
-    protected processCreate7(response: Response): Promise<void> {
+    protected processCreate7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1715,7 +1715,7 @@ export class Client {
      * @param id (optional) 
      * @return Success
      */
-    delete7(id: number | undefined): Promise<void> {
+    delete7(id: number | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1734,7 +1734,7 @@ export class Client {
         });
     }
 
-    protected processDelete7(response: Response): Promise<void> {
+    protected processDelete7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1753,7 +1753,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds7(body: number[] | undefined): Promise<void> {
+    deleteByIds7(body: number[] | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1772,7 +1772,7 @@ export class Client {
         });
     }
 
-    protected processDeleteByIds7(response: Response): Promise<void> {
+    protected processDeleteByIds7(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1812,7 +1812,7 @@ export class Client {
   );
 }
 
-    protected processLogin(response: Response): Promise<void> {
+    protected processLogin(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1831,7 +1831,7 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    register(body: RegisterDto | undefined): Promise<void> {
+    register(body: RegisterDto | undefined): Promise<any> {
         let url_ = this.baseUrl + "/api/user/register";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1850,7 +1850,7 @@ export class Client {
         });
     }
 
-    protected processRegister(response: Response): Promise<void> {
+    protected processRegister(response: Response): Promise<any> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {

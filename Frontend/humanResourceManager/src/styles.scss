@@ -19,3 +19,69 @@
     background-color: rgba(100, 100, 100, 0.6);
   }
   
+  @media (min-width: 1920px) {
+    .w-modal-dialog {
+      width: 45% !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 80vh;
+      overflow-y: scroll !important;
+    }
+  }
+
+  @media (min-width: 1500px) and (max-width: 1920px) {
+    .w-modal-dialog {
+      width: 45% !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 80vh;
+      overflow-y: scroll !important;
+    }
+  }
+
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    .w-modal-dialog {
+      width: 55% !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 80vh;
+      overflow-y: scroll !important;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1200px) {
+    .w-modal-dialog {
+      width: 65% !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 75vh;
+      overflow-y: scroll !important;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    .w-modal-dialog {
+      width: 85% !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 70vh;
+      overflow-y: scroll !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .w-modal-dialog {
+      width: 96% !important;
+      display: inline-block !important;
+    }
+  
+    .w-modal-dialog .ant-modal-body {
+      max-height: 80vh;
+      overflow-y: scroll !important;
+    }
+  }

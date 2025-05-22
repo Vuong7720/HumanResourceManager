@@ -73,9 +73,10 @@
                   nzWidth="25px"
                 ></th>
             <th [nzWidth]="'50px'">STT</th>
-            <th>Tên người dùng</th>
-            <th>Người tạo</th>
-            <th class="text-center">Thao tác</th>
+            <th [nzWidth]="'200px'">Tên người dùng</th>
+            <th [nzWidth]="'200px'">Quyền hạn</th>
+            <th [nzWidth]="'200px'">Người tạo</th>
+            <th [nzWidth]="'100px'" class="text-center">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,7 @@
             </td>
             <td>{{ (entityRequest.pageNumber - 1) * entityRequest.pageSize + (i + 1) }}</td>
             <td>{{ data.username }}</td>
+            <td>{{ getNameRole(data.role) }}</td>
             <td>{{ data.nguoiTao }}: {{ data.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td class="text-center">
               <button class="btn btn-sm btn-outline-primary me-1" (click)="onAdd(data)" nz-tooltip nzTooltipTitle="Sửa">

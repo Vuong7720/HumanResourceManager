@@ -19,13 +19,12 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 
 @NgModule({
-  declarations: [
-    EmployeeComponent,
-    CreateeployeeComponent
-  ],
+  declarations: [EmployeeComponent, CreateeployeeComponent],
   imports: [
     CommonModule,
     EmployeeRoutingModule,
@@ -40,7 +39,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     ReactiveFormsModule,
     NzModalModule,
     NzSpinModule,
-NzFormModule
-  ]
+    NzFormModule,
+    NzDatePickerModule,
+    NzSelectModule
+  ],
 })
-export class EmployeeModule { }
+export class EmployeeModule {}

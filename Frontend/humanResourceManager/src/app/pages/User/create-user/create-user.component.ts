@@ -17,6 +17,7 @@ export class CreateUserComponent implements OnInit {
   data = {} as any;
   isSpinning = true;
   isEditMode = false;
+  lstEmployee: any[] = [];
 
   constructor(
     private fb: FormBuilder, 
@@ -28,6 +29,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getEmploy();
     this.buildForm();
     if (this.getParams.data) {
       this.data = this.getParams.data;
@@ -40,7 +42,8 @@ export class CreateUserComponent implements OnInit {
     this.form = this.fb.group({
       username: [this.data.username || null, [Validators.required, Validators.maxLength(255)]],
       password: [this.data.password || null, [Validators.required, Validators.maxLength(255)]],
-      employeeID: [this.data.employeeID || null]
+      employeeID: [this.data.employeeID || null],
+      role: [this.data.role || null],
     })
     this.isSpinning = false;
   }
@@ -85,4 +88,20 @@ export class CreateUserComponent implements OnInit {
    onBack(): void {
     this.nzModalRef.destroy();
   }
+
+  getEmploy(){
+    this.service.getListSelect2().then((res: any) => {
+      if(res){
+        this.lstEmployee = res.data;
+      }else{
+        this.toastr.error('Lấy danh sách nhân viên thất bại')
+      }
+    })
+  }
+
+  lstRole = [
+    {name: 'Admin', value: 1},
+    {name: 'HR', value: 2},
+    {name: 'Employee', value: 3},
+  ]
 }

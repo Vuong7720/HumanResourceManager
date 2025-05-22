@@ -44,7 +44,7 @@ namespace humanResourceManager.Services
 				EmployeeID = result.Entity.Id,
 				ContractType = input.ContractType,
 				StartDate = input.StartDate,
-				EndDate = input.EndDate,
+				EndDate = input.HireDate,
 				Salary = input.Salary,
 			};
 
@@ -133,7 +133,7 @@ namespace humanResourceManager.Services
 		public async Task<PagedResultDto<EmployeesDto>> GetPagingDto(PagingRequest request)
 		{
 			var employees = _dbContext.Employees.AsQueryable();
-			if (request.Keyword != null)
+			if (!string.IsNullOrWhiteSpace(request.Keyword))
 			{
 				employees = employees.Where(x => x.FullName.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
 			}

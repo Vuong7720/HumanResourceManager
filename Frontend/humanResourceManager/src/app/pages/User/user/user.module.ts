@@ -15,6 +15,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 @NgModule({
   declarations: [UserComponent, CreateUserComponent],
   imports: [
@@ -30,7 +31,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzSpinModule,
     NzFormModule,
     NzAffixModule,
-    NzPaginationModule
+    NzPaginationModule,
+    NzSelectModule
   ],
 })
 export class UserModule {}

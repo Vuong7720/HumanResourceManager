@@ -6,6 +6,7 @@ import { Message, PagedResultDto } from 'src/app/api2/dto';
 import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-confirm.component';
 import { CreateDepartmentComponent } from '../../Department/department/create-department/create-department.component';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { CreateUserComponent } from '../create-user/create-user.component';
 
 @Component({
   selector: 'app-user',
@@ -42,7 +43,7 @@ export class UserComponent {
     private toastr: ToastrService
   ) { }
   ngOnInit(): void {
-    this.loadData();
+
   }
 
 
@@ -76,7 +77,7 @@ export class UserComponent {
   onAdd(data?: any) {
     const modalRef = this.modal.create({
       nzTitle: '',
-      nzContent: CreateDepartmentComponent,
+      nzContent: CreateUserComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzFooter: null,
       nzCentered: true,
@@ -183,4 +184,15 @@ export class UserComponent {
     this.checked = false;
     this.setOfCheckedId.clear();
   }
+
+
+  // ---------------------
+  getNameRole(id: any): string {
+    return this.lstRole.find((item) => item.value === id)?.name || '';
+  }
+  lstRole = [
+    {name: 'Admin', value: 1},
+    {name: 'HR', value: 2},
+    {name: 'Employee', value: 3},
+  ]
 }
