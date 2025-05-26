@@ -16,7 +16,16 @@ namespace humanResourceManager.Models.UsersModel
 		public string? Password { get; set; }
 
 		public Role Role { get; set; }
+
+		public List<int> RoleIds { get; set; } = new List<int>();
+		public List<string> RoleNames { get; set; } = new List<string>();
+
+		public List<int> PermissionIds { get; set; } = new List<int>();
+		public List<string> PermissionNames { get; set; } = new List<string>();
+
 		public bool IsDeleted { get; set; } = false;
+
+		public bool IsStatic { get; set; } = false;
 
 		public string? CreationName { get; set; }
 		public DateTime? CreationTime { get; set; }

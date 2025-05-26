@@ -18,9 +18,13 @@ namespace humanResourceManager.Datas
         public string Password { get; set; }
 
         public Role Role { get; set; }
-        public bool IsDeleted { get; set; } = false;
 
-        [MaxLength(128)]
+		public List<int> RoleIds { get; set; } = new List<int>();
+		public bool IsDeleted { get; set; } = false;
+
+		public bool IsStatic { get; set; } = false;
+
+		[MaxLength(128)]
         public string? CreationName { get; set; }
         public DateTime? CreationTime { get; set; }
         [MaxLength(128)]

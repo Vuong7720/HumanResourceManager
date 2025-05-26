@@ -59,6 +59,11 @@ namespace humanResourceManager.Services
 				throw new BusinessException("Không tìm thấy dữ liệu chấm công");
 			}
 
+			if (entity.IsStatic == true)
+			{
+				throw new Exception("Không thể xoá người dùng mặc định");
+			}
+
 			_dbContext.Users.Remove(entity);
 			await _dbContext.SaveChangesAsync();
 		}
@@ -71,17 +76,41 @@ namespace humanResourceManager.Services
 				throw new BusinessException("Không tìm thấy bản ghi nào");
 			}
 
+			foreach (var entity in entities)
+			{
+				if (entity.IsStatic == true)
+				{
+					throw new BusinessException($"Không thể xoá người dùng mặc định: {entity.Username}");
+				}
+			}
+
 			_dbContext.Users.RemoveRange(entities);
 			await _dbContext.SaveChangesAsync();
 		}
 
 		public async Task<UsersDto> GetById(int id)
 		{
-			var entity = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+			var entity = await _dbContext.Users
+		.Include(u => u.Employee)  // load employee nếu có
+		.FirstOrDefaultAsync(x => x.Id == id);
+
 			if (entity == null)
 			{
-				throw new BusinessException("Không tìm thấy dữ liệu chấm công");
+				throw new BusinessException("Không tìm thấy dữ liệu người dùng");
 			}
+
+			// Lấy role info dựa trên RoleIds của user
+			var roles = await _dbContext.Roles
+				.Where(r => entity.RoleIds.Contains(r.Id))
+				.ToListAsync();
+
+			// Lấy permission Ids từ các role của user
+			var permissionIds = roles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+
+			// Lấy permission names từ permission Ids
+			var permissions = await _dbContext.Permissions
+				.Where(p => permissionIds.Contains(p.Id))
+				.ToListAsync();
 
 			return new UsersDto
 			{
@@ -96,44 +125,50 @@ namespace humanResourceManager.Services
 				CreationTime = entity.CreationTime,
 				UpdatedBy = entity.UpdatedBy,
 				UpdatedAt = entity.UpdatedAt,
+
+				RoleIds = roles.Select(r => r.Id).ToList(),
+				RoleNames = roles.Select(r => r.RoleName ?? "").ToList(),
+
+				PermissionIds = permissionIds,
+				PermissionNames = permissions.Select(p => p.PermissionName ?? "").ToList()
 			};
 		}
 
 		public async Task<PagedResultDto<UsersDto>> GetPagingDto(PagingRequest request)
 		{
-			var users = _dbContext.Users.AsQueryable();
-			if (request.Keyword != null)
+			var usersQuery = _dbContext.Users.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(request.Keyword))
 			{
-				users = users.Where(x => x.Username.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
+				var keyword = request.Keyword.Trim().ToLower();
+				usersQuery = usersQuery.Where(x => x.Username.ToLower().Contains(keyword));
 			}
-			var queryResult = users
-			.Select(a => new UsersDto()
+
+			// Lấy dữ liệu paging users
+			var pagingData = await PageResult<Users>.PageAsync(usersQuery, request.PageNumber - 1, request.PageSize, request.Field, request.FieldOption);
+
+			var users = pagingData.Items;
+
+			// Lấy tất cả RoleId trong tập users đã lấy
+			var allRoleIds = users.SelectMany(u => u.RoleIds).Distinct().ToList();
+
+			// Lấy các role tương ứng
+			var roles = await _dbContext.Roles.Where(r => allRoleIds.Contains(r.Id)).ToListAsync();
+
+			// Lấy tất cả permissionId của các role
+			var allPermissionIds = roles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+
+			// Lấy permission
+			var permissions = await _dbContext.Permissions.Where(p => allPermissionIds.Contains(p.Id)).ToListAsync();
+
+			// Map từng user thành UsersDto có đầy đủ thông tin Role, Permission
+			var usersDto = users.Select(user =>
 			{
-				Id = a.Id,
-				EmployeeID = a.EmployeeID,
-				Employee = a.Employee,
-				Username = a.Username,
-				Password = a.Password,
-				Role = a.Role,
-				IsDeleted = a.IsDeleted,
-				CreationName = a.CreationName,
-				CreationTime = a.CreationTime,
-				UpdatedBy = a.UpdatedBy,
-				UpdatedAt = a.UpdatedAt,
-			});
+				var userRoles = roles.Where(r => user.RoleIds.Contains(r.Id)).ToList();
+				var userPermissionIds = userRoles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+				var userPermissions = permissions.Where(p => userPermissionIds.Contains(p.Id)).ToList();
 
-			var pagingData = await PageResult<UsersDto>.PageAsync(queryResult, request.PageNumber - 1, request.PageSize, request.Field, request.FieldOption);
-
-			return new PagedResultDto<UsersDto>(pagingData.TotalCount, pagingData.Items.ToList());
-		}
-
-		public async Task<UsersDto> SignIn(SignInInfo input)
-		{
-			var user = await _dbContext.Users.FirstOrDefaultAsync(a => a.Username == input.Username && a.Password == input.Password);
-
-			if (user != null)
-			{
-				return new UsersDto()
+				return new UsersDto
 				{
 					Id = user.Id,
 					EmployeeID = user.EmployeeID,
@@ -146,12 +181,54 @@ namespace humanResourceManager.Services
 					CreationTime = user.CreationTime,
 					UpdatedBy = user.UpdatedBy,
 					UpdatedAt = user.UpdatedAt,
+
+					RoleIds = userRoles.Select(r => r.Id).ToList(),
+					RoleNames = userRoles.Select(r => r.RoleName ?? "").ToList(),
+
+					PermissionIds = userPermissionIds,
+					PermissionNames = userPermissions.Select(p => p.PermissionName ?? "").ToList(),
 				};
-			}
-			else
-			{
+			}).ToList();
+
+			return new PagedResultDto<UsersDto>(pagingData.TotalCount, usersDto);
+		}
+
+		public async Task<UsersDto> SignIn(SignInInfo input)
+		{
+			var user = await _dbContext.Users.FirstOrDefaultAsync(a => a.Username == input.Username && a.Password == input.Password);
+
+			if (user == null)
 				return null;
-			}
+
+			// Lấy role dựa trên RoleIds của user
+			var roles = await _dbContext.Roles.Where(r => user.RoleIds.Contains(r.Id)).ToListAsync();
+
+			// Lấy permission Ids từ role
+			var permissionIds = roles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+
+			// Lấy permission
+			var permissions = await _dbContext.Permissions.Where(p => permissionIds.Contains(p.Id)).ToListAsync();
+
+			return new UsersDto
+			{
+				Id = user.Id,
+				EmployeeID = user.EmployeeID,
+				Employee = user.Employee,
+				Username = user.Username,
+				Password = user.Password,
+				Role = user.Role,
+				IsDeleted = user.IsDeleted,
+				CreationName = user.CreationName,
+				CreationTime = user.CreationTime,
+				UpdatedBy = user.UpdatedBy,
+				UpdatedAt = user.UpdatedAt,
+
+				RoleIds = roles.Select(r => r.Id).ToList(),
+				RoleNames = roles.Select(r => r.RoleName ?? "").ToList(),
+
+				PermissionIds = permissionIds,
+				PermissionNames = permissions.Select(p => p.PermissionName ?? "").ToList(),
+			};
 		}
 
 		public async Task<UsersDto> UpdateAsync(int id, CreateUpdateUsersDto input)

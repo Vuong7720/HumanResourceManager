@@ -62,6 +62,7 @@ builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IPositionsService, PositionsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 
 builder.Services.AddSingleton<JwtService>();
@@ -101,6 +102,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
+
+
+
 	var context = services.GetRequiredService<MyDbContext>();
 
 	var adminUsername = "admin";
@@ -125,6 +129,9 @@ using (var scope = app.Services.CreateScope())
 	{
 		Console.WriteLine("✅ Tài khoản admin đã tồn tại.");
 	}
+
+	var roleService = services.GetRequiredService<IRoleService>();
+	await roleService.SeedDataOriginal();
 }
 
 

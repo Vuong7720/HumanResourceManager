@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using humanResourceManager.Datas.RoleAndPermission;
+using Microsoft.EntityFrameworkCore;
 
 namespace humanResourceManager.Datas
 {
@@ -16,6 +17,11 @@ namespace humanResourceManager.Datas
         public DbSet<Positions> Positions { get; set; }
         public DbSet<Users> Users { get; set; }
 
-        #endregion
-    }
+		public DbSet<Permission> Permissions { get; set; }
+
+        public DbSet<Rolee> Roles { get; set; }
+
+
+		#endregion
+	}
 }
