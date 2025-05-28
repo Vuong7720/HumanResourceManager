@@ -56,7 +56,7 @@
         (nzQueryParams)="onQueryParamsChange($event)"
         [nzLoading]="loading"
         [nzSize]="'middle'"
-        [nzScroll]="{ y: '53vh', x: '100%' }"
+        [nzScroll]="{ y: '63vh', x: '100%' }"
         [nzFrontPagination]="false"
         [nzPaginationType]="'default'"
         [nzShowPagination]="true"
@@ -73,8 +73,8 @@
                   nzWidth="25px"
                 ></th>
             <th [nzWidth]="'50px'">STT</th>
-            <th [nzWidth]="'200px'">Tên Nhân viên</th>
-            <th [nzWidth]="'200px'">Ngày sinh</th>
+            <th [nzWidth]="'150px'">Tên Nhân viên</th>
+            <th [nzWidth]="'150px'">Ngày sinh</th>
             <th [nzWidth]="'150px'">Giới tính</th>
             <th [nzWidth]="'150px'">Số điện thoại</th>
             <th [nzWidth]="'150px'">Email</th>
@@ -84,7 +84,7 @@
             <th [nzWidth]="'150px'">Mức lương</th>
             <th [nzWidth]="'150px'">Trạng thái</th>
             <th [nzWidth]="'150px'">Người tạo</th>
-            <th nzWidth="150px" class="text-center" nzRight>Thao tác</th>
+            <th nzWidth="50px" class="text-center" nzRight>Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -99,13 +99,13 @@
             </td>
             <td>{{ (entityRequest.pageNumber - 1) * entityRequest.pageSize + (i + 1) }}</td>
             <td>{{ data.fullName }}</td>
-            <td>{{ data.birthDay | date:'dd-MM-yyyy' }}</td>
-            <td>{{ getNameGender(data.gender) }}</td>
+            <td>{{ data.birthDay }}</td>
+            <td>{{ data.gender }}</td>
             <td>{{ data.phoneNumber }}</td>
             <td>{{ data.email }}</td>
             <td>{{ data.address }}</td>
-            <td>{{ getNameDepartment(data.departmentId) }}</td>
-            <td>{{ getNamePosition(data.positionId) }}</td>
+            <td>{{ data.departmentName }}</td>
+            <td>{{ data.positionName }}</td>
             <td>{{ data.salary }}</td>
             <td>{{ data.status }}</td>
             <td>{{ data.nguoiTao }}: {{ data.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>

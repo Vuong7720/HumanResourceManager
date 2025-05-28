@@ -1,15 +1,17 @@
 
 <div class="dashboard p-4">
   <h2 class="mb-4 text-center text-primary">📊 Tổng Quan</h2>
-  
+  <!-- 
+  { label: 'Chấm công', value: totalAttendance, icon: 'bi-calendar-check-fill', color: 'danger' },
+  { label: 'Bảng lương', value: totalPayrolls, icon: 'bi-currency-dollar', color: 'dark' },
+  -->
   <div class="row g-4 mb-4">
-    <div class="col-md-4" *ngFor="let item of [
+    <div class="col-md-3" *ngFor="let item of [
       { label: 'Nhân viên', value: totalEmployees, icon: 'bi-people-fill', color: 'info' },
       { label: 'Phòng ban', value: totalDepartments, icon: 'bi-diagram-3-fill', color: 'success' },
       { label: 'Hợp đồng', value: totalContracts, icon: 'bi-file-earmark-text-fill', color: 'warning' },
       { label: 'Chức vụ', value: totalPositions, icon: 'bi-person-badge-fill', color: 'primary' },
-      { label: 'Chấm công', value: totalAttendance, icon: 'bi-calendar-check-fill', color: 'danger' },
-      { label: 'Bảng lương', value: totalPayrolls, icon: 'bi-currency-dollar', color: 'dark' },
+      
     ]">
       <nz-card>
         <h5>

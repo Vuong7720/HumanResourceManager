@@ -4,7 +4,9 @@
 // </auto-generated>
 //----------------------
 
-import { from, Observable, switchMap } from "rxjs";
+/* tslint:disable */
+/* eslint-disable */
+// ReSharper disable InconsistentNaming
 
 export class Client {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
@@ -16,39 +18,11 @@ export class Client {
         this.baseUrl = baseUrl ?? "";
     }
 
- createAuthHeader(): HeadersInit {
-  const token = localStorage.getItem('access_token');
-  return {
-    "Authorization": `Bearer ${token}`,
-    "Content-Type": "application/json"
-  };
-}
-
-
-checkOut(employeeId: number | undefined): Promise<any> {
-        let url_ = this.baseUrl + "/api/attendance/check-out?";
-        if (employeeId === null)
-            throw new Error("The parameter 'employeeId' cannot be null.");
-        else if (employeeId !== undefined)
-            url_ += "employeeId=" + encodeURIComponent("" + employeeId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "POST",
-            headers: {
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
-        });
-    }
-
     /**
      * @param body (optional) 
      * @return Success
      */
-    getListDto(body: PagingRequest | undefined): Promise<any> {
+    getListDto(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -63,11 +37,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto(_response);
         });
     }
 
-    protected processGetListDto(response: Response): Promise<any> {
+    protected processGetListDto(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -86,7 +60,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById(id: number | undefined): Promise<any> {
+    getById(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -101,11 +75,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById(_response);
         });
     }
 
-    protected processGetById(response: Response): Promise<any> {
+    protected processGetById(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -125,7 +99,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update(id: number | undefined, body: CreateUpdateAttendanceDto | undefined): Promise<any> {
+    update(id: number | undefined, body: CreateUpdateAttendanceDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -144,11 +118,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate(_response);
         });
     }
 
-    protected processUpdate(response: Response): Promise<any> {
+    protected processUpdate(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -167,7 +141,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateUpdateAttendanceDto | undefined): Promise<any> {
+    create(body: CreateUpdateAttendanceDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -182,11 +156,49 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate(_response);
         });
     }
 
-    protected processCreate(response: Response): Promise<any> {
+    protected processCreate(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @param employeeId (optional) 
+     * @return Success
+     */
+    checkOut(employeeId: number | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/attendance/check-out?";
+        if (employeeId === null)
+            throw new Error("The parameter 'employeeId' cannot be null.");
+        else if (employeeId !== undefined)
+            url_ += "employeeId=" + encodeURIComponent("" + employeeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCheckOut(_response);
+        });
+    }
+
+    protected processCheckOut(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -205,7 +217,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete(id: number | undefined): Promise<any> {
+    delete(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -220,11 +232,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete(_response);
         });
     }
 
-    protected processDelete(response: Response): Promise<any> {
+    protected processDelete(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -243,7 +255,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds(body: number[] | undefined): Promise<any> {
+    deleteByIds(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/attendance/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -258,11 +270,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds(_response);
         });
     }
 
-    protected processDeleteByIds(response: Response): Promise<any> {
+    protected processDeleteByIds(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -281,7 +293,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto2(body: PagingRequest | undefined): Promise<any> {
+    getListDto2(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -296,11 +308,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto2(_response);
         });
     }
 
-    protected processGetListDto2(response: Response): Promise<any> {
+    protected processGetListDto2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -319,7 +331,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById2(id: number | undefined): Promise<any> {
+    getById2(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -334,11 +346,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById2(_response);
         });
     }
 
-    protected processGetById2(response: Response): Promise<any> {
+    protected processGetById2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -358,7 +370,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update2(id: number | undefined, body: CreateUpdateContractsDto | undefined): Promise<any> {
+    update2(id: number | undefined, body: CreateUpdateContractsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -377,11 +389,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate2(_response);
         });
     }
 
-    protected processUpdate2(response: Response): Promise<any> {
+    protected processUpdate2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -400,7 +412,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create2(body: CreateUpdateContractsDto | undefined): Promise<any> {
+    create2(body: CreateUpdateContractsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -415,11 +427,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate2(_response);
         });
     }
 
-    protected processCreate2(response: Response): Promise<any> {
+    protected processCreate2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -438,7 +450,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete2(id: number | undefined): Promise<any> {
+    delete2(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -453,11 +465,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete2(_response);
         });
     }
 
-    protected processDelete2(response: Response): Promise<any> {
+    protected processDelete2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -476,7 +488,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds2(body: number[] | undefined): Promise<any> {
+    deleteByIds2(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/contract/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -491,11 +503,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds2(_response);
         });
     }
 
-    protected processDeleteByIds2(response: Response): Promise<any> {
+    protected processDeleteByIds2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -513,21 +525,22 @@ checkOut(employeeId: number | undefined): Promise<any> {
     /**
      * @return Success
      */
-    overview(): Promise<any> {
+    overview(): Promise<void> {
         let url_ = this.baseUrl + "/api/dashboard/overview";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
             method: "GET",
-            headers: this.createAuthHeader()
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processOverview(_response);
         });
     }
 
-    protected processOverview(response: Response): Promise<any> {
+    protected processOverview(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -546,7 +559,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto3(body: PagingRequest | undefined): Promise<any> {
+    getListDto3(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -561,11 +574,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto3(_response);
         });
     }
 
-    protected processGetListDto3(response: Response): Promise<any> {
+    protected processGetListDto3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -584,7 +597,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById3(id: number | undefined): Promise<any> {
+    getById3(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -599,11 +612,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById3(_response);
         });
     }
 
-    protected processGetById3(response: Response): Promise<any> {
+    protected processGetById3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -623,7 +636,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update3(id: number | undefined, body: CreateUpdateDepartmentsDto | undefined): Promise<any> {
+    update3(id: number | undefined, body: CreateUpdateDepartmentsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -642,11 +655,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate3(_response);
         });
     }
 
-    protected processUpdate3(response: Response): Promise<any> {
+    protected processUpdate3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -665,7 +678,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create3(body: CreateUpdateDepartmentsDto | undefined): Promise<any> {
+    create3(body: CreateUpdateDepartmentsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -680,11 +693,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate3(_response);
         });
     }
 
-    protected processCreate3(response: Response): Promise<any> {
+    protected processCreate3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -703,7 +716,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete3(id: number | undefined): Promise<any> {
+    delete3(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -718,11 +731,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete3(_response);
         });
     }
 
-    protected processDelete3(response: Response): Promise<any> {
+    protected processDelete3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -741,7 +754,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds3(body: number[] | undefined): Promise<any> {
+    deleteByIds3(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/department/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -756,11 +769,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds3(_response);
         });
     }
 
-    protected processDeleteByIds3(response: Response): Promise<any> {
+    protected processDeleteByIds3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -778,7 +791,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
     /**
      * @return Success
      */
-    getListSelect(): Promise<any> {
+    getListSelect(): Promise<void> {
         let url_ = this.baseUrl + "/api/department/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -789,11 +802,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListSelect(_response);
         });
     }
 
-    protected processGetListSelect(response: Response): Promise<any> {
+    protected processGetListSelect(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -812,7 +825,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto4(body: PagingRequest | undefined): Promise<any> {
+    getListDto4(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -827,11 +840,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto4(_response);
         });
     }
 
-    protected processGetListDto4(response: Response): Promise<any> {
+    protected processGetListDto4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -850,7 +863,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById4(id: number | undefined): Promise<any> {
+    getById4(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -865,11 +878,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById4(_response);
         });
     }
 
-    protected processGetById4(response: Response): Promise<any> {
+    protected processGetById4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -889,7 +902,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update4(id: number | undefined, body: CreateUpdateEmployeesDto | undefined): Promise<any> {
+    update4(id: number | undefined, body: CreateUpdateEmployeesDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -908,11 +921,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate4(_response);
         });
     }
 
-    protected processUpdate4(response: Response): Promise<any> {
+    protected processUpdate4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -931,7 +944,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create4(body: CreateUpdateEmployeesDto | undefined): Promise<any> {
+    create4(body: CreateUpdateEmployeesDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -946,11 +959,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate4(_response);
         });
     }
 
-    protected processCreate4(response: Response): Promise<any> {
+    protected processCreate4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -969,7 +982,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete4(id: number | undefined): Promise<any> {
+    delete4(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -984,11 +997,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete4(_response);
         });
     }
 
-    protected processDelete4(response: Response): Promise<any> {
+    protected processDelete4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1007,7 +1020,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds4(body: number[] | undefined): Promise<any> {
+    deleteByIds4(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1022,11 +1035,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds4(_response);
         });
     }
 
-    protected processDeleteByIds4(response: Response): Promise<any> {
+    protected processDeleteByIds4(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1044,7 +1057,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
     /**
      * @return Success
      */
-    getListSelect2(): Promise<any> {
+    getListSelect2(): Promise<void> {
         let url_ = this.baseUrl + "/api/employee/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1055,11 +1068,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListSelect2(_response);
         });
     }
 
-    protected processGetListSelect2(response: Response): Promise<any> {
+    protected processGetListSelect2(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1078,7 +1091,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto5(body: PagingRequest | undefined): Promise<any> {
+    getListDto5(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1093,11 +1106,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto5(_response);
         });
     }
 
-    protected processGetListDto5(response: Response): Promise<any> {
+    protected processGetListDto5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1116,7 +1129,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById5(id: number | undefined): Promise<any> {
+    getById5(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1131,11 +1144,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById5(_response);
         });
     }
 
-    protected processGetById5(response: Response): Promise<any> {
+    protected processGetById5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1155,7 +1168,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update5(id: number | undefined, body: CreateUpdatePayrollDto | undefined): Promise<any> {
+    update5(id: number | undefined, body: CreateUpdatePayrollDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1174,11 +1187,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate5(_response);
         });
     }
 
-    protected processUpdate5(response: Response): Promise<any> {
+    protected processUpdate5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1197,7 +1210,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create5(body: CreateUpdatePayrollDto | undefined): Promise<any> {
+    create5(body: CreateUpdatePayrollDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1212,11 +1225,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate5(_response);
         });
     }
 
-    protected processCreate5(response: Response): Promise<any> {
+    protected processCreate5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1235,7 +1248,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete5(id: number | undefined): Promise<any> {
+    delete5(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1250,11 +1263,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete5(_response);
         });
     }
 
-    protected processDelete5(response: Response): Promise<any> {
+    protected processDelete5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1273,7 +1286,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds5(body: number[] | undefined): Promise<any> {
+    deleteByIds5(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/payroll/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1288,11 +1301,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds5(_response);
         });
     }
 
-    protected processDeleteByIds5(response: Response): Promise<any> {
+    protected processDeleteByIds5(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1311,7 +1324,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto6(body: PagingRequest | undefined): Promise<any> {
+    getListDto6(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1326,11 +1339,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto6(_response);
         });
     }
 
-    protected processGetListDto6(response: Response): Promise<any> {
+    protected processGetListDto6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1349,7 +1362,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById6(id: number | undefined): Promise<any> {
+    getById6(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1364,11 +1377,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById6(_response);
         });
     }
 
-    protected processGetById6(response: Response): Promise<any> {
+    protected processGetById6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1388,7 +1401,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update6(id: number | undefined, body: CreateUpdatePositionsDto | undefined): Promise<any> {
+    update6(id: number | undefined, body: CreateUpdatePositionsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1407,11 +1420,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate6(_response);
         });
     }
 
-    protected processUpdate6(response: Response): Promise<any> {
+    protected processUpdate6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1430,7 +1443,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create6(body: CreateUpdatePositionsDto | undefined): Promise<any> {
+    create6(body: CreateUpdatePositionsDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1445,11 +1458,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate6(_response);
         });
     }
 
-    protected processCreate6(response: Response): Promise<any> {
+    protected processCreate6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1468,7 +1481,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete6(id: number | undefined): Promise<any> {
+    delete6(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1483,11 +1496,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete6(_response);
         });
     }
 
-    protected processDelete6(response: Response): Promise<any> {
+    protected processDelete6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1506,7 +1519,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds6(body: number[] | undefined): Promise<any> {
+    deleteByIds6(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/position/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1521,11 +1534,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds6(_response);
         });
     }
 
-    protected processDeleteByIds6(response: Response): Promise<any> {
+    protected processDeleteByIds6(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1543,7 +1556,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
     /**
      * @return Success
      */
-    getListSelect3(): Promise<any> {
+    getListSelect3(): Promise<void> {
         let url_ = this.baseUrl + "/api/position/get-list-select";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1554,11 +1567,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListSelect3(_response);
         });
     }
 
-    protected processGetListSelect3(response: Response): Promise<any> {
+    protected processGetListSelect3(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1577,7 +1590,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    getListDto7(body: PagingRequest | undefined): Promise<any> {
+    getListDto7(body: PagingRequest | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/get-list-dto";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1592,11 +1605,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetListDto7(_response);
         });
     }
 
-    protected processGetListDto7(response: Response): Promise<any> {
+    protected processGetListDto7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1615,7 +1628,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    getById7(id: number | undefined): Promise<any> {
+    getById7(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/get-by-id?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1630,11 +1643,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processGetById7(_response);
         });
     }
 
-    protected processGetById7(response: Response): Promise<any> {
+    protected processGetById7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1654,7 +1667,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    update7(id: number | undefined, body: CreateUpdateUsersDto | undefined): Promise<any> {
+    update7(id: number | undefined, body: CreateUpdateUsersDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/update?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1673,11 +1686,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processUpdate7(_response);
         });
     }
 
-    protected processUpdate7(response: Response): Promise<any> {
+    protected processUpdate7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1696,7 +1709,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    create7(body: CreateUpdateUsersDto | undefined): Promise<any> {
+    create7(body: CreateUpdateUsersDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1711,11 +1724,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processCreate7(_response);
         });
     }
 
-    protected processCreate7(response: Response): Promise<any> {
+    protected processCreate7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1734,7 +1747,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param id (optional) 
      * @return Success
      */
-    delete7(id: number | undefined): Promise<any> {
+    delete7(id: number | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -1749,11 +1762,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDelete7(_response);
         });
     }
 
-    protected processDelete7(response: Response): Promise<any> {
+    protected processDelete7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1772,7 +1785,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    deleteByIds7(body: number[] | undefined): Promise<any> {
+    deleteByIds7(body: number[] | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/delete-by-ids";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1787,11 +1800,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processDeleteByIds7(_response);
         });
     }
 
-    protected processDeleteByIds7(response: Response): Promise<any> {
+    protected processDeleteByIds7(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1810,28 +1823,26 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-   login(body: LoginDto | undefined): Observable<any> {
-  const url_ = `${this.baseUrl}/api/user/login`;
+    login(body: LoginDto | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/user/login";
+        url_ = url_.replace(/[?&]$/, "");
 
-  const fetchPromise = this.http.fetch(url_, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+        const content_ = JSON.stringify(body);
 
-  return from(fetchPromise).pipe(
-    switchMap(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-  );
-}
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
 
-    protected processLogin(response: Response): Promise<any> {
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processLogin(_response);
+        });
+    }
+
+    protected processLogin(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1850,7 +1861,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
      * @param body (optional) 
      * @return Success
      */
-    register(body: RegisterDto | undefined): Promise<any> {
+    register(body: RegisterDto | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/user/register";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1865,11 +1876,11 @@ checkOut(employeeId: number | undefined): Promise<any> {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return _response.json();
+            return this.processRegister(_response);
         });
     }
 
-    protected processRegister(response: Response): Promise<any> {
+    protected processRegister(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1885,14 +1896,177 @@ checkOut(employeeId: number | undefined): Promise<any> {
     }
 }
 
+export class Attendance implements IAttendance {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    date?: Date | undefined;
+    checkIn?: Date | undefined;
+    checkOut?: Date | undefined;
+    status?: AttendanceStatus;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+
+    constructor(data?: IAttendance) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.employeeID = _data["employeeID"];
+            this.employee = _data["employee"] ? Employees.fromJS(_data["employee"]) : <any>undefined;
+            this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
+            this.checkIn = _data["checkIn"] ? new Date(_data["checkIn"].toString()) : <any>undefined;
+            this.checkOut = _data["checkOut"] ? new Date(_data["checkOut"].toString()) : <any>undefined;
+            this.status = _data["status"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Attendance {
+        data = typeof data === 'object' ? data : {};
+        let result = new Attendance();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["employeeID"] = this.employeeID;
+        data["employee"] = this.employee ? this.employee.toJSON() : <any>undefined;
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["checkIn"] = this.checkIn ? this.checkIn.toISOString() : <any>undefined;
+        data["checkOut"] = this.checkOut ? this.checkOut.toISOString() : <any>undefined;
+        data["status"] = this.status;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IAttendance {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    date?: Date | undefined;
+    checkIn?: Date | undefined;
+    checkOut?: Date | undefined;
+    status?: AttendanceStatus;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+}
+
 export enum AttendanceStatus {
     _1 = 1,
     _2 = 2,
     _3 = 3,
+    _4 = 4,
+    _5 = 5,
+}
+
+export class Contracts implements IContracts {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    contractType?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    salary?: number | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+
+    constructor(data?: IContracts) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.employeeID = _data["employeeID"];
+            this.employee = _data["employee"] ? Employees.fromJS(_data["employee"]) : <any>undefined;
+            this.contractType = _data["contractType"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : <any>undefined;
+            this.salary = _data["salary"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Contracts {
+        data = typeof data === 'object' ? data : {};
+        let result = new Contracts();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["employeeID"] = this.employeeID;
+        data["employee"] = this.employee ? this.employee.toJSON() : <any>undefined;
+        data["contractType"] = this.contractType;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["salary"] = this.salary;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IContracts {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    contractType?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    salary?: number | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
 }
 
 export class CreateUpdateAttendanceDto implements ICreateUpdateAttendanceDto {
     employeeID?: number | undefined;
+    employee?: Employees;
     date?: Date | undefined;
     checkIn?: Date | undefined;
     checkOut?: Date | undefined;
@@ -1912,6 +2086,7 @@ export class CreateUpdateAttendanceDto implements ICreateUpdateAttendanceDto {
     init(_data?: any) {
         if (_data) {
             this.employeeID = _data["employeeID"];
+            this.employee = _data["employee"] ? Employees.fromJS(_data["employee"]) : <any>undefined;
             this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
             this.checkIn = _data["checkIn"] ? new Date(_data["checkIn"].toString()) : <any>undefined;
             this.checkOut = _data["checkOut"] ? new Date(_data["checkOut"].toString()) : <any>undefined;
@@ -1931,6 +2106,7 @@ export class CreateUpdateAttendanceDto implements ICreateUpdateAttendanceDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["employeeID"] = this.employeeID;
+        data["employee"] = this.employee ? this.employee.toJSON() : <any>undefined;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         data["checkIn"] = this.checkIn ? this.checkIn.toISOString() : <any>undefined;
         data["checkOut"] = this.checkOut ? this.checkOut.toISOString() : <any>undefined;
@@ -1939,12 +2115,11 @@ export class CreateUpdateAttendanceDto implements ICreateUpdateAttendanceDto {
         data["userId"] = this.userId;
         return data;
     }
-
-    
 }
 
 export interface ICreateUpdateAttendanceDto {
     employeeID?: number | undefined;
+    employee?: Employees;
     date?: Date | undefined;
     checkIn?: Date | undefined;
     checkOut?: Date | undefined;
@@ -2053,7 +2228,7 @@ export class CreateUpdateEmployeesDto implements ICreateUpdateEmployeesDto {
     fullName?: string | undefined;
     birthDay?: Date | undefined;
     gender?: number | undefined;
-    phoneNumber?: number | undefined;
+    phoneNumber?: string | undefined;
     email?: string | undefined;
     address?: string | undefined;
     positionId?: number | undefined;
@@ -2063,6 +2238,9 @@ export class CreateUpdateEmployeesDto implements ICreateUpdateEmployeesDto {
     status?: EmployeeStatus;
     userName?: string | undefined;
     userId?: number;
+    contractType?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
 
     constructor(data?: ICreateUpdateEmployeesDto) {
         if (data) {
@@ -2088,6 +2266,9 @@ export class CreateUpdateEmployeesDto implements ICreateUpdateEmployeesDto {
             this.status = _data["status"];
             this.userName = _data["userName"];
             this.userId = _data["userId"];
+            this.contractType = _data["contractType"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : <any>undefined;
         }
     }
 
@@ -2113,6 +2294,9 @@ export class CreateUpdateEmployeesDto implements ICreateUpdateEmployeesDto {
         data["status"] = this.status;
         data["userName"] = this.userName;
         data["userId"] = this.userId;
+        data["contractType"] = this.contractType;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         return data;
     }
 }
@@ -2121,7 +2305,7 @@ export interface ICreateUpdateEmployeesDto {
     fullName?: string | undefined;
     birthDay?: Date | undefined;
     gender?: number | undefined;
-    phoneNumber?: number | undefined;
+    phoneNumber?: string | undefined;
     email?: string | undefined;
     address?: string | undefined;
     positionId?: number | undefined;
@@ -2131,6 +2315,9 @@ export interface ICreateUpdateEmployeesDto {
     status?: EmployeeStatus;
     userName?: string | undefined;
     userId?: number;
+    contractType?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
 }
 
 export class CreateUpdatePayrollDto implements ICreateUpdatePayrollDto {
@@ -2293,10 +2480,226 @@ export interface ICreateUpdateUsersDto {
     userId?: number;
 }
 
+export class Departments implements IDepartments {
+    id?: number;
+    departmentName?: string | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    employees?: Employees[] | undefined;
+
+    constructor(data?: IDepartments) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.departmentName = _data["departmentName"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            if (Array.isArray(_data["employees"])) {
+                this.employees = [] as any;
+                for (let item of _data["employees"])
+                    this.employees!.push(Employees.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Departments {
+        data = typeof data === 'object' ? data : {};
+        let result = new Departments();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["departmentName"] = this.departmentName;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        if (Array.isArray(this.employees)) {
+            data["employees"] = [];
+            for (let item of this.employees)
+                data["employees"].push(item ? item.toJSON() : <any>undefined);
+        }
+        return data;
+    }
+}
+
+export interface IDepartments {
+    id?: number;
+    departmentName?: string | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    employees?: Employees[] | undefined;
+}
+
 export enum EmployeeStatus {
     _1 = 1,
     _2 = 2,
     _3 = 3,
+}
+
+export class Employees implements IEmployees {
+    id?: number;
+    fullName?: string | undefined;
+    birthDay?: Date | undefined;
+    gender?: number | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+    address?: string | undefined;
+    positionId?: number | undefined;
+    position?: Positions;
+    departmentId?: number | undefined;
+    department?: Departments;
+    salary?: number | undefined;
+    hireDate?: Date | undefined;
+    status?: EmployeeStatus;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    contracts?: Contracts[] | undefined;
+    attendances?: Attendance[] | undefined;
+    payrolls?: Payroll[] | undefined;
+
+    constructor(data?: IEmployees) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.fullName = _data["fullName"];
+            this.birthDay = _data["birthDay"] ? new Date(_data["birthDay"].toString()) : <any>undefined;
+            this.gender = _data["gender"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.email = _data["email"];
+            this.address = _data["address"];
+            this.positionId = _data["positionId"];
+            this.position = _data["position"] ? Positions.fromJS(_data["position"]) : <any>undefined;
+            this.departmentId = _data["departmentId"];
+            this.department = _data["department"] ? Departments.fromJS(_data["department"]) : <any>undefined;
+            this.salary = _data["salary"];
+            this.hireDate = _data["hireDate"] ? new Date(_data["hireDate"].toString()) : <any>undefined;
+            this.status = _data["status"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            if (Array.isArray(_data["contracts"])) {
+                this.contracts = [] as any;
+                for (let item of _data["contracts"])
+                    this.contracts!.push(Contracts.fromJS(item));
+            }
+            if (Array.isArray(_data["attendances"])) {
+                this.attendances = [] as any;
+                for (let item of _data["attendances"])
+                    this.attendances!.push(Attendance.fromJS(item));
+            }
+            if (Array.isArray(_data["payrolls"])) {
+                this.payrolls = [] as any;
+                for (let item of _data["payrolls"])
+                    this.payrolls!.push(Payroll.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Employees {
+        data = typeof data === 'object' ? data : {};
+        let result = new Employees();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["fullName"] = this.fullName;
+        data["birthDay"] = this.birthDay ? this.birthDay.toISOString() : <any>undefined;
+        data["gender"] = this.gender;
+        data["phoneNumber"] = this.phoneNumber;
+        data["email"] = this.email;
+        data["address"] = this.address;
+        data["positionId"] = this.positionId;
+        data["position"] = this.position ? this.position.toJSON() : <any>undefined;
+        data["departmentId"] = this.departmentId;
+        data["department"] = this.department ? this.department.toJSON() : <any>undefined;
+        data["salary"] = this.salary;
+        data["hireDate"] = this.hireDate ? this.hireDate.toISOString() : <any>undefined;
+        data["status"] = this.status;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        if (Array.isArray(this.contracts)) {
+            data["contracts"] = [];
+            for (let item of this.contracts)
+                data["contracts"].push(item ? item.toJSON() : <any>undefined);
+        }
+        if (Array.isArray(this.attendances)) {
+            data["attendances"] = [];
+            for (let item of this.attendances)
+                data["attendances"].push(item ? item.toJSON() : <any>undefined);
+        }
+        if (Array.isArray(this.payrolls)) {
+            data["payrolls"] = [];
+            for (let item of this.payrolls)
+                data["payrolls"].push(item ? item.toJSON() : <any>undefined);
+        }
+        return data;
+    }
+}
+
+export interface IEmployees {
+    id?: number;
+    fullName?: string | undefined;
+    birthDay?: Date | undefined;
+    gender?: number | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+    address?: string | undefined;
+    positionId?: number | undefined;
+    position?: Positions;
+    departmentId?: number | undefined;
+    department?: Departments;
+    salary?: number | undefined;
+    hireDate?: Date | undefined;
+    status?: EmployeeStatus;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    contracts?: Contracts[] | undefined;
+    attendances?: Attendance[] | undefined;
+    payrolls?: Payroll[] | undefined;
 }
 
 export class LoginDto implements ILoginDto {
@@ -2342,9 +2745,12 @@ export interface ILoginDto {
 export class PagingRequest implements IPagingRequest {
     field?: string | undefined;
     fieldOption?: boolean;
-    pageSize: number = 10;
-    pageNumber: number = 1;
+    pageSize?: number;
+    pageNumber?: number;
     keyword?: string | undefined;
+    filterDate?: Date | undefined;
+    lateAfter?: TimeSpan;
+    leaveAfter?: TimeSpan;
 
     constructor(data?: IPagingRequest) {
         if (data) {
@@ -2362,6 +2768,9 @@ export class PagingRequest implements IPagingRequest {
             this.pageSize = _data["pageSize"];
             this.pageNumber = _data["pageNumber"];
             this.keyword = _data["keyword"];
+            this.filterDate = _data["filterDate"] ? new Date(_data["filterDate"].toString()) : <any>undefined;
+            this.lateAfter = _data["lateAfter"] ? TimeSpan.fromJS(_data["lateAfter"]) : <any>undefined;
+            this.leaveAfter = _data["leaveAfter"] ? TimeSpan.fromJS(_data["leaveAfter"]) : <any>undefined;
         }
     }
 
@@ -2379,6 +2788,9 @@ export class PagingRequest implements IPagingRequest {
         data["pageSize"] = this.pageSize;
         data["pageNumber"] = this.pageNumber;
         data["keyword"] = this.keyword;
+        data["filterDate"] = this.filterDate ? this.filterDate.toISOString() : <any>undefined;
+        data["lateAfter"] = this.lateAfter ? this.lateAfter.toJSON() : <any>undefined;
+        data["leaveAfter"] = this.leaveAfter ? this.leaveAfter.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2389,12 +2801,176 @@ export interface IPagingRequest {
     pageSize?: number;
     pageNumber?: number;
     keyword?: string | undefined;
+    filterDate?: Date | undefined;
+    lateAfter?: TimeSpan;
+    leaveAfter?: TimeSpan;
+}
+
+export class Payroll implements IPayroll {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    month?: number | undefined;
+    year?: number | undefined;
+    baseSalary?: number | undefined;
+    bonus?: number | undefined;
+    deductions?: number | undefined;
+    netSalary?: number | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+
+    constructor(data?: IPayroll) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.employeeID = _data["employeeID"];
+            this.employee = _data["employee"] ? Employees.fromJS(_data["employee"]) : <any>undefined;
+            this.month = _data["month"];
+            this.year = _data["year"];
+            this.baseSalary = _data["baseSalary"];
+            this.bonus = _data["bonus"];
+            this.deductions = _data["deductions"];
+            this.netSalary = _data["netSalary"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Payroll {
+        data = typeof data === 'object' ? data : {};
+        let result = new Payroll();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["employeeID"] = this.employeeID;
+        data["employee"] = this.employee ? this.employee.toJSON() : <any>undefined;
+        data["month"] = this.month;
+        data["year"] = this.year;
+        data["baseSalary"] = this.baseSalary;
+        data["bonus"] = this.bonus;
+        data["deductions"] = this.deductions;
+        data["netSalary"] = this.netSalary;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IPayroll {
+    id?: number;
+    employeeID?: number | undefined;
+    employee?: Employees;
+    month?: number | undefined;
+    year?: number | undefined;
+    baseSalary?: number | undefined;
+    bonus?: number | undefined;
+    deductions?: number | undefined;
+    netSalary?: number | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+}
+
+export class Positions implements IPositions {
+    id?: number;
+    positionName?: string | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    employees?: Employees[] | undefined;
+
+    constructor(data?: IPositions) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.positionName = _data["positionName"];
+            this.isDeleted = _data["isDeleted"];
+            this.creationName = _data["creationName"];
+            this.creationTime = _data["creationTime"] ? new Date(_data["creationTime"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            if (Array.isArray(_data["employees"])) {
+                this.employees = [] as any;
+                for (let item of _data["employees"])
+                    this.employees!.push(Employees.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Positions {
+        data = typeof data === 'object' ? data : {};
+        let result = new Positions();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["positionName"] = this.positionName;
+        data["isDeleted"] = this.isDeleted;
+        data["creationName"] = this.creationName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        if (Array.isArray(this.employees)) {
+            data["employees"] = [];
+            for (let item of this.employees)
+                data["employees"].push(item ? item.toJSON() : <any>undefined);
+        }
+        return data;
+    }
+}
+
+export interface IPositions {
+    id?: number;
+    positionName?: string | undefined;
+    isDeleted?: boolean;
+    creationName?: string | undefined;
+    creationTime?: Date | undefined;
+    updatedBy?: string | undefined;
+    updatedAt?: Date | undefined;
+    employees?: Employees[] | undefined;
 }
 
 export class RegisterDto implements IRegisterDto {
     username?: string | undefined;
     password?: string | undefined;
     employeeID?: number;
+    role?: Role;
 
     constructor(data?: IRegisterDto) {
         if (data) {
@@ -2410,6 +2986,7 @@ export class RegisterDto implements IRegisterDto {
             this.username = _data["username"];
             this.password = _data["password"];
             this.employeeID = _data["employeeID"];
+            this.role = _data["role"];
         }
     }
 
@@ -2425,6 +3002,7 @@ export class RegisterDto implements IRegisterDto {
         data["username"] = this.username;
         data["password"] = this.password;
         data["employeeID"] = this.employeeID;
+        data["role"] = this.role;
         return data;
     }
 }
@@ -2433,6 +3011,7 @@ export interface IRegisterDto {
     username?: string | undefined;
     password?: string | undefined;
     employeeID?: number;
+    role?: Role;
 }
 
 export enum Role {
@@ -2441,8 +3020,100 @@ export enum Role {
     _3 = 3,
 }
 
+export class TimeSpan implements ITimeSpan {
+    ticks?: number;
+    readonly days?: number;
+    readonly hours?: number;
+    readonly milliseconds?: number;
+    readonly microseconds?: number;
+    readonly nanoseconds?: number;
+    readonly minutes?: number;
+    readonly seconds?: number;
+    readonly totalDays?: number;
+    readonly totalHours?: number;
+    readonly totalMilliseconds?: number;
+    readonly totalMicroseconds?: number;
+    readonly totalNanoseconds?: number;
+    readonly totalMinutes?: number;
+    readonly totalSeconds?: number;
+
+    constructor(data?: ITimeSpan) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ticks = _data["ticks"];
+            (<any>this).days = _data["days"];
+            (<any>this).hours = _data["hours"];
+            (<any>this).milliseconds = _data["milliseconds"];
+            (<any>this).microseconds = _data["microseconds"];
+            (<any>this).nanoseconds = _data["nanoseconds"];
+            (<any>this).minutes = _data["minutes"];
+            (<any>this).seconds = _data["seconds"];
+            (<any>this).totalDays = _data["totalDays"];
+            (<any>this).totalHours = _data["totalHours"];
+            (<any>this).totalMilliseconds = _data["totalMilliseconds"];
+            (<any>this).totalMicroseconds = _data["totalMicroseconds"];
+            (<any>this).totalNanoseconds = _data["totalNanoseconds"];
+            (<any>this).totalMinutes = _data["totalMinutes"];
+            (<any>this).totalSeconds = _data["totalSeconds"];
+        }
+    }
+
+    static fromJS(data: any): TimeSpan {
+        data = typeof data === 'object' ? data : {};
+        let result = new TimeSpan();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ticks"] = this.ticks;
+        data["days"] = this.days;
+        data["hours"] = this.hours;
+        data["milliseconds"] = this.milliseconds;
+        data["microseconds"] = this.microseconds;
+        data["nanoseconds"] = this.nanoseconds;
+        data["minutes"] = this.minutes;
+        data["seconds"] = this.seconds;
+        data["totalDays"] = this.totalDays;
+        data["totalHours"] = this.totalHours;
+        data["totalMilliseconds"] = this.totalMilliseconds;
+        data["totalMicroseconds"] = this.totalMicroseconds;
+        data["totalNanoseconds"] = this.totalNanoseconds;
+        data["totalMinutes"] = this.totalMinutes;
+        data["totalSeconds"] = this.totalSeconds;
+        return data;
+    }
+}
+
+export interface ITimeSpan {
+    ticks?: number;
+    days?: number;
+    hours?: number;
+    milliseconds?: number;
+    microseconds?: number;
+    nanoseconds?: number;
+    minutes?: number;
+    seconds?: number;
+    totalDays?: number;
+    totalHours?: number;
+    totalMilliseconds?: number;
+    totalMicroseconds?: number;
+    totalNanoseconds?: number;
+    totalMinutes?: number;
+    totalSeconds?: number;
+}
+
 export class ApiException extends Error {
-    // message: string;
+    message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };
