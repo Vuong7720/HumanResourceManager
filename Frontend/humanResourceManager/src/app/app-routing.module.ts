@@ -62,6 +62,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'role',
+    loadChildren: () => import('./pages/role/role.module').then(m => m.RoleModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'check',
     loadChildren: () => import('./pages/login/check/check.module').then(m => m.CheckModule),
     canLoad: [AuthGuard],

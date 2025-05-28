@@ -1,0 +1,58 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'">
+  <div *nzModalTitle>
+    <!-- <h3 class="fw-bold">Cập nhật</h3> -->
+    <h3 class="fw-bold">
+      {{ isEditMode ? 'Cập nhật' : 'Thêm mới' }}
+    </h3>
+  </div>
+
+  <nz-form *ngIf="form" skipValidation [formGroup]="form">
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label [nzFor]="'roleName'" [nzNoColon]="true"
+        class="d-flex align-items-center fs-6 fw-semibold required">
+        <span>Tên vai trò</span>
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="codeErrorTpl">
+        <input nz-input class="form-control form-control-sm" placeholder="" formControlName="roleName" />
+        <ng-template #codeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Tên vai trò không được bỏ trống
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            Tên vai trò không được vượt quá 255 ký tự
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+      <nz-form-label [nzFor]="'positionName'" [nzNoColon]="true"
+        class="d-flex align-items-center fs-6 fw-semibold required">
+        <span>Danh sách quyền</span>
+      </nz-form-label>
+      <nz-form-control>
+        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #f0f0f0; padding: 8px; border-radius: 4px;">
+          <ng-container *ngFor="let group of groupedPermissions | keyvalue">
+            <strong>{{ group.key }}</strong>
+            <div style="margin-left: 12px; margin-bottom: 8px;">
+              <label *ngFor="let item of group.value" class="d-block mb-1">
+                <input type="checkbox" [value]="item.value"
+                  [checked]="form.get('permissionIds')?.value?.includes(item.value)"
+                  (change)="onCheckboxChange(item.value,$event)" />
+                {{ item.label }}
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-form>
+
+  <div *nzModalFooter>
+    <!-- [disabled]="!form.valid" -->
+    <button (click)="onSubmit()" class="btn btn-sm btn-primary me-2">
+      <i class="fa fa-floppy-o fs-4 me-2"></i> Lưu
+    </button>
+    <a href="javascript:;" (click)="onBack()" class="btn btn-sm btn-secondary me-2"><i
+        class="fa fa-times fs-4 me-2"></i> Đóng</a>
+  </div>
+</nz-spin>

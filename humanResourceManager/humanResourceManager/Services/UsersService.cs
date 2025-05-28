@@ -1,4 +1,5 @@
-﻿using humanResourceManager.Datas;
+﻿using Azure.Core;
+using humanResourceManager.Datas;
 using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
@@ -6,6 +7,7 @@ using humanResourceManager.Models.UsersModel;
 using humanResourceManager.Ulity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace humanResourceManager.Services
 {
@@ -28,12 +30,12 @@ namespace humanResourceManager.Services
 				// entity.Employee = input.Employee; // Không set lại Employee object ở Update, chỉ giữ EmployeeID
 				Username = input.Username,
 				Password = input.Password,
-				Role = input.Role,
-				CreationName = input.UserName,
+				Role = input.Role??Role.Admin,
+				RoleIds = input.RoleIds ?? new List<int>(),
 				CreationTime = DateTime.Now
 			};
 
-			_dbContext.Users.Add(entity);
+			 _dbContext.Users.Add(entity);
 			await _dbContext.SaveChangesAsync();
 			return new UsersDto
 			{
@@ -43,6 +45,7 @@ namespace humanResourceManager.Services
 				Username = entity.Username,
 				Password = entity.Password,
 				Role = entity.Role,
+				RoleIds = entity.RoleIds,
 				IsDeleted = entity.IsDeleted,
 				CreationName = entity.CreationName,
 				CreationTime = entity.CreationTime,
@@ -243,8 +246,8 @@ namespace humanResourceManager.Services
 			// entity.Employee = input.Employee; // Không set lại Employee object ở Update, chỉ giữ EmployeeID
 			entity.Username = input.Username;
 			entity.Password = input.Password;
-			entity.Role = input.Role;
-			entity.UpdatedBy = input.UserName;
+			entity.Role = input.Role??Role.Admin;
+			entity.RoleIds = input.RoleIds ?? new List<int>();
 			entity.UpdatedAt = DateTime.Now;
 
 			_dbContext.Users.Update(entity);
@@ -258,6 +261,7 @@ namespace humanResourceManager.Services
 				Username = entity.Username,
 				Password = entity.Password,
 				Role = entity.Role,
+				RoleIds = entity.RoleIds,
 				IsDeleted = entity.IsDeleted,
 				CreationName = entity.CreationName,
 				CreationTime = entity.CreationTime,

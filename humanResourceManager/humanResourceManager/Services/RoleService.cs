@@ -24,7 +24,7 @@ namespace humanResourceManager.Services
 			Rolee entity = new Rolee
 			{
 				RoleName = input.RoleName,
-				PermissionIds = input.PermissionIds,
+				PermissionIds = input.PermissionIds ?? new List<int>(),
 				CreationName = input.UserName,
 				CreationTime = DateTime.Now
 			};
@@ -44,6 +44,7 @@ namespace humanResourceManager.Services
 				PermissionNames = listNamePermission,
 
 				IsDeleted = entity.IsDeleted,
+				IsStatic = entity.IsStatic,
 				CreationName = entity.CreationName,
 				CreationTime = entity.CreationTime,
 				UpdatedBy = entity.UpdatedBy,
@@ -80,6 +81,7 @@ namespace humanResourceManager.Services
 				PermissionNames = listNamePermission,
 
 				IsDeleted = entity.IsDeleted,
+				IsStatic = entity.IsStatic,
 				CreationName = entity.CreationName,
 				CreationTime = entity.CreationTime,
 				UpdatedBy = entity.UpdatedBy,
@@ -142,8 +144,9 @@ namespace humanResourceManager.Services
 				RoleName = entity.RoleName,
 				PermissionIds = entity.PermissionIds,
 				PermissionNames = listNamePermission,
-
+				
 				IsDeleted = entity.IsDeleted,
+				IsStatic = entity.IsStatic,
 				CreationName = entity.CreationName,
 				CreationTime = entity.CreationTime,
 				UpdatedBy = entity.UpdatedBy,
@@ -168,6 +171,7 @@ namespace humanResourceManager.Services
 				PermissionNames = new List<string>(),
 
 				IsDeleted = a.IsDeleted,
+				IsStatic = a.IsStatic,
 				CreationName = a.CreationName,
 				CreationTime = a.CreationTime,
 				UpdatedBy = a.UpdatedBy,

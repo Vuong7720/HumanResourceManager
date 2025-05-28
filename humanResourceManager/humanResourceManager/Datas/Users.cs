@@ -17,7 +17,7 @@ namespace humanResourceManager.Datas
         [MaxLength(128)]
         public string Password { get; set; }
 
-        public Role Role { get; set; }
+        public Role Role { get; set; } 
 
 		public List<int> RoleIds { get; set; } = new List<int>();
 		public bool IsDeleted { get; set; } = false;
