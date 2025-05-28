@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './AuthService/auth.guard';
+import { DenyAccessComponent } from './pages/Deny-access/deny-access.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
@@ -72,6 +73,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/check/check.module').then(m => m.CheckModule),
     canLoad: [AuthGuard],
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'access-deny',
+    component: DenyAccessComponent,
+    title: 'Truy cập bị từ chối - Hệ thống quản lý nhân sự',
   },
 ];
 

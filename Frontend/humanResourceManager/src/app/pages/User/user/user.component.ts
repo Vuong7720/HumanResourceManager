@@ -7,6 +7,8 @@ import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-con
 import { CreateDepartmentComponent } from '../../Department/department/create-department/create-department.component';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -35,15 +37,34 @@ export class UserComponent {
   sortKey: string | null = null;
   isSpinning: boolean = false;
 
+  userInfo: JwtPayload | null = null;
+	
+  createPermission:boolean = false;
+  updatePermission:boolean = false;
+  deletePermission:boolean = false;
 
   constructor(
     private modal: NzModalService, 
     private viewContainerRef: ViewContainerRef, 
     private service: Client,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
   ngOnInit(): void {
-
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement")) {
+      this.router.navigate(['access-deny']);
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement_Create")) {
+      this.createPermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement_Update")) {
+      this.updatePermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement_Delete")) {
+      this.deletePermission = true;
+    }
   }
 
 
@@ -60,6 +81,7 @@ export class UserComponent {
     if (response && response.data) {
       this.listOfData.totalCount = response.data.totalCount;
       this.listOfData.items = response.data.items;
+      // console.log('Dữ liệu người dùng:', this.listOfData.items);
       this.processedData = this.listOfData.items!.map(item => ({ ...item }));
       this.loading = false;
       this.isSpinning = false;

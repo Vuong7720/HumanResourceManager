@@ -1,7 +1,9 @@
 ﻿using humanResourceManager.Datas;
+using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
 using humanResourceManager.Models.DepartmentModel;
+using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,14 +12,21 @@ namespace humanResourceManager.Services
 	public class DepartmentsService : IDepartmentsService
 	{
 		private readonly MyDbContext _dbContext;
+		private readonly ICurrentUserExtended _currentUser;
 
-		public DepartmentsService(MyDbContext dbContext)
+		public DepartmentsService(MyDbContext dbContext, ICurrentUserExtended currentUser)
 		{
 			_dbContext = dbContext;
+			_currentUser = currentUser;
 		}
 
 		public async Task<MessageDto> CreateAsync(CreateUpdateDepartmentsDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement_Create))
+			{
+				throw new Exception("Không có quyền tạo mới phòng ban");
+			}
+
 			try
 			{
                 Departments entity = new Departments
@@ -42,6 +51,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteAsync(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá phòng ban");
+			}
+
 			var entity = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -54,6 +68,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteMultipleAsync(IEnumerable<int> ids)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá phòng ban");
+			}
+
 			var entities = await _dbContext.Departments.Where(x => ids.Contains(x.Id)).ToListAsync();
 			if (entities == null || entities.Count == 0)
 			{
@@ -66,6 +85,11 @@ namespace humanResourceManager.Services
 
 		public async Task<DepartmentsDto> GetById(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement))
+			{
+				throw new Exception("Không có quyền xem chi tiết phòng ban");
+			}
+
 			var entity = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -86,6 +110,11 @@ namespace humanResourceManager.Services
 
 		public async Task<PagedResultDto<DepartmentsDto>> GetPagingDto(PagingRequest request)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách phòng ban");
+			}
+
 			var departments = _dbContext.Departments.AsQueryable();
 			if (request.Keyword != null)
 			{
@@ -125,6 +154,11 @@ namespace humanResourceManager.Services
 
 		public async Task<DepartmentsDto> UpdateAsync(int id, CreateUpdateDepartmentsDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.DepartmentManagement_Update))
+			{
+				throw new Exception("Không có quyền cập nhật thông tin phòng ban");
+			}
+
 			var entity = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{

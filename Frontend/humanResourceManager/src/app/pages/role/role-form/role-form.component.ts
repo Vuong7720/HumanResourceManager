@@ -1,5 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
@@ -30,11 +31,17 @@ export class RoleFormComponent implements OnInit {
     private toastr: ToastrService,
     private service: RoleService,
     private nzModalRef: NzModalRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.userInfo = this.authService.getUserInfo();
+    // console.log(this.userInfo);
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement_Create") && 
+        !this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement_Update")) {
+      this.router.navigate(['access-deny']);
+    }
     this.loadDataPermission();
     this.buildForm();
     if (this.getParams.data) {
@@ -42,6 +49,8 @@ export class RoleFormComponent implements OnInit {
       this.isEditMode = true;
       this.buildForm();
     }
+
+    
   }
 
   loadDataPermission() {

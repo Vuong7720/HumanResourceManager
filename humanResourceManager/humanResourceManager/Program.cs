@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using humanResourceManager.Models.UsersModel;
 using humanResourceManager.Enums;
+using humanResourceManager.Models.ICurrentUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,9 @@ builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IPositionsService, PositionsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserExtended, CurrentUserExtended>();
 
 
 builder.Services.AddSingleton<JwtService>();

@@ -1,8 +1,10 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 import { Client } from 'src/app/api2/api.client';
 import { SelectOptionItems } from 'src/app/api2/role/models';
 import { RoleService } from 'src/app/api2/role/role.service';
@@ -24,22 +26,33 @@ export class CreateUserComponent implements OnInit {
 
   listRoleSelectData = [] as SelectOptionItems[];
 
+  userInfo: JwtPayload | null = null;
+
   constructor(
     private fb: FormBuilder, 
     private toastr: ToastrService,
     private service: Client,
     private nzModalRef: NzModalRef,
     private roleService: RoleService,
+    private authService: AuthService,
+    private router: Router,
   ) {
 
   }
 
   ngOnInit(): void {
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement_Create") && 
+        !this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement_Update")) {
+      this.router.navigate(['access-deny']);
+    }
+
     this.loadDataRoles();
     this.getEmploy();
     this.buildForm();
     if (this.getParams.data) {
       this.data = this.getParams.data;
+      console.log(this.data);
       this.isEditMode = true;
       this.buildForm();
     }
@@ -71,20 +84,20 @@ export class CreateUserComponent implements OnInit {
   }
 
   onCheckboxChange(id: number, event: any): void {
-    const permissionIds: number[] = this.form.get('permissionIds')?.value || [];
+    const roleIds: number[] = this.form.get('roleIds')?.value || [];
 
     if (event.target.checked) {
-      if (!permissionIds.includes(id)) {
-        permissionIds.push(id);
+      if (!roleIds.includes(id)) {
+        roleIds.push(id);
       }
     } else {
-      const index = permissionIds.indexOf(id);
+      const index = roleIds.indexOf(id);
       if (index > -1) {
-        permissionIds.splice(index, 1);
+        roleIds.splice(index, 1);
       }
     }
 
-    this.form.get('permissionIds')?.setValue(permissionIds);
+    this.form.get('roleIds')?.setValue(roleIds);
   }
 
   onSubmit(): void {

@@ -1,5 +1,4 @@
 ﻿using humanResourceManager.IServices;
-using humanResourceManager.Models.PositionsModel;
 using humanResourceManager.Models;
 using humanResourceManager.Ulity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +11,7 @@ namespace humanResourceManager.Controllers
 	public class AttendanceController : ControllerBase
 	{
 		private readonly IAttendanceService _attendanceService;
-
+		
 		public AttendanceController(IAttendanceService attendanceService)
 		{
 			_attendanceService = attendanceService;

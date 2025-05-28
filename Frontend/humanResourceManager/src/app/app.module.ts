@@ -25,6 +25,9 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { DeleteComfirmComponent } from './shared/delete-confirm/delete-confirm.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './AuthService/auth.interceptor';
+
 registerLocaleData(vi);
 
 @NgModule({
@@ -60,6 +63,11 @@ registerLocaleData(vi);
   {
     provide: Client,
     useFactory: () => new Client(environment.apiBaseUrl)
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
   }
 ],
   bootstrap: [AppComponent]

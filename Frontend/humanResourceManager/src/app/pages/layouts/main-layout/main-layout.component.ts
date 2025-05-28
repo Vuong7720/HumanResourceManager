@@ -14,9 +14,21 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.authService.getUserInfo();
+    console.log(this.userInfo?.permissions);
   }
 
   logOut(){
     this.authService.logout();
+  }
+
+  checkPermission(permission: string): boolean {
+    if (!this.userInfo || !this.userInfo.permissions) {
+      return false;
+    }
+    // Tách chuỗi permissions thành mảng, bỏ khoảng trắng nếu có
+  const permissionsArray = this.userInfo.permissions.split(',').map(p => p.trim());
+
+  return permissionsArray.includes(permission);
+    // return this.userInfo.permissions.includes(permission);
   }
 }

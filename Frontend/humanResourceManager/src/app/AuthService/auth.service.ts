@@ -8,6 +8,7 @@ export interface JwtPayload {
   name: string;
   email?: string;
   role?: string;
+  permissions?: string;
   exp: number;
 }
 
@@ -51,6 +52,7 @@ export class AuthService {
       sub: raw["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
       name: raw["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
       role: raw["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+      permissions: raw["permission_names"],
       exp: raw.exp,
     };
   } catch (e) {
