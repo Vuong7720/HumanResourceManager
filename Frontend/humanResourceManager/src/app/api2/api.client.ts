@@ -2345,6 +2345,9 @@ export class PagingRequest implements IPagingRequest {
     pageSize: number = 10;
     pageNumber: number = 1;
     keyword?: string | undefined;
+    filterDate?: Date | undefined;
+    lateAfter?: TimeSpan;
+    leaveAfter?: TimeSpan;
 
     constructor(data?: IPagingRequest) {
         if (data) {
@@ -2362,6 +2365,9 @@ export class PagingRequest implements IPagingRequest {
             this.pageSize = _data["pageSize"];
             this.pageNumber = _data["pageNumber"];
             this.keyword = _data["keyword"];
+            this.filterDate = _data["filterDate"] ? new Date(_data["filterDate"].toString()) : <any>undefined;
+            this.lateAfter = _data["lateAfter"] ? TimeSpan.fromJS(_data["lateAfter"]) : <any>undefined;
+            this.leaveAfter = _data["leaveAfter"] ? TimeSpan.fromJS(_data["leaveAfter"]) : <any>undefined;
         }
     }
 
@@ -2379,8 +2385,105 @@ export class PagingRequest implements IPagingRequest {
         data["pageSize"] = this.pageSize;
         data["pageNumber"] = this.pageNumber;
         data["keyword"] = this.keyword;
+        data["filterDate"] = this.filterDate ? this.filterDate.toISOString() : <any>undefined;
+        data["lateAfter"] = this.lateAfter ? this.lateAfter.toJSON() : <any>undefined;
+        data["leaveAfter"] = this.leaveAfter ? this.leaveAfter.toJSON() : <any>undefined;
         return data;
     }
+}
+
+
+
+export class TimeSpan implements ITimeSpan {
+    ticks?: number;
+    readonly days?: number;
+    readonly hours?: number;
+    readonly milliseconds?: number;
+    readonly microseconds?: number;
+    readonly nanoseconds?: number;
+    readonly minutes?: number;
+    readonly seconds?: number;
+    readonly totalDays?: number;
+    readonly totalHours?: number;
+    readonly totalMilliseconds?: number;
+    readonly totalMicroseconds?: number;
+    readonly totalNanoseconds?: number;
+    readonly totalMinutes?: number;
+    readonly totalSeconds?: number;
+
+    constructor(data?: ITimeSpan) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ticks = _data["ticks"];
+            (<any>this).days = _data["days"];
+            (<any>this).hours = _data["hours"];
+            (<any>this).milliseconds = _data["milliseconds"];
+            (<any>this).microseconds = _data["microseconds"];
+            (<any>this).nanoseconds = _data["nanoseconds"];
+            (<any>this).minutes = _data["minutes"];
+            (<any>this).seconds = _data["seconds"];
+            (<any>this).totalDays = _data["totalDays"];
+            (<any>this).totalHours = _data["totalHours"];
+            (<any>this).totalMilliseconds = _data["totalMilliseconds"];
+            (<any>this).totalMicroseconds = _data["totalMicroseconds"];
+            (<any>this).totalNanoseconds = _data["totalNanoseconds"];
+            (<any>this).totalMinutes = _data["totalMinutes"];
+            (<any>this).totalSeconds = _data["totalSeconds"];
+        }
+    }
+
+    static fromJS(data: any): TimeSpan {
+        data = typeof data === 'object' ? data : {};
+        let result = new TimeSpan();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ticks"] = this.ticks;
+        data["days"] = this.days;
+        data["hours"] = this.hours;
+        data["milliseconds"] = this.milliseconds;
+        data["microseconds"] = this.microseconds;
+        data["nanoseconds"] = this.nanoseconds;
+        data["minutes"] = this.minutes;
+        data["seconds"] = this.seconds;
+        data["totalDays"] = this.totalDays;
+        data["totalHours"] = this.totalHours;
+        data["totalMilliseconds"] = this.totalMilliseconds;
+        data["totalMicroseconds"] = this.totalMicroseconds;
+        data["totalNanoseconds"] = this.totalNanoseconds;
+        data["totalMinutes"] = this.totalMinutes;
+        data["totalSeconds"] = this.totalSeconds;
+        return data;
+    }
+}
+
+export interface ITimeSpan {
+    ticks?: number;
+    days?: number;
+    hours?: number;
+    milliseconds?: number;
+    microseconds?: number;
+    nanoseconds?: number;
+    minutes?: number;
+    seconds?: number;
+    totalDays?: number;
+    totalHours?: number;
+    totalMilliseconds?: number;
+    totalMicroseconds?: number;
+    totalNanoseconds?: number;
+    totalMinutes?: number;
+    totalSeconds?: number;
 }
 
 export interface IPagingRequest {
@@ -2389,6 +2492,9 @@ export interface IPagingRequest {
     pageSize?: number;
     pageNumber?: number;
     keyword?: string | undefined;
+    filterDate?: Date | undefined;
+    lateAfter?: TimeSpan;
+    leaveAfter?: TimeSpan;
 }
 
 export class RegisterDto implements IRegisterDto {
