@@ -18,11 +18,11 @@
           <i class="bi bi-plus-circle me-1"></i> Thêm mới
         </button> -->
         <nz-date-picker [(ngModel)]="entityRequest.filterDate" (ngModelChange)="onChange($event)"></nz-date-picker>
-        <nz-time-picker [(ngModel)]="entityRequest.lateAfter" (ngModelChange)="onLateAfterChange($event)">
+        <!-- <nz-time-picker [(ngModel)]="entityRequest.lateAfter" (ngModelChange)="onLateAfterChange($event)">
         </nz-time-picker>
 
         <nz-time-picker [(ngModel)]="entityRequest.leaveAfter" (ngModelChange)="onLeaveAfterChange($event)">
-        </nz-time-picker>
+        </nz-time-picker> -->
         <!-- 
         <button class="btn btn-sm btn-danger" [disabled]="setOfCheckedId.size <= 0" (click)="onDelete(null)">
           <i class="bi bi-trash me-1"></i> Xóa ({{ setOfCheckedId.size }})

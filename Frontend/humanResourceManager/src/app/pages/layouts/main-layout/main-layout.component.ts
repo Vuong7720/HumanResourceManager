@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 
 @Component({
@@ -10,11 +11,10 @@ export class MainLayoutComponent implements OnInit {
   isCollapsed = false; 
   userInfo: JwtPayload | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.userInfo = this.authService.getUserInfo();
-    console.log(this.userInfo?.permissions);
   }
 
   logOut(){
@@ -31,4 +31,8 @@ export class MainLayoutComponent implements OnInit {
   return permissionsArray.includes(permission);
     // return this.userInfo.permissions.includes(permission);
   }
+checkIn(): void {
+  this.router.navigate(['/check']);
+}
+
 }
