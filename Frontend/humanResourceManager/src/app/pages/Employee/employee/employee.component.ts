@@ -13,6 +13,7 @@ import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-con
 import { CreateDepartmentComponent } from '../../Department/department/create-department/create-department.component';
 import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 import { Router } from '@angular/router';
+import { EmployeeService } from 'src/app/api2/employee/employee.service';
 
 @Component({
   selector: 'app-employee',
@@ -55,6 +56,7 @@ export class EmployeeComponent {
     private toastr: ToastrService,
     private authService: AuthService,
     private router: Router,
+    private employeeService: EmployeeService
   ) {}
   ngOnInit(): void {
     this.userInfo = this.authService.getUserInfo();
@@ -260,4 +262,32 @@ export class EmployeeComponent {
     { id: 2, name: 'Hợp đồng thử việc' },
     { id: 3, name: 'Hợp đồng thời vụ' },
   ];
+
+  export(){
+    this.employeeService.exportExcel(this.entityRequest).subscribe({
+      next: (blob: Blob) => {
+        // const url = window.URL.createObjectURL(blob);
+        // const link = document.createElement('a');
+        // link.href = url;
+        // link.download = 'EmployeeData.xlsx';
+        // link.click();
+        // window.URL.revokeObjectURL(url);
+
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          var today = new Date();
+          const day = today.getDate();
+          const month = today.getMonth() + 1;
+          const year = today.getFullYear();
+          var hours = today.getHours();
+          var minutes = today.getMinutes();
+          link.download = `Danh Sách nhân sự ${day}-${month}-${year} ${hours}_${minutes}`;
+          link.click();
+          window.URL.revokeObjectURL(link.href);
+      },
+      error: (err) => {
+        console.error('Export failed', err);
+      },
+    });
+  }
 }

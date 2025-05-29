@@ -7,6 +7,10 @@ using humanResourceManager.Models.EmployeesModel;
 using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 
 namespace humanResourceManager.Services
 {
@@ -14,11 +18,13 @@ namespace humanResourceManager.Services
 	{
 		private readonly MyDbContext _dbContext;
 		private readonly ICurrentUserExtended _currentUser;
+		private readonly IHostingEnvironment _hostingEnvironment;
 
-		public EmployeesService(MyDbContext dbContext, ICurrentUserExtended currentUser)
+		public EmployeesService(MyDbContext dbContext, ICurrentUserExtended currentUser, IHostingEnvironment hostingEnvironment)
 		{
 			_dbContext = dbContext;
 			_currentUser = currentUser;
+			_hostingEnvironment = hostingEnvironment;
 		}
 
 		public async Task<EmployeesDto> CreateAsync(CreateUpdateEmployeesDto input)
@@ -117,6 +123,8 @@ namespace humanResourceManager.Services
 			_dbContext.Employees.RemoveRange(entities);
 			await _dbContext.SaveChangesAsync();
 		}
+
+
 
 		public async Task<EmployeesDto> GetById(int id)
 		{
@@ -258,5 +266,111 @@ namespace humanResourceManager.Services
 				UpdatedAt = entity.UpdatedAt,
 			};
 		}
+
+		#region export data
+		public async Task<byte[]> ExportDataReport(PagingRequest request)
+		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách nhân viên");
+			}
+
+			var employees = _dbContext.Employees.AsQueryable();
+			if (!string.IsNullOrWhiteSpace(request.Keyword))
+			{
+				employees = employees.Where(x => x.FullName.Trim().ToLower().Contains(request.Keyword.Trim().ToLower()));
+			}
+			var queryResult = employees
+			.Select(entity => new EmployeesDto()
+			{
+				Id = entity.Id,
+				FullName = entity.FullName,
+				BirthDay = entity.BirthDay,
+				Gender = entity.Gender,
+				PhoneNumber = entity.PhoneNumber,
+				Email = entity.Email,
+				Address = entity.Address,
+				PositionId = entity.PositionId,
+				DepartmentId = entity.DepartmentId,
+				Salary = entity.Salary,
+				HireDate = entity.HireDate,
+				Status = entity.Status,
+				IsDeleted = entity.IsDeleted,
+				CreationName = entity.CreationName,
+				CreationTime = entity.CreationTime,
+				UpdatedBy = entity.UpdatedBy,
+				UpdatedAt = entity.UpdatedAt,
+			});
+
+			return await WriteDataToExcel(queryResult.ToList(), request);
+		}
+
+		private async Task<byte[]> WriteDataToExcel(List<EmployeesDto> data, PagingRequest request)
+		{
+			try
+			{
+				var file = new FileInfo(Path.Combine(_hostingEnvironment.ContentRootPath + "/ExcelTemplates/ListEmployee.xlsx"));
+
+				if (!file.Exists)
+				{
+					throw new FileNotFoundException("Không tìm thấy file template.");
+				}
+
+				using var xlPackage = new ExcelPackage(file);
+				var ngayXuat = "Ngày xuất: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+				var tieuDe = "DANH SÁCH NHÂN VIÊN: ";
+				if (!string.IsNullOrEmpty(request.Keyword))
+				{
+					tieuDe = tieuDe + "Lọc theo từ khóa " + request.Keyword;
+				}
+
+				foreach (var index in Enumerable.Range(0, 1))
+				{
+					ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+					var workbook = xlPackage.Workbook;
+					var worksheet = workbook.Worksheets["Tổng hợp"];
+					worksheet.Cells[1, 1].Value = tieuDe;
+					worksheet.Cells[2, 1].Value = ngayXuat;
+					var cellTable = worksheet?.Cells.FirstOrDefault();
+
+					var rowStart = 5;
+
+					if (cellTable != null && index == 0 && data.Count > 0)
+					{
+						var stt = 1;
+						foreach (var item in data)
+						{
+							for (var i = 1; i <= 12; i++)
+							{
+								worksheet.Cells[rowStart, i].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+							}
+							worksheet.Cells[rowStart, 1].Value = stt;
+							worksheet.Cells[rowStart, 2].Value = item.FullName;
+							worksheet.Cells[rowStart, 3].Value = item.BirthDay;
+							worksheet.Cells[rowStart, 4].Value = item.Gender == 1 ? "Nam" : "Nữ";
+							worksheet.Cells[rowStart, 5].Value = item.PhoneNumber;
+							worksheet.Cells[rowStart, 6].Value = item.Email;
+							worksheet.Cells[rowStart, 7].Value = item.Address;
+							worksheet.Cells[rowStart, 8].Value = item.PositionName;
+							worksheet.Cells[rowStart, 9].Value = item.DepartmentName;
+							worksheet.Cells[rowStart, 10].Value = item.Salary;
+							worksheet.Cells[rowStart, 11].Value = item.HireDate;
+							worksheet.Cells[rowStart, 12].Value = item.Status == EmployeeStatus.DangLamViec ? "Đang làm việc" : (item.Status == EmployeeStatus.TamNghi ? "Tạm nghỉ" : "Thôi việc");
+							stt++;
+							rowStart++;
+						}
+					}
+				}
+				await Task.Yield();
+				var dataFile = xlPackage.GetAsByteArray();
+				return dataFile;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		#endregion
 	}
 }

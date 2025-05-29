@@ -99,5 +99,14 @@ namespace humanResourceManager.Controllers
 				return Ok(ApiResult.Error(ex.Message ?? "Lỗi không xác định"));
 			}
 		}
+
+		[HttpPost]
+		[Route("export-excel")]
+		public async Task<IActionResult> ExportExcel(PagingRequest request)
+		{
+			var execlBytes = await _service.ExportDataReport(request);
+			var file = File(execlBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			return file;
+		}
 	}
 }
