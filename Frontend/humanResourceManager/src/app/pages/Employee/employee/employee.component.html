@@ -56,7 +56,7 @@
         (nzQueryParams)="onQueryParamsChange($event)"
         [nzLoading]="loading"
         [nzSize]="'middle'"
-        [nzScroll]="{ y: '63vh', x: '100%' }"
+        [nzScroll]="{ y: '63vh', x: '90%' }"
         [nzFrontPagination]="false"
         [nzPaginationType]="'default'"
         [nzShowPagination]="true"
@@ -70,7 +70,6 @@
                   [(nzChecked)]="checked"
                   [nzIndeterminate]="indeterminate"
                   (nzCheckedChange)="onAllChecked($event)"
-                  nzWidth="25px"
                 ></th>
             <th [nzWidth]="'50px'">STT</th>
             <th [nzWidth]="'150px'">Tên Nhân viên</th>
@@ -84,7 +83,7 @@
             <th [nzWidth]="'150px'">Mức lương</th>
             <th [nzWidth]="'150px'">Trạng thái</th>
             <th [nzWidth]="'150px'">Người tạo</th>
-            <th nzWidth="50px" class="text-center" nzRight>Thao tác</th>
+            <th nzWidth="100px" class="text-center" style="right: -10px !important;" nzRight></th>
           </tr>
         </thead>
         <tbody>
