@@ -35,9 +35,8 @@ namespace humanResourceManager.Services
 			Users entity = new Users
 			{
 				EmployeeID = input.EmployeeID,
-				// entity.Employee = input.Employee; // Không set lại Employee object ở Update, chỉ giữ EmployeeID
 				Username = input.Username,
-				Password = input.Password,
+				Password = BCrypt.Net.BCrypt.HashPassword(input.Password),
 				Role = input.Role??Role.Admin,
 				RoleIds = input.RoleIds ?? new List<int>(),
 				CreationTime = DateTime.Now

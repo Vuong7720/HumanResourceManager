@@ -9,6 +9,9 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 import { Router } from '@angular/router';
+import { RoleService } from 'src/app/api2/role/role.service';
+import { finalize } from 'rxjs';
+import { SelectOptionItems } from 'src/app/api2/role/models';
 
 @Component({
   selector: 'app-user',
@@ -38,7 +41,7 @@ export class UserComponent {
   isSpinning: boolean = false;
 
   userInfo: JwtPayload | null = null;
-	
+	listRoleSelectData = [] as SelectOptionItems[];
   createPermission:boolean = false;
   updatePermission:boolean = false;
   deletePermission:boolean = false;
@@ -50,9 +53,11 @@ export class UserComponent {
     private toastr: ToastrService,
     private authService: AuthService,
     private router: Router,
+    private roleService: RoleService,
   ) { }
   ngOnInit(): void {
     this.userInfo = this.authService.getUserInfo();
+    this.loadDataRoles();
     if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("UserManagement")) {
       this.router.navigate(['access-deny']);
     }
@@ -91,6 +96,26 @@ export class UserComponent {
   });
 }
 
+loadDataRoles() {
+    this.roleService
+      .getListSelectRole()
+      .pipe(finalize(() => {}))
+      .subscribe((response) => {
+        if (response.status) {
+          this.listRoleSelectData = response.data;
+        } else {
+          this.toastr.error(response.message);
+        }
+      });
+  }
+
+getNameRole2(ids: any[]): string {
+  const names = this.listRoleSelectData
+    .filter(role => ids.includes(role.value))
+    .map(role => role.label);
+
+  return names.join(', ');
+}
 
   // Từ khoá tìm kiếm
   searchKeyword = '';

@@ -45,7 +45,7 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item class="d-flex flex-column mb-2 fv-row">
+    <nz-form-item class="d-flex flex-column mb-2 fv-row" *ngIf="!data.username">
       <nz-form-label
         [nzFor]="'password'"
         [nzNoColon]="true"

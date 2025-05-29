@@ -52,7 +52,6 @@ export class CreateUserComponent implements OnInit {
     this.buildForm();
     if (this.getParams.data) {
       this.data = this.getParams.data;
-      console.log(this.data);
       this.isEditMode = true;
       this.buildForm();
     }
