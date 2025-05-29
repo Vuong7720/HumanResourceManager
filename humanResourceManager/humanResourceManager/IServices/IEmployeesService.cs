@@ -10,6 +10,9 @@ namespace humanResourceManager.IServices
 		Task<EmployeesDto> UpdateAsync(int id, CreateUpdateEmployeesDto input);
 
 		Task<PagedResultDto<EmployeesDto>> GetPagingDto(PagingRequest request);
+
+		Task<byte[]> ExportDataReport(PagingRequest request);
+
 		Task<EmployeesDto> GetById(int id);
 
 		Task DeleteAsync(int id);
