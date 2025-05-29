@@ -71,15 +71,12 @@
         <div style="max-height: 300px; overflow-y: auto; border: 1px solid #f0f0f0; padding: 8px; border-radius: 4px;">
           <label *ngFor="let item of listRoleSelectData" class="d-block">
             <input type="checkbox" [value]="item.value"
-              [checked]="form.get('permissionIds')?.value?.includes(item.value)"
+              [checked]="form.get('roleIds')?.value?.includes(item.value)"
               (change)="onCheckboxChange(item.value,$event)" />
             {{ item.label }}
           </label>
         </div>
       </nz-form-control>
-      <!-- <nz-select formControlName="role" nzPlaceHolder="quyền">
-        <nz-option *ngFor="let item of lstRole" [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
-      </nz-select> -->
     </nz-form-item>
   </nz-form>
 

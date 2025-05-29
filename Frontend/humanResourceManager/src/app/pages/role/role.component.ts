@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { RoleFormComponent } from './role-form/role-form.component';
 import { RoleService } from 'src/app/api2/role/role.service';
+import { Router } from '@angular/router';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 
 @Component({
   selector: 'app-role',
@@ -34,14 +36,36 @@ export class RoleComponent {
   sortKey: string | null = null;
   isSpinning: boolean = false;
 
+  userInfo: JwtPayload | null = null;
+  
+  createPermission:boolean = false;
+  updatePermission:boolean = false;
+  deletePermission:boolean = false;
+
 
   constructor(
     private modal: NzModalService, 
     private viewContainerRef: ViewContainerRef, 
+    private router: Router,
+    private authService: AuthService,
     private service: RoleService,
     private toastr: ToastrService
   ) { }
   ngOnInit(): void {
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement")) {
+      this.router.navigate(['access-deny']);
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement_Create")) {
+      this.createPermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement_Update")) {
+      this.updatePermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("RoleManagement_Delete")) {
+      this.deletePermission = true;
+    }
+
     this.loadData();
   }
 

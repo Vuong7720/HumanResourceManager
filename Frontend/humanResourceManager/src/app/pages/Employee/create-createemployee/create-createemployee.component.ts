@@ -1,7 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
 import { Client } from 'src/app/api2/api.client';
 
 @Component({
@@ -19,14 +21,24 @@ export class CreateeployeeComponent implements OnInit {
   lstDepartment: any[] = [];
   lstPosition: any[] = [];
 
+  userInfo: JwtPayload | null = null;
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: Client,
-    private nzModalRef: NzModalRef
+    private nzModalRef: NzModalRef,
+    private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement_Create") && 
+          !this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement_Update")) {
+        this.router.navigate(['access-deny']);
+      }
+
     this.getDeparment();
     this.getPosition();
     this.buildForm();

@@ -4,6 +4,7 @@ using humanResourceManager.Datas.RoleAndPermission;
 using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
+using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Models.PositionsModel;
 using humanResourceManager.Models.RoleModel;
 using humanResourceManager.Ulity;
@@ -14,13 +15,20 @@ namespace humanResourceManager.Services
 	public class RoleService : IRoleService
 	{
 		private readonly MyDbContext _dbContext;
+		private readonly ICurrentUserExtended _currentUser;
 
-		public RoleService(MyDbContext dbContext)
+		public RoleService(MyDbContext dbContext, ICurrentUserExtended currentUser)
 		{
 			_dbContext = dbContext;
+			_currentUser = currentUser;
 		}
 		public async Task<RoleDto> CreateAsync(CreateUpdateRoleDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement_Create))
+			{
+				throw new Exception("Không có quyền tạo mới vai trò");
+			}
+
 			Rolee entity = new Rolee
 			{
 				RoleName = input.RoleName,
@@ -54,6 +62,11 @@ namespace humanResourceManager.Services
 
 		public async Task<RoleDto> UpdateAsync(int id, CreateUpdateRoleDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement_Update))
+			{
+				throw new Exception("Không có quyền cập nhật thông tin vai trò");
+			}
+
 			var entity = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -91,6 +104,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteAsync(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá vai trò");
+			}
+
 			var entity = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -107,6 +125,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteMultipleAsync(IEnumerable<int> ids)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá vai trò");
+			}
+
 			var entities = await _dbContext.Roles.Where(x => ids.Contains(x.Id)).ToListAsync();
 			if (entities == null || entities.Count == 0)
 			{
@@ -127,6 +150,11 @@ namespace humanResourceManager.Services
 
 		public async Task<RoleDto> GetById(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement))
+			{
+				throw new Exception("Không có quyền xem thông tin chi tiết vai trò");
+			}
+
 			var entity = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -156,6 +184,11 @@ namespace humanResourceManager.Services
 
 		public async Task<PagedResultDto<RoleDto>> GetPagingDto(PagingRequest request)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.RoleManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách vai trò");
+			}
+
 			var roles = _dbContext.Roles.AsQueryable();
 			if (request.Keyword != null)
 			{

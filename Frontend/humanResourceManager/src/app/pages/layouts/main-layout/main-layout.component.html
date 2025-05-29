@@ -14,9 +14,9 @@
       </li>
 
       <!-- Quản lý nhân sự -->
-      <li nz-menu-item><a routerLink="/employees"><i class="bi bi-person-lines-fill"></i> Danh sách nhân viên</a></li>
-      <li nz-menu-item><a routerLink="/positions"><i class="bi bi-postcard-fill"></i> Chức vụ</a></li>
-      <li nz-menu-item><a routerLink="/departments"><i class="bi bi-bookmarks"></i> Phòng ban</a></li>
+      <li *ngIf="checkPermission('EmployeeManagement')" nz-menu-item><a routerLink="/employees"><i class="bi bi-person-lines-fill"></i> Danh sách nhân viên</a></li>
+      <li *ngIf="checkPermission('PositionManagement')" nz-menu-item><a routerLink="/positions"><i class="bi bi-postcard-fill"></i> Chức vụ</a></li>
+      <li *ngIf="checkPermission('DepartmentManagement')" nz-menu-item><a routerLink="/departments"><i class="bi bi-bookmarks"></i> Phòng ban</a></li>
       <!-- <li nz-menu-item><a routerLink="/contracts"><i class="bi bi-person-lines-fill"></i> Hợp đồng</a></li> -->
 
       <!-- Chấm công -->
@@ -30,12 +30,12 @@
       </li>
 
       <!-- Tài khoản -->
-      <li nz-menu-item nzIcon="team" nzTitle="Tài khoản người dùng">
+      <li *ngIf="checkPermission('UserManagement')" nz-menu-item nzIcon="team" nzTitle="Tài khoản người dùng">
         <a routerLink="/users"><i class="bi bi-person"></i> Người dùng</a>
       </li>
 
       <!-- Vai trò -->
-      <li nz-menu-item nzIcon="team" nzTitle="Vai trò">
+      <li *ngIf="checkPermission('RoleManagement')" nz-menu-item nzIcon="team" nzTitle="Vai trò">
         <a routerLink="/role"><i class="bi bi-person"></i> Vai trò</a>
       </li>
     </ul>

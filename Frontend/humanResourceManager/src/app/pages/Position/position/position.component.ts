@@ -6,6 +6,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { CreatePositionComponent } from './create-position/create-position.component';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-position',
@@ -33,14 +35,36 @@ export class PositionComponent {
   sortKey: string | null = null;
   isSpinning: boolean = false;
 
+  userInfo: JwtPayload | null = null;
+	
+  createPermission:boolean = false;
+  updatePermission:boolean = false;
+  deletePermission:boolean = false;
+
 
   constructor(
     private modal: NzModalService, 
     private viewContainerRef: ViewContainerRef, 
     private service: Client,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
   ngOnInit(): void {
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("PositionManagement")) {
+      this.router.navigate(['access-deny']);
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("PositionManagement_Create")) {
+      this.createPermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("PositionManagement_Update")) {
+      this.updatePermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("PositionManagement_Delete")) {
+      this.deletePermission = true;
+    }
+
     this.loadData();
   }
 

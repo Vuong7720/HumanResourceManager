@@ -14,16 +14,17 @@ namespace humanResourceManager.Services
             _key = config["Jwt:Key"];
         }
 
-        public string GenerateToken(Users user)
+        public string GenerateToken(Users user, List<string>? lstPermissions)
         {
             var claims = new[]
             {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Username),
-                    new Claim(ClaimTypes.Role, user.Role.ToString()) // Fix: Convert Role enum to string
-                };
+                    new Claim(ClaimTypes.Role, user.Role.ToString()), // Fix: Convert Role enum to string
+                    new Claim("permission_names", string.Join(",", lstPermissions ?? []))
+				};
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

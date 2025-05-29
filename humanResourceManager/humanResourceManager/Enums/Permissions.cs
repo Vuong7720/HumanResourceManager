@@ -35,7 +35,12 @@
 		public const string UserManagement_Create = "UserManagement_Create";
 		public const string UserManagement_Update = "UserManagement_Update";
 		public const string UserManagement_Delete = "UserManagement_Delete";
-		public const string UserManagement_Approved = "UserManagement_Approved";
+
+		// người dùng
+		public const string RoleManagement = "RoleManagement";
+		public const string RoleManagement_Create = "RoleManagement_Create";
+		public const string RoleManagement_Update = "RoleManagement_Update";
+		public const string RoleManagement_Delete = "RoleManagement_Delete";
 
 		/// <summary>
 		/// Trả về tất cả permission
@@ -55,7 +60,10 @@
 		PositionManagement_Delete, PositionManagement_Approved,
 
 		UserManagement, UserManagement_Create, UserManagement_Update,
-		UserManagement_Delete, UserManagement_Approved
+		UserManagement_Delete, 
+
+		RoleManagement, RoleManagement_Create, RoleManagement_Update,
+		RoleManagement_Delete, 
 	};
 
 	}

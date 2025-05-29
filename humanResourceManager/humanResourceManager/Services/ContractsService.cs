@@ -1,7 +1,9 @@
 ﻿using humanResourceManager.Datas;
+using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
 using humanResourceManager.Models.ContractsModel;
+using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,14 +12,21 @@ namespace humanResourceManager.Services
 	public class ContractsService : IContractsService
 	{
 		private readonly MyDbContext _dbContext;
+		private readonly ICurrentUserExtended _currentUser;
 
-		public ContractsService(MyDbContext dbContext)
+		public ContractsService(MyDbContext dbContext, ICurrentUserExtended currentUser)
 		{
 			_dbContext = dbContext;
+			_currentUser = currentUser;
 		}
 
 		public async Task<ContractsDto> CreateAsync(CreateUpdateContractsDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement_Create))
+			{
+				throw new Exception("Không có quyền thêm mới hợp đồng");
+			}
+
 			Contracts entity = new Contracts
 			{
 				EmployeeID = input.EmployeeID,
@@ -51,10 +60,14 @@ namespace humanResourceManager.Services
 
 		public async Task<ContractsDto> UpdateAsync(int id, CreateUpdateContractsDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement_Update))
+			{
+				throw new Exception("Không có quyền cập nhật hợp đồng");
+			}
 			var entity = await _dbContext.Contracts.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
-				throw new Exception("Không tìm thấy bản ghi Attendance cần cập nhật");
+				throw new Exception("Không tìm thấy bản ghi cập nhật");
 			}
 
 			entity.EmployeeID = input.EmployeeID;
@@ -88,10 +101,14 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteAsync(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá hợp đồng");
+			}
 			var entity = await _dbContext.Contracts.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
-				throw new BusinessException("Không tìm thấy dữ liệu chấm công");
+				throw new BusinessException("Không tìm thấy bản ghi này");
 			}
 
 			_dbContext.Contracts.Remove(entity);
@@ -100,10 +117,15 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteMultipleAsync(IEnumerable<int> ids)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá hợp đồng");
+			}
+
 			var entities = await _dbContext.Contracts.Where(x => ids.Contains(x.Id)).ToListAsync();
 			if (entities == null || entities.Count == 0)
 			{
-				throw new BusinessException("Không tìm thấy bản ghi nào");
+				throw new BusinessException("Không tìm thấy bản ghi");
 			}
 
 			_dbContext.Contracts.RemoveRange(entities);
@@ -112,6 +134,11 @@ namespace humanResourceManager.Services
 
 		public async Task<ContractsDto> GetById(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement))
+			{
+				throw new Exception("Không có quyền xem hợp đồng");
+			}
+
 			var entity = await _dbContext.Contracts.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -133,6 +160,11 @@ namespace humanResourceManager.Services
 
 		public async Task<PagedResultDto<ContractsDto>> GetPagingDto(PagingRequest request)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.ContractManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách hợp đồng");
+			}
+
 			var contracts = _dbContext.Contracts.AsQueryable();
 
 			var queryResult = contracts

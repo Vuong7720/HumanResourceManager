@@ -35,8 +35,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "POST",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -57,9 +56,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -96,8 +93,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -138,9 +134,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -176,9 +170,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -215,8 +207,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -252,9 +243,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -290,9 +279,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -329,8 +316,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -371,9 +357,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -409,9 +393,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -448,8 +430,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -485,9 +466,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -555,9 +534,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -594,8 +571,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -636,9 +612,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -674,9 +648,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -713,8 +685,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -750,9 +721,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -784,8 +753,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -821,9 +789,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -860,8 +826,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -902,9 +867,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -940,9 +903,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -979,8 +940,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1016,9 +976,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1050,8 +1008,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1087,9 +1044,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1126,8 +1081,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1168,9 +1122,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1206,9 +1158,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1245,8 +1195,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1282,9 +1231,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1320,9 +1267,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1359,8 +1304,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1401,9 +1345,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1439,9 +1381,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1478,8 +1418,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1515,9 +1454,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1549,8 +1486,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1586,9 +1522,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1625,8 +1559,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "GET",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1667,9 +1600,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1705,9 +1636,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1744,8 +1673,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
 
         let options_: RequestInit = {
             method: "DELETE",
-            headers: {
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1781,9 +1709,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1859,9 +1785,7 @@ checkOut(employeeId: number | undefined): Promise<any> {
         let options_: RequestInit = {
             body: content_,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
+            headers: this.createAuthHeader()
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {

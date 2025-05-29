@@ -11,6 +11,8 @@ import { Message, PagedResultDto } from 'src/app/api2/dto';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteComfirmComponent } from 'src/app/shared/delete-confirm/delete-confirm.component';
 import { CreateDepartmentComponent } from '../../Department/department/create-department/create-department.component';
+import { AuthService, JwtPayload } from 'src/app/AuthService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -40,13 +42,35 @@ export class EmployeeComponent {
   lstDepartment: any[] = [];
   lstPosition: any[] = [];
 
+  userInfo: JwtPayload | null = null;
+	
+  createPermission:boolean = false;
+  updatePermission:boolean = false;
+  deletePermission:boolean = false;
+
   constructor(
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private service: Client,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
+    this.userInfo = this.authService.getUserInfo();
+    if (!this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement")) {
+      this.router.navigate(['access-deny']);
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement_Create")) {
+      this.createPermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement_Update")) {
+      this.updatePermission = true;
+    }
+    if (this.userInfo?.permissions?.split(',').map(p => p.trim()).includes("EmployeeManagement_Delete")) {
+      this.deletePermission = true;
+    }
+    
     this.getDeparment();
     this.getPosition();
     // this.loadData();

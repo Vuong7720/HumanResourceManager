@@ -1,8 +1,10 @@
 ﻿using humanResourceManager.Datas;
+using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
 using humanResourceManager.Models.ContractsModel;
 using humanResourceManager.Models.EmployeesModel;
+using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Ulity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,14 +13,20 @@ namespace humanResourceManager.Services
 	public class EmployeesService : IEmployeesService
 	{
 		private readonly MyDbContext _dbContext;
+		private readonly ICurrentUserExtended _currentUser;
 
-		public EmployeesService(MyDbContext dbContext)
+		public EmployeesService(MyDbContext dbContext, ICurrentUserExtended currentUser)
 		{
 			_dbContext = dbContext;
+			_currentUser = currentUser;
 		}
 
 		public async Task<EmployeesDto> CreateAsync(CreateUpdateEmployeesDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement_Create))
+			{
+				throw new Exception("Không có quyền tạo mới nhân viên");
+			}
 			Employees entity = new Employees
 			{
 				FullName = input.FullName,
@@ -78,6 +86,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteAsync(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá nhân viên");
+			}
+
 			var entity = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -90,6 +103,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteMultipleAsync(IEnumerable<int> ids)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá nhân viên");
+			}
+
 			var entities = await _dbContext.Employees.Where(x => ids.Contains(x.Id)).ToListAsync();
 			if (entities == null || entities.Count == 0)
 			{
@@ -102,6 +120,11 @@ namespace humanResourceManager.Services
 
 		public async Task<EmployeesDto> GetById(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement))
+			{
+				throw new Exception("Không có quyền xem thông tin chi tiết nhân viên");
+			}
+
 			var entity = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -132,6 +155,11 @@ namespace humanResourceManager.Services
 
 		public async Task<PagedResultDto<EmployeesDto>> GetPagingDto(PagingRequest request)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách nhân viên");
+			}
+
 			var employees = _dbContext.Employees.AsQueryable();
 			if (!string.IsNullOrWhiteSpace(request.Keyword))
 			{
@@ -181,10 +209,15 @@ namespace humanResourceManager.Services
 
 		public async Task<EmployeesDto> UpdateAsync(int id, CreateUpdateEmployeesDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.EmployeeManagement_Update))
+			{
+				throw new Exception("Không có quyền cập nhật thông tin nhân viên");
+			}
+
 			var entity = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
-				throw new Exception("Không tìm thấy bản ghi Attendance cần cập nhật");
+				throw new Exception("Không tìm thấy bản ghi cần cập nhật");
 			}
 
 			entity.FullName = input.FullName;

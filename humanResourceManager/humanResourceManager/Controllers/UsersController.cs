@@ -47,7 +47,7 @@ namespace humanResourceManager.Controllers
 
 		[HttpPut]
 		[Route("update")]
-		public async Task<IActionResult> UpdateAsync(int id, CreateUpdateUsersDto model)
+		public async Task<IActionResult> UpdateAsync(int id, [FromBody] CreateUpdateUsersDto model)
 		{
 			try
 			{
@@ -61,7 +61,7 @@ namespace humanResourceManager.Controllers
 
 		[HttpPost]
 		[Route("create")]
-		public async Task<IActionResult> CreateAsync(CreateUpdateUsersDto input)
+		public async Task<IActionResult> CreateAsync([FromBody] CreateUpdateUsersDto input)
 		{
 			try
 			{
@@ -81,7 +81,7 @@ namespace humanResourceManager.Controllers
 		}
 
 		[HttpDelete("delete-by-ids")]
-		public async Task<IActionResult> DeleteByIds(List<int> ids)
+		public async Task<IActionResult> DeleteByIds([FromBody] List<int> ids)
 		{
 			await _usersService.DeleteMultipleAsync(ids);
 			return Ok(ApiResult.Success(null, "Xóa thành công"));

@@ -3,6 +3,7 @@ using humanResourceManager.Datas;
 using humanResourceManager.Enums;
 using humanResourceManager.IServices;
 using humanResourceManager.Models;
+using humanResourceManager.Models.ICurrentUser;
 using humanResourceManager.Models.UsersModel;
 using humanResourceManager.Ulity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,22 @@ namespace humanResourceManager.Services
 	{
 		private readonly MyDbContext _dbContext;
         private readonly JwtService _jwtService;
+		private readonly ICurrentUserExtended _currentUser;
 
-        public UsersService(MyDbContext dbContext, JwtService jwtService)
+		public UsersService(MyDbContext dbContext, JwtService jwtService, ICurrentUserExtended currentUser)
 		{
 			_dbContext = dbContext;
             _jwtService = jwtService;
-        }
+			_currentUser = currentUser;
+		}
 
 		public async Task<UsersDto> CreateAsync(CreateUpdateUsersDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement_Create))
+			{
+				throw new Exception("Không có quyền tạo mới người dùng");
+			}
+
 			Users entity = new Users
 			{
 				EmployeeID = input.EmployeeID,
@@ -56,6 +64,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteAsync(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá người dùng");
+			}
+
 			var entity = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -73,6 +86,11 @@ namespace humanResourceManager.Services
 
 		public async Task DeleteMultipleAsync(IEnumerable<int> ids)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement_Delete))
+			{
+				throw new Exception("Không có quyền xoá người dùng");
+			}
+
 			var entities = await _dbContext.Users.Where(x => ids.Contains(x.Id)).ToListAsync();
 			if (entities == null || entities.Count == 0)
 			{
@@ -93,6 +111,11 @@ namespace humanResourceManager.Services
 
 		public async Task<UsersDto> GetById(int id)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement))
+			{
+				throw new Exception("Không có quyền xem thông tin chi tiết người dùng");
+			}
+
 			var entity = await _dbContext.Users
 		.Include(u => u.Employee)  // load employee nếu có
 		.FirstOrDefaultAsync(x => x.Id == id);
@@ -139,6 +162,11 @@ namespace humanResourceManager.Services
 
 		public async Task<PagedResultDto<UsersDto>> GetPagingDto(PagingRequest request)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement))
+			{
+				throw new Exception("Không có quyền xem danh sách người dùng");
+			}
+
 			var usersQuery = _dbContext.Users.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(request.Keyword))
@@ -236,6 +264,11 @@ namespace humanResourceManager.Services
 
 		public async Task<UsersDto> UpdateAsync(int id, CreateUpdateUsersDto input)
 		{
+			if (!_currentUser.PermissionNames.Contains(Permissions.UserManagement_Update))
+			{
+				throw new Exception("Không có quyền cập nhật thông tin người dùng");
+			}
+
 			var entity = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
 			if (entity == null)
 			{
@@ -278,7 +311,24 @@ namespace humanResourceManager.Services
                 throw new UnauthorizedAccessException("Invalid credentials");
             }
 
-            return _jwtService.GenerateToken(user);
+			// Lấy tất cả RoleId trong tập users đã lấy
+			var allRoleIds = user.RoleIds;
+
+			// Lấy các role tương ứng
+			var roles = await _dbContext.Roles.Where(r => allRoleIds.Contains(r.Id)).ToListAsync();
+
+			// Lấy tất cả permissionId của các role
+			var allPermissionIds = roles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+
+			// Lấy permission
+			var permissions = await _dbContext.Permissions.Where(p => allPermissionIds.Contains(p.Id)).ToListAsync();
+			
+			var userRoles = roles.Where(r => user.RoleIds.Contains(r.Id)).ToList();
+			var userPermissionIds = userRoles.SelectMany(r => r.PermissionIds).Distinct().ToList();
+			var userPermissions = permissions.Where(p => userPermissionIds.Contains(p.Id)).ToList();
+			var lstPermissionName = userPermissions.Select(p => p.PermissionName ?? "").ToList();
+
+			return _jwtService.GenerateToken(user, lstPermissionName);
         }
 
         public async Task<MessageDto> RegisterAsync(RegisterDto dto)
